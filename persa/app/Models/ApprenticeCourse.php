@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Instructor_course extends Model
+class ApprenticeCourse extends Model
 {
     use HasFactory;
-    protected $table = 'instructor_course';
+    protected $table = 'apprentice_course';
     protected $fillable = [
-        'instructor_id',
+        'user_id',
         'course_id',
     ];
 
@@ -18,7 +18,7 @@ class Instructor_course extends Model
      * relación con la tabla user
      */
     public function user(){
-        return $this->belongsTo(User::class, 'instructor_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

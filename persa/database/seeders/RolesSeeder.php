@@ -17,7 +17,7 @@ class RolesSeeder extends Seeder
             ['name' => 'COORDINADOR'],
             ['name' => 'INSTRUTOR'],
             ['name' => 'APRENDIZ'],
-            ['name' => 'GUARDIA']
+            ['name' => 'GUARDA']
         ]);
     }
 }

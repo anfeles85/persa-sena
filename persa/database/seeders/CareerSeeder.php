@@ -33,7 +33,7 @@ class CareerSeeder extends Seeder
             [
                 'name' => 'Deporte',
                 'type' => 'TECNICO'
-            ],
+            ]
 
         ]);
     }

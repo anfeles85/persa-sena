@@ -21,7 +21,10 @@ class PermissionSeeder extends Seeder
                 'departure_time' => '09:15:00',
                 'reasons' => 'CITA MEDICA',
                 'instructor_id' => 1,
+                'guard_id' => 4,
                 'status' => 'APROBADO',
+                'location_id' => 1,
+                'permission_type_id' => 1,
             ],
             [
                 'permission_date' => '2023-10-02',
@@ -29,7 +32,11 @@ class PermissionSeeder extends Seeder
                 'end_time' => '12:00:00',
                 'departure_time' => '10:15:00',
                 'reasons' => 'CALAMIDAD DOMESTICA',
+                'instructor_id' => 2,
+                'guard_id' => 5,
                 'status' => 'PENDIENTE',
+                'location_id' => 2,
+                'permission_type_id' => 4,
             ],
             [
                 'permission_date' => '2023-10-03',
@@ -37,7 +44,11 @@ class PermissionSeeder extends Seeder
                 'end_time' => '13:00:00',
                 'departure_time' => '11:15:00',
                 'reasons' => 'ENTREVISTA ETAPA PRODUCTIVA',
+                'instructor_id' => 3,
+                'guard_id' => 4,
                 'status' => 'APROBADO',
+                'location_id' => 3,
+                'permission_type_id' => 1,
             ],
             [
                 'permission_date' => '2023-10-04',
@@ -45,7 +56,11 @@ class PermissionSeeder extends Seeder
                 'end_time' => '14:00:00',
                 'departure_time' => '12:15:00',
                 'reasons' => 'OTRO',
+                'instructor_id' => 4,
+                'guard_id' => 5,
                 'status' => 'DESAPROBADO',
+                'location_id' => 2,
+                'permission_type_id' => 3,
             ],
             [
                 'permission_date' => '2023-10-05',
@@ -53,8 +68,12 @@ class PermissionSeeder extends Seeder
                 'end_time' => '14:30:00',
                 'departure_time' => '13:15:00',
                 'reasons' => 'CITA MEDICA',
+                'instructor_id' => 5,
+                'guard_id' => 4,
                 'status' => 'APROBADO',
-            ],
+                'location_id' => 1,
+                'permission_type_id' => 1,
+            ]
         ]); 
         }
     }
