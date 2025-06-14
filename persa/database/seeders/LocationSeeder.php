@@ -14,9 +14,18 @@ class LocationSeeder extends Seeder
     public function run(): void
     {
         Location::insert([
-            ['name' => 'SAGRADO'],
-            ['name' => 'SALESIANO'],
-            ['name' => 'BICENTENARIO']
+            [
+                'name' => 'SAGRADO',
+                'address' => 'Cra 25 # 24-47'
+            ],
+            [
+                'name' => 'SALESIANO',
+                'address' => 'Cra 26 # 34-40 B'
+            ],
+            [
+                'name' => 'BICENTENARIO',
+                'address' => 'Cl 28 # 19-38'
+                ]
         ]);
     }
 }
