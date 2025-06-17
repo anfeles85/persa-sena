@@ -48,21 +48,21 @@ class User extends Authenticatable
     /**
      * relación con la tabla roles
      */
-    public function roles(){
+    public function role(){
         return $this->belongsTo(Roles::class, 'role_id');
     }
     
     /**
      * relación con la tabla permission
      */
-    public function instructors_id(){
-        return $this->hasMany(Permission::class, 'instructors_id');
+    public function instructorPermissions(){
+        return $this->hasMany(Permission::class, 'instructor_id');
     }
     
     /**
      * relación con la tabla permission
      */
-    public function guard_id(){
+    public function guardPermissions(){
         return $this->hasMany(Permission::class, 'guard_id');
     }
 
@@ -70,14 +70,14 @@ class User extends Authenticatable
     /**
      * relación con la tabla apprentice_course
      */
-    public function apprentice_Courses(){
+    public function apprenticeCourses(){
         return $this->belongsToMany(Course::class, 'apprentice_course', 'user_id', 'course_id');
     }
   
     /**
      * relación con la tabla instrcutor_course
      */
-    public function instructor_Courses(){
+    public function instructorCourses(){
         return $this->belongsToMany(Course::class, 'instrcutor_course', 'instructor_id', 'course_id');
     }
 }

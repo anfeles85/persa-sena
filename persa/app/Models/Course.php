@@ -24,14 +24,14 @@ class Course extends Model
     /**
      * relación con la tabla apprentice_course
      */
-    public function apprentice_Courses(){
+    public function apprenticeCourses(){
         return $this->belongsToMany(User::class, 'apprentice_course', 'user_id', 'course_id');
     }
   
     /**
      * relación con la tabla instrcutor_course
      */
-    public function instructor_Courses(){
+    public function instructorCourses(){
         return $this->belongsToMany(User::class, 'instrcutor_course', 'instructor_id', 'course_id');
     }
 

@@ -29,15 +29,15 @@ class Permission extends Model
     /**
      * relación con la tabla user, instructor_id
      */
-    public function instructor_id(){
+    public function instructor_user(){
         return $this->belongsTo(User::class, 'instructor_id');
     }
 
     /**
      * relación con la tabla user, guard_id
      */
-    public function guard_id(){
-        return $this->belongsTo(Instructor_course::class, 'guard_id');
+    public function guard_user(){
+        return $this->belongsTo(InstructorCourse::class, 'guard_id');
     }
 
     /**
@@ -50,8 +50,8 @@ class Permission extends Model
     /**
      * relación con la tabla permission_type
      */
-    public function permission_type(){
-        return $this->belongsTo(Permission_type::class, 'location_id');
+    public function permissionType(){
+        return $this->belongsTo(PermissionType::class, 'permission_type_id');
     }
 
 
