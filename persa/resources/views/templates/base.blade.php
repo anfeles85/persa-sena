@@ -1,83 +1,60 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title')</title>
-    <!-- Custom fonts for this template-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet" />
-    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet"> 
-    <link href="{{ asset('datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" href="{{ asset('img/sena-logo.png') }}">
+  <title>
+    @yield('title')
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-svg.css" rel="stylesheet" />  
+  <!-- CSS Files -->
+  <link id="pagestyle" href="{{ asset('css/argon-dashboard.css?v=2.1.0') }}" rel="stylesheet" />
 </head>
-<body id="page-top">
-    <div id="wrapper">
-        @include('templates/nav')                        
-        <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                @include('templates/topbar')
-                <!-- End of Topbar -->
+<body class="g-sidenav-show   bg-gray-100">
+    <div class="min-height-300 position-absolute w-100" style="background-color: #00304D;"></div>
+    @include('templates.nav')
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Bienvenido {{ Auth::user()->name }}</h1>                         
-                    </div>
+    <main class="main-content position-relative border-radius-lg ">
+        @include('templates.topbar')
 
-                    <div class="row">
-                        <div class="col-lg-12 mb-4">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">@yield('header')</h6>
-                                </div>
-
-                                <div class="card-body">
-                                    <!-- aqui se insertan las paginas que heredan de este template -->
-                                    @yield('content')
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.container-fluid -->                    
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            @include('templates/footer')
-            <!-- End of Footer -->
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    @yield('content')
+                </div>  
+            </div>     
         </div>
-        <!-- End of Content Wrapper -->
 
+        @include('templates.footer')
 
-    </div>
-    <!-- End of Page Wrapper -->
+    </main>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <script src="{{ asset('js/core/popper.min.js') }}"></script>
+    <script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/smooth-scrollbar.min.js') }}"></script>
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
 
-    <script src="{{ asset('jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('jquery-easing/jquery.easing.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
-    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
-    <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('datatables/dataTables.bootstrap4.min.js') }}"></script>     
-    
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{ asset('js/argon-dashboard.min.js?v=2.1.0')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @yield('scripts')
-
 </body>
-
-</html>
+</html>    
