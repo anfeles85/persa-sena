@@ -8,51 +8,78 @@ use Illuminate\Support\Facades\Validator;
 
 class PermissionTypeController extends Controller
 {
+    private $rules = [
+        'name' => 'required|string|max:255',
+    ];
+
+    private $traductionAttributes = [
+        'name' => 'nombre',
+    ];
+
     public function index()
     {
         $permissionTypes = PermissionType::all();
-        return response()->json($permissionTypes);
+        return view('permission_type.index', compact('permissionTypes'));
+    }
+
+    public function create()
+    {
+        return view('permission_type.create');
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255'
-        ]);
+        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return redirect()->route('permission_type.create')->withInput()->withErrors($validator);
         }
 
-        $permissionType = PermissionType::create($request->all());
-        return response()->json($permissionType, 201);
+        PermissionType::create($request->all());
+        session()->flash('message', 'Tipo de permiso creado exitosamente');
+        return redirect()->route('permission_type.index');
     }
 
-    public function show($id)
+    public function edit($id)
     {
-        $permissionType = PermissionType::findOrFail($id);
-        return response()->json($permissionType);
+        $permissionType = PermissionType::find($id);
+        if ($permissionType) {
+            return view('permission_type.edit', compact('permissionType'));
+        }
+
+        session()->flash('warning', 'Tipo de permiso no encontrado');
+        return redirect()->route('permission_type.index');
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255'
-        ]);
+        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return redirect()->route('permission_type.edit', $id)->withInput()->withErrors($validator);
         }
 
-        $permissionType = PermissionType::findOrFail($id);
-        $permissionType->update($request->all());
-        return response()->json($permissionType);
+        $permissionType = PermissionType::find($id);
+        if ($permissionType) {
+            $permissionType->update($request->all());
+            session()->flash('message', 'Tipo de permiso actualizado exitosamente');
+        } else {
+            session()->flash('warning', 'Tipo de permiso no encontrado');
+        }
+
+        return redirect()->route('permission_type.index');
     }
 
     public function destroy($id)
     {
-        $permissionType = PermissionType::findOrFail($id);
-        $permissionType->delete();
-        return response()->json(null, 204);
+        $permissionType = PermissionType::find($id);
+        if ($permissionType) {
+            $permissionType->delete();
+            session()->flash('message', 'Tipo de permiso eliminado exitosamente');
+        } else {
+            session()->flash('warning', 'Tipo de permiso no encontrado');
+        }
+
+        return redirect()->route('permission_type.index');
     }
 }
