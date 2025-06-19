@@ -6,6 +6,7 @@ use App\Http\Controllers\PermissionTypeController;
 use App\Http\Controllers\RolesController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
