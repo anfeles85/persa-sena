@@ -8,51 +8,78 @@ use Illuminate\Support\Facades\Validator;
 
 class RolesController extends Controller
 {
+    private $rules = [
+        'name' => 'required|string|max:50',
+    ];
+
+    private $traductionAttributes = [
+        'name' => 'nombre',
+    ];
+
     public function index()
     {
         $roles = Roles::all();
-        return response()->json($roles);
+        return view('roles.index', compact('roles'));
+    }
+
+    public function create()
+    {
+        return view('roles.create');
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:50'
-        ]);
+        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return redirect()->route('roles.create')->withInput()->withErrors($validator);
         }
 
-        $role = Roles::create($request->all());
-        return response()->json($role, 201);
+        Roles::create($request->all());
+        session()->flash('message', 'Rol creado exitosamente');
+        return redirect()->route('roles.index');
     }
 
-    public function show($id)
+    public function edit($id)
     {
-        $role = Roles::findOrFail($id);
-        return response()->json($role);
+        $role = Roles::find($id);
+        if ($role) {
+            return view('roles.edit', compact('role'));
+        }
+
+        session()->flash('warning', 'Rol no encontrado');
+        return redirect()->route('roles.index');
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:50'
-        ]);
+        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return redirect()->route('roles.edit', $id)->withInput()->withErrors($validator);
         }
 
-        $role = Roles::findOrFail($id);
-        $role->update($request->all());
-        return response()->json($role);
+        $role = Roles::find($id);
+        if ($role) {
+            $role->update($request->all());
+            session()->flash('message', 'Rol actualizado exitosamente');
+        } else {
+            session()->flash('warning', 'Rol no encontrado');
+        }
+
+        return redirect()->route('roles.index');
     }
 
     public function destroy($id)
     {
-        $role = Roles::findOrFail($id);
-        $role->delete();
-        return response()->json(null, 204);
+        $role = Roles::find($id);
+        if ($role) {
+            $role->delete();
+            session()->flash('message', 'Rol eliminado exitosamente');
+        } else {
+            session()->flash('warning', 'Rol no encontrado');
+        }
+
+        return redirect()->route('roles.index');
     }
 }
