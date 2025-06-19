@@ -33,13 +33,14 @@ Route::prefix('location')->group(function(){
 });
 
 Route::prefix('career')->group(function(){
-    Route::get('/index',[CareerController::class], 'index')->name('career.index');
-    Route::get('/create',[CareerController::class], 'create')->name('career.create');
-    Route::get('/edit{id}',[CareerController::class], 'edit')->name('career.edit');
-    Route::post('/store',[CareerController::class], 'store')->name('career.store');
-    Route::put('/update{id}',[CareerController::class], 'update')->name('career.update');
-    Route::get('/destroy{id}',[CareerController::class], 'destroy')->name('career.destroy');
+    Route::get('/index', [CareerController::class, 'index'])->name('career.index');
+    Route::get('/create', [CareerController::class, 'create'])->name('career.create');
+    Route::get('/edit/{id}', [CareerController::class, 'edit'])->name('career.edit');
+    Route::post('/store', [CareerController::class, 'store'])->name('career.store');
+    Route::put('/update/{id}', [CareerController::class, 'update'])->name('career.update');
+    Route::get('/destroy/{id}', [CareerController::class, 'destroy'])->name('career.destroy');
 });
+
 
 Route::prefix('permission_type')->group(function(){
     Route::get('/index',[PermissionTypeController::class], 'index')->name('permission_type.index');
@@ -51,11 +52,10 @@ Route::prefix('permission_type')->group(function(){
 });
 
 Route::prefix('roles')->group(function(){
-    Route::get('/index',[RolesController::class], 'index')->name('roles.index');
-    Route::get('/create',[RolesController::class], 'create')->name('roles.create');
-    Route::get('/edit{id}',[RolesController::class], 'edit')->name('roles.edit');
-    Route::post('/store',[RolesController::class], 'store')->name('roles.store');
-    Route::put('/update{id}',[RolesController::class], 'update')->name('roles.update');
-    Route::get('/destroy{id}',[RolesController::class], 'destroy')->name('roles.destroy');
+    Route::get('/index', [RolesController::class, 'index'])->name('roles.index');
+    Route::get('/create', [RolesController::class, 'create'])->name('roles.create');
+    Route::get('/edit/{id}', [RolesController::class, 'edit'])->name('roles.edit');
+    Route::post('/store', [RolesController::class, 'store'])->name('roles.store');
+    Route::put('/update/{id}', [RolesController::class, 'update'])->name('roles.update');
+    Route::get('/destroy/{id}', [RolesController::class, 'destroy'])->name('roles.destroy');
 });
-
