@@ -8,53 +8,79 @@ use Illuminate\Support\Facades\Validator;
 
 class CareerController extends Controller
 {
+    private $rules = [
+        'name' => 'required|string|max:50',
+        'type' => 'required|string|max:50',
+    ];
+
+    private $traductionAttributes = [
+        'name' => 'nombre',
+        'type' => 'tipo',
+    ];
+
     public function index()
     {
         $careers = Career::all();
-        return response()->json($careers);
+        return view('career.index', compact('careers'));
+    }
+
+    public function create()
+    {
+        return view('career.create');
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:50',
-            'type' => 'required|string|max:50'
-        ]);
+        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return redirect()->route('career.create')->withInput()->withErrors($validator);
         }
 
-        $career = Career::create($request->all());
-        return response()->json($career, 201);
+        Career::create($request->all());
+        session()->flash('message', 'Carrera creada exitosamente');
+        return redirect()->route('career.index');
     }
 
-    public function show($id)
+    public function edit($id)
     {
-        $career = Career::findOrFail($id);
-        return response()->json($career);
+        $career = Career::find($id);
+        if ($career) {
+            return view('career.edit', compact('career'));
+        }
+        session()->flash('warning', 'Carrera no encontrada');
+        return redirect()->route('career.index');
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:50',  
-            'type' => 'required|string|max:50'
-        ]);
+        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return redirect()->route('career.edit', $id)->withInput()->withErrors($validator);
         }
 
-        $career = Career::findOrFail($id);
-        $career->update($request->all());
-        return response()->json($career);
+        $career = Career::find($id);
+        if ($career) {
+            $career->update($request->all());
+            session()->flash('message', 'Carrera actualizada exitosamente');
+        } else {
+            session()->flash('warning', 'Carrera no encontrada');
+        }
+
+        return redirect()->route('career.index');
     }
 
     public function destroy($id)
     {
-        $career = Career::findOrFail($id);
-        $career->delete();
-        return response()->json(null, 204);
+        $career = Career::find($id);
+        if ($career) {
+            $career->delete();
+            session()->flash('message', 'Carrera eliminada exitosamente');
+        } else {
+            session()->flash('warning', 'Carrera no encontrada');
+        }
+
+        return redirect()->route('career.index');
     }
 }
