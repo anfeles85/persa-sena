@@ -43,12 +43,12 @@ Route::prefix('career')->group(function(){
 
 
 Route::prefix('permission_type')->group(function(){
-    Route::get('/index',[PermissionTypeController::class], 'index')->name('permission_type.index');
-    Route::get('/create',[PermissionTypeController::class], 'create')->name('permission_type.create');
-    Route::get('/edit{id}',[PermissionTypeController::class], 'edit')->name('permission_type.edit');
-    Route::post('/store',[PermissionTypeController::class], 'store')->name('permission_type.store');
-    Route::put('/update{id}',[PermissionTypeController::class], 'update')->name('permission_type.update');
-    Route::get('/destroy{id}',[PermissionTypeController::class], 'destroy')->name('permission_type.destroy');
+    Route::get('/index',[PermissionTypeController::class, 'index'])->name('permission_type.index');
+    Route::get('/create',[PermissionTypeController::class, 'create'])->name('permission_type.create');
+    Route::get('/edit{id}',[PermissionTypeController::class, 'edit'])->name('permission_type.edit');
+    Route::post('/store',[PermissionTypeController::class, 'store'])->name('permission_type.store');
+    Route::put('/update{id}',[PermissionTypeController::class, 'update'])->name('permission_type.update');
+    Route::get('/destroy{id}',[PermissionTypeController::class, 'destroy'])->name('permission_type.destroy');
 });
 
 Route::prefix('roles')->group(function(){
