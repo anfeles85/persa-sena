@@ -15,10 +15,12 @@
   <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-svg.css" rel="stylesheet" />  
   <!-- CSS Files -->
   <link id="pagestyle" href="{{ asset('css/argon-dashboard.css?v=2.1.0') }}" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
-    <div class="min-height-300 position-absolute w-100" style="background-color: #00304D;"></div>
+    <div class="min-height-90 position-absolute w-100" style="background-color: #00304D;"></div>
     @include('templates.nav')
 
     <main class="main-content position-relative border-radius-lg ">
