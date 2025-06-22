@@ -1,9 +1,10 @@
 @extends('templates.base')
-@section('title', 'Crear Ubicacion')
-@section('header', 'Crear Ubicacion')
+@section('title', 'Crear Sede')
+@section('header', 'Crear Sede')
 @section('content')
 
-    <div class="mt-8">
+    <div>
+        <label class="fs-3">Crear sede</label>
         <div class="col-lg-12 mb-4">
             <form action="{{ route('location.store') }}" method="POST">
                 @csrf
@@ -23,8 +24,8 @@
                 </div>
                 <div class="row">
                     <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary w-50">Guardar</button>
-                    <a href="{{ route('location.index') }}" class="btn btn-secondary w-50">Cancelar</a>
+                    <button type="submit" class="btn btn-success w-50">Guardar</button>
+                    <a href="{{ route('location.index') }}" class="btn btn-danger w-50">Cancelar</a>
                     </div>
                 </div>
             </form>

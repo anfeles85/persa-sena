@@ -11774,6 +11774,9 @@ fieldset:disabled .btn {
   max-height: 100vh !important;
 }
 
+.min-height-90 {
+  min-height: 90px !important;
+}
 .min-height-100 {
   min-height: 100px !important;
 }
