@@ -10,41 +10,47 @@ class LocationController extends Controller
 {
     private $rules = [
         'name' => 'required|string|max:50',
-        'description' => 'required|string|max:255',
+        'address' => 'required|string|max:50',
     ];
 
     private $traductionAttributes = [
         'name' => 'nombre',
-        'description' => 'descripción',
+        'address' => 'dirección',
     ];
 
     public function index()
     {
         $locations = Location::all();
+
         return view('location.index', compact('locations'));
     }
 
     public function create()
     {
-        return view('location.create');
+        $locations = Location::all();
+        return view('location.create', compact('locations'));
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), $this->rules);
-        $validator->setAttributeNames($this->traductionAttributes);
+        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
             return redirect()->route('location.create')->withInput()->withErrors($validator->errors());
         }
 
         Location::create($request->all());
+<<<<<<< HEAD
         session()->flash('message', 'Sede creada exitosamente');
         return redirect()->route('location.index');
+=======
+        return redirect()->route('location.index')->with('created_successfully', true);
+>>>>>>> 7e3fdcf (Implementacion de librería y actualizacion de menu)
     }
 
     public function edit($id)
     {
+<<<<<<< HEAD
         $location = Location::find($id);
         if ($location) {
             return view('location.edit', compact('location'));
@@ -52,13 +58,15 @@ class LocationController extends Controller
             session()->flash('warning', 'No se encontró la sede');
             return redirect()->route('location.index');
         }
+=======
+        return redirect()->back()->with('success', 'La sede se edito correctamente.');
+>>>>>>> 7e3fdcf (Implementacion de librería y actualizacion de menu)
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), $this->rules);
-        $validator->setAttributeNames($this->traductionAttributes);
 
+<<<<<<< HEAD
         if ($validator->fails()) {
             return redirect()->route('location.edit', $id)->withInput()->withErrors($validator->errors());
         }
@@ -72,10 +80,13 @@ class LocationController extends Controller
         }
 
         return redirect()->route('location.index');
+=======
+>>>>>>> 7e3fdcf (Implementacion de librería y actualizacion de menu)
     }
 
     public function destroy($id)
     {
+<<<<<<< HEAD
         $location = Location::find($id);
         if ($location) {
             $location->delete();
@@ -85,5 +96,9 @@ class LocationController extends Controller
         }
 
         return redirect()->route('location.index');
+=======
+        Location::destroy($id); 
+        return redirect()->route('location.index')->with('success', 'Sede eliminada correctamente');
+>>>>>>> 7e3fdcf (Implementacion de librería y actualizacion de menu)
     }
 }

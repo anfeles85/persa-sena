@@ -22,26 +22,74 @@
         </tr>
       </thead>
       <tbody>
+        @foreach ($locations as $location)
         <tr>
-          <td>1</td>
-          <td>Tipo de actividad prueba</td>
-          <td>carrera 23 #4-23</td>
+          <td>{{ $location['id'] }}</td>
+          <td>{{ $location['name'] }}</td>
+          <td>{{ $location['address'] }}</td>
           <td class="d-flex align-items-center justify-content-center gap-2">
-            <a href="#" class="btn btn-primary btn-circle" title="Editar">
+            <a href="{{ route('location.edit', $location["id"]) }}" class="btn btn-primary btn-circle" title="Editar">
                 <i class="far fa-edit"></i>
             </a>
-            <a href="#" class="btn btn-danger btn-circle" title="Eliminar" onclick="return remove();">
+            <form id="form-delete-{{ $location['id'] }}" action="{{ route('location.destroy', $location["id"]) }}"
+              method="post">
+              @csrf
+              @method('DELETE')
+
+              <button type="submit" class="btn btn-danger btn-circle" title="Eliminar" 
+              onclick="event.preventDefault(); remove({{ $location['id'] }})">
                 <i class="fas fa-trash"></i>
-            </a>
+              </button>
+            </form>
           </td>
         </tr>
+        @endforeach
       </tbody>
     </table>
   </div>
 </div>
 
+@endsection
 
+@section('scripts')
 
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡OK!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
+    <script>
+        function remove(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡Esta acción no se puede deshacer!",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form-delete-' + id).submit();
+                }
+            });
+    
+        }
+    </script>    
+    @if(session('created_successfully'))
+        <script>
+            Swal.fire("Sede creado exitosamente");
+        </script>
+    @endif
 @endsection
 
 @section('scripts')

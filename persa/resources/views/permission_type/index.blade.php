@@ -21,24 +21,74 @@
             </tr>
             </thead>
             <tbody>
+                @foreach ($permissionTypes as $permissionType)
                 <tr>
-                    <td>1</td>
-                    <td>Tipo de actividad prueba</td>
+                    <td>{{ $permissionType['id'] }}</td>
+                    <td>{{ $permissionType['name'] }}</td>
                     <td class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
-                        <a href="#" class="btn btn-primary btn-circle" title="Editar">
+                        <a href="{{ route('permission_type.edit', $permissionType["id"]) }}" class="btn btn-primary btn-circle" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
-                        <a href="#" class="btn btn-danger btn-circle" title="Eliminar" onclick="return remove();">
-                            <i class="fas fa-trash"></i>
-                        </a>
+
+                        <form id="form-delete-{{ $permissionType['id'] }}" action="{{ route('permission_type.destroy', $permissionType["id"]) }}"
+                            method="post">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-danger btn-circle" title="Eliminar" 
+                            onclick="event.preventDefault(); remove({{ $permissionType['id'] }})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 </div>
 
+@endsection
 
+@section('scripts')
+
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡OK!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
+    <script>
+        function remove(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡Esta acción no se puede deshacer!",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form-delete-' + id).submit();
+                }
+            });
+    
+        }
+    </script>    
+    @if(session('created_successfully'))
+        <script>
+            Swal.fire("Tipo de permiso creado exitosamente");
+        </script>
+    @endif
 @endsection
 
 @section('scripts')

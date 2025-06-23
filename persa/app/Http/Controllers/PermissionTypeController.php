@@ -24,7 +24,8 @@ class PermissionTypeController extends Controller
 
     public function create()
     {
-        return view('permission_type.create');
+        $permissionTypes = PermissionType::all();
+        return view('permission_type.create', compact('permissionTypes'));
     }
 
     public function store(Request $request)
@@ -35,24 +36,22 @@ class PermissionTypeController extends Controller
             return redirect()->route('permission_type.create')->withInput()->withErrors($validator->errors());
         }
 
+        $request->merge([
+        'name' => strtoupper($request->name),
+        ]); 
+
         PermissionType::create($request->all());
-        session()->flash('message', 'Tipo de permiso creado exitosamente');
-        return redirect()->route('permission_type.index');
+        return redirect()->route('permission_type.index')->with('created_successfully', true);
     }
 
     public function edit($id)
     {
-        $permissionType = PermissionType::find($id);
-        if ($permissionType) {
-            return view('permission_type.edit', compact('permissionType'));
-        }
-
-        session()->flash('warning', 'Tipo de permiso no encontrado');
-        return redirect()->route('permission_type.index');
+       return redirect()->back()->with('success', 'Tipo de permiso editado correctamente.');
     }
 
     public function update(Request $request, $id)
     {
+<<<<<<< HEAD
         $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
@@ -68,18 +67,14 @@ class PermissionTypeController extends Controller
         }
 
         return redirect()->route('permission_type.index');
+=======
+        
+>>>>>>> 7e3fdcf (Implementacion de librería y actualizacion de menu)
     }
 
     public function destroy($id)
     {
-        $permissionType = PermissionType::find($id);
-        if ($permissionType) {
-            $permissionType->delete();
-            session()->flash('message', 'Tipo de permiso eliminado exitosamente');
-        } else {
-            session()->flash('warning', 'Tipo de permiso no encontrado');
-        }
-
-        return redirect()->route('permission_type.index');
+        PermissionType::destroy($id); 
+        return redirect()->route('permission_type.index')->with('success', 'Tipo de permiso eliminado correctamente');
     }
 }
