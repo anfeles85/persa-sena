@@ -51,12 +51,40 @@ class CareerController extends Controller
 
     public function edit($id)
     {
-        return redirect()->back()->with('success', 'El registro editado correctamente.');
+        $career = Career::find($id);
+        if ($career) // si existe
+        {
+            $types = $this->types;
+            return view('career.edit', compact('career', 'types'));
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra el técnico solicitado');
+            return redirect()->route('career.index');
+        }
     }
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return redirect()->route('career.edit', $id)->withInput()->withErrors($errors);
+        }
+        $career = Career::find($id);
+        if($career) 
+        {
+            $career->update($request->all());
+            session()->flash('message', 'Actividad actualizada exitosamente');
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra la actividad solicitado');
+            return redirect()->route('career.index');
+        }
 
+        return redirect()->route('career.index')->with('success', 'El programa se editó correctamente.');
     }
 
     public function destroy($id)
