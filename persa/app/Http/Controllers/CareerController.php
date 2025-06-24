@@ -20,7 +20,8 @@ class CareerController extends Controller
 
     private $types = [
         ['name' => 'TECNICO', 'value' => 'TECNICO'],
-        ['name' => 'TECNOLOGO', 'value' => 'TECNOLOGO']
+        ['name' => 'TECNOLOGO', 'value' => 'TECNOLOGO'],
+        ['name' => 'AUXILIAR', 'value' => 'AUXILIAR']
     ];
 
     public function index()
@@ -41,7 +42,7 @@ class CareerController extends Controller
         $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return redirect()->route('career.create')->withInput()->withErrors($validator);
+            return redirect()->route('career.create')->withInput()->withErrors($validator->errors());
         }
 
         Career::create($request->all());

@@ -33,7 +33,7 @@ class PermissionTypeController extends Controller
         $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return redirect()->route('permission_type.create')->withInput()->withErrors($validator);
+            return redirect()->route('permission_type.create')->withInput()->withErrors($validator->errors());
         }
 
         $request->merge([
