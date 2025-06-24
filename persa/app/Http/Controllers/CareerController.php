@@ -18,6 +18,12 @@ class CareerController extends Controller
         'type' => 'tipo',
     ];
 
+    private $types = [
+        ['name' => 'TECNICO', 'value' => 'TECNICO'],
+        ['name' => 'TECNOLOGO', 'value' => 'TECNOLOGO'],
+        ['name' => 'AUXILIAR', 'value' => 'AUXILIAR']
+    ];
+
     public function index()
     {
         $careers = Career::all();
@@ -26,7 +32,9 @@ class CareerController extends Controller
 
     public function create()
     {
-        return view('career.create');
+        $careers = Career::all();
+        $types = $this->types;  
+        return view('career.create', compact('careers', 'types'));
     }
 
     public function store(Request $request)
@@ -38,49 +46,22 @@ class CareerController extends Controller
         }
 
         Career::create($request->all());
-        session()->flash('message', 'Programa creado exitosamente');
-        return redirect()->route('career.index');
+        return redirect()->route('career.index')->with('created_successfully', true);
     }
 
     public function edit($id)
     {
-        $career = Career::find($id);
-        if ($career) {
-            return view('career.edit', compact('career'));
-        }
-        session()->flash('warning', 'Programa no encontrado');
-        return redirect()->route('career.index');
+        return redirect()->back()->with('success', 'El registro editado correctamente.');
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
-        if ($validator->fails()) {
-            return redirect()->route('career.edit', $id)->withInput()->withErrors($validator->errors());
-        }
-
-        $career = Career::find($id);
-        if ($career) {
-            $career->update($request->all());
-            session()->flash('message', 'Programa actualizado exitosamente');
-        } else {
-            session()->flash('warning', 'Programa no encontrado');
-        }
-
-        return redirect()->route('career.index');
     }
 
     public function destroy($id)
     {
-        $career = Career::find($id);
-        if ($career) {
-            $career->delete();
-            session()->flash('message', 'Programa eliminado exitosamente');
-        } else {
-            session()->flash('warning', 'Programa no encontrado');
-        }
-
-        return redirect()->route('career.index');
+        Career::destroy($id); 
+        return redirect()->route('career.index')->with('success', 'Carrera eliminada correctamente');
     }
 }

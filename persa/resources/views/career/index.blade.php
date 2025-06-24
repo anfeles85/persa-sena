@@ -1,46 +1,94 @@
 @extends('templates.base')
-@section('title', 'career')
-@section('header', 'career')
+@section('title', 'Carerra')
+@section('header', 'Carerra')
 @section('content')
-
 
 <div class="row">
     <div class="col-lg-12 mb-4 d-grid gap-2 d-md-block">
-        <a href="{{ route('career.create') }}" class="btn btn-primary">Crear</a>
+        <a href="{{ route('career.create') }}" class="btn btn-success">Crear</a>
     </div>
 </div>
 
-
 <div class="row">
     <div class="col-lg-12 mb-4">
-        <table id="table_data" class="table table-striped table-hover">
+        <table id="table_data" class="table table-striped align-items-center text-center">
             <thead>
                 <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Tipo</th>
-            </tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                </tr>
             </thead>
             <tbody>
+                @foreach ($careers as $career)
                 <tr>
-                    <td>1</td>
-                    <td>Tipo de actividad prueba</td>
-                    <td>Tecnico</td>
-                    <td>
-                        <a href="#"  class="btn btn-primary btn-circle btn-sm" title="Editar">
+                    <td>{{ $career['id'] }}</td>
+                    <td>{{ $career['name'] }}</td>
+                    <td>{{ $career['type'] }}</td>
+                    <td class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
+                        <a href="{{ route('career.edit', $career["id"]) }}" class="btn btn-primary btn-circle" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
-                        <a href="#" class="btn btn-danger btn-circle btn-sm" title="Eliminar" onclick="return remove();">
-                            <i class="fas fa-trash"></i>
-                        </a>
+
+                       <form id="form-delete-{{ $career['id'] }}" action="{{ route('career.destroy', $career["id"]) }}"
+                            method="post">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-danger btn-circle" title="Eliminar" 
+                            onclick="event.preventDefault(); remove({{ $career['id'] }})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 </div>
 
+@endsection
 
+@section('scripts')
+
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡OK!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
+    <script>
+        function remove(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡Esta acción no se puede deshacer!",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form-delete-' + id).submit();
+                }
+            });
+    
+        }
+    </script>    
+    @if(session('created_successfully'))
+        <script>
+            Swal.fire("Carrera creada exitosamente");
+        </script>
+    @endif
 @endsection
 
 @section('scripts')

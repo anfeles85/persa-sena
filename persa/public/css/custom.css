@@ -1,0 +1,6 @@
+#table_data thead, tbody, td, th {
+  border-bottom: none !important;
+  border-top: none !important;
+  background-color: #f8f9fae4;
+  border-top: none !important;
+}
