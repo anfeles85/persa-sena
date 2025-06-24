@@ -50,3 +50,27 @@ Route::prefix('permission_type')->group(function(){
     Route::put('/update/{id}',[PermissionTypeController::class, 'update'])->name('permission_type.update');
     Route::delete('/destroy/{id}',[PermissionTypeController::class, 'destroy'])->name('permission_type.destroy');
 });
+
+
+Route::prefix('course')->group(function(){
+    Route::get('/index',[CourseController::class, 'index'])->name('course.index');
+    Route::get('/create',[CourseController::class, 'create'])->name('course.create');
+    Route::get('/edit{id}',[CourseController::class, 'edit'])->name('course.edit');
+    Route::post('/store',[CourseController::class, 'store'])->name('course.store');
+    Route::put('/update/{id}',[CourseController::class, 'update'])->name('course.update');
+    Route::delete('/destroy/{id}',[CourseController::class, 'destroy'])->name('course.destroy');
+});
+
+
+Route::prefix('pemission')->group(function(){
+    Route::get('/index',[PermissionController::class, 'index'])->name('apprentice_course.index');
+    Route::get('/create',[PermissionController::class, 'create'])->name('apprentice_course.create');
+    Route::get('/edit{id}',[PermissionController::class, 'edit'])->name('apprentice_course.edit');
+    Route::post('/store',[PermissionController::class, 'store'])->name('apprentice_course.store');
+    Route::put('/update/{id}',[PermissionController::class, 'update'])->name('apprentice_course.update');
+    Route::delete('/destroy/{id}',[PermissionController::class, 'destroy'])->name('apprentice_course.destroy');
+});
+Route::prefix('users')->group(function(){
+    Route::get('/index', [UserController::class, 'index'])->name('users.index');
+    Route::post('/send_email', [UserController::class, 'send_email'])->name('users.send_email');
+});
