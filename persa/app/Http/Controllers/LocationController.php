@@ -35,11 +35,11 @@ class LocationController extends Controller
         $validator->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return redirect()->route('location.create')->withInput()->withErrors($validator);
+            return redirect()->route('location.create')->withInput()->withErrors($validator->errors());
         }
 
         Location::create($request->all());
-        session()->flash('message', 'Ubicación creada exitosamente');
+        session()->flash('message', 'Sede creada exitosamente');
         return redirect()->route('location.index');
     }
 
@@ -49,7 +49,7 @@ class LocationController extends Controller
         if ($location) {
             return view('location.edit', compact('location'));
         } else {
-            session()->flash('warning', 'No se encontró la ubicación');
+            session()->flash('warning', 'No se encontró la sede');
             return redirect()->route('location.index');
         }
     }
@@ -60,15 +60,15 @@ class LocationController extends Controller
         $validator->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return redirect()->route('location.edit', $id)->withInput()->withErrors($validator);
+            return redirect()->route('location.edit', $id)->withInput()->withErrors($validator->errors());
         }
 
         $location = Location::find($id);
         if ($location) {
             $location->update($request->all());
-            session()->flash('message', 'Ubicación actualizada exitosamente');
+            session()->flash('message', 'Sede actualizada exitosamente');
         } else {
-            session()->flash('warning', 'No se encontró la ubicación');
+            session()->flash('warning', 'No se encontró la sede');
         }
 
         return redirect()->route('location.index');
@@ -79,9 +79,9 @@ class LocationController extends Controller
         $location = Location::find($id);
         if ($location) {
             $location->delete();
-            session()->flash('message', 'Ubicación eliminada exitosamente');
+            session()->flash('message', 'Sede eliminada exitosamente');
         } else {
-            session()->flash('warning', 'No se encontró la ubicación');
+            session()->flash('warning', 'No se encontró la sede');
         }
 
         return redirect()->route('location.index');

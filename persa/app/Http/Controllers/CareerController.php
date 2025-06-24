@@ -34,11 +34,11 @@ class CareerController extends Controller
         $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return redirect()->route('career.create')->withInput()->withErrors($validator);
+            return redirect()->route('career.create')->withInput()->withErrors($validator->errors());
         }
 
         Career::create($request->all());
-        session()->flash('message', 'Carrera creada exitosamente');
+        session()->flash('message', 'Programa creado exitosamente');
         return redirect()->route('career.index');
     }
 
@@ -48,7 +48,7 @@ class CareerController extends Controller
         if ($career) {
             return view('career.edit', compact('career'));
         }
-        session()->flash('warning', 'Carrera no encontrada');
+        session()->flash('warning', 'Programa no encontrado');
         return redirect()->route('career.index');
     }
 
@@ -57,15 +57,15 @@ class CareerController extends Controller
         $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return redirect()->route('career.edit', $id)->withInput()->withErrors($validator);
+            return redirect()->route('career.edit', $id)->withInput()->withErrors($validator->errors());
         }
 
         $career = Career::find($id);
         if ($career) {
             $career->update($request->all());
-            session()->flash('message', 'Carrera actualizada exitosamente');
+            session()->flash('message', 'Programa actualizado exitosamente');
         } else {
-            session()->flash('warning', 'Carrera no encontrada');
+            session()->flash('warning', 'Programa no encontrado');
         }
 
         return redirect()->route('career.index');
@@ -76,9 +76,9 @@ class CareerController extends Controller
         $career = Career::find($id);
         if ($career) {
             $career->delete();
-            session()->flash('message', 'Carrera eliminada exitosamente');
+            session()->flash('message', 'Programa eliminado exitosamente');
         } else {
-            session()->flash('warning', 'Carrera no encontrada');
+            session()->flash('warning', 'Programa no encontrado');
         }
 
         return redirect()->route('career.index');
