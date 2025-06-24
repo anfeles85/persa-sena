@@ -24,7 +24,8 @@ class RolesController extends Controller
 
     public function create()
     {
-        return view('roles.create');
+        $roles = Roles::all();
+        return view('roles.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -35,51 +36,28 @@ class RolesController extends Controller
             return redirect()->route('roles.create')->withInput()->withErrors($validator);
         }
 
+         $request->merge([
+        'name' => strtoupper($request->name),
+        ]); 
+
         Roles::create($request->all());
-        session()->flash('message', 'Rol creado exitosamente');
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->with('created_successfully', true);
     }
 
     public function edit($id)
     {
-        $role = Roles::find($id);
-        if ($role) {
-            return view('roles.edit', compact('role'));
-        }
-
-        session()->flash('warning', 'Rol no encontrado');
-        return redirect()->route('roles.index');
+       return redirect()->back()->with('success', 'El rol fue editado correctamente.');
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
-
-        if ($validator->fails()) {
-            return redirect()->route('roles.edit', $id)->withInput()->withErrors($validator);
-        }
-
-        $role = Roles::find($id);
-        if ($role) {
-            $role->update($request->all());
-            session()->flash('message', 'Rol actualizado exitosamente');
-        } else {
-            session()->flash('warning', 'Rol no encontrado');
-        }
-
-        return redirect()->route('roles.index');
+       
     }
 
     public function destroy($id)
     {
-        $role = Roles::find($id);
-        if ($role) {
-            $role->delete();
-            session()->flash('message', 'Rol eliminado exitosamente');
-        } else {
-            session()->flash('warning', 'Rol no encontrado');
-        }
-
-        return redirect()->route('roles.index');
+        
+        Roles::destroy($id); 
+        return redirect()->route('roles.index')->with('success', 'Rol eliminada correctamente');
     }
 }

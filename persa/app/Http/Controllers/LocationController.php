@@ -10,80 +10,52 @@ class LocationController extends Controller
 {
     private $rules = [
         'name' => 'required|string|max:50',
-        'description' => 'required|string|max:255',
+        'address' => 'required|string|max:50',
     ];
 
     private $traductionAttributes = [
         'name' => 'nombre',
-        'description' => 'descripción',
+        'address' => 'dirección',
     ];
 
     public function index()
     {
         $locations = Location::all();
+
         return view('location.index', compact('locations'));
     }
 
     public function create()
     {
-        return view('location.create');
+        $locations = Location::all();
+        return view('location.create', compact('locations'));
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), $this->rules);
-        $validator->setAttributeNames($this->traductionAttributes);
+        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
             return redirect()->route('location.create')->withInput()->withErrors($validator);
         }
 
         Location::create($request->all());
-        session()->flash('message', 'Ubicación creada exitosamente');
-        return redirect()->route('location.index');
+        return redirect()->route('location.index')->with('created_successfully', true);
     }
 
     public function edit($id)
     {
-        $location = Location::find($id);
-        if ($location) {
-            return view('location.edit', compact('location'));
-        } else {
-            session()->flash('warning', 'No se encontró la ubicación');
-            return redirect()->route('location.index');
-        }
+        return redirect()->back()->with('success', 'La sede se edito correctamente.');
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), $this->rules);
-        $validator->setAttributeNames($this->traductionAttributes);
 
-        if ($validator->fails()) {
-            return redirect()->route('location.edit', $id)->withInput()->withErrors($validator);
-        }
-
-        $location = Location::find($id);
-        if ($location) {
-            $location->update($request->all());
-            session()->flash('message', 'Ubicación actualizada exitosamente');
-        } else {
-            session()->flash('warning', 'No se encontró la ubicación');
-        }
-
-        return redirect()->route('location.index');
     }
 
     public function destroy($id)
     {
-        $location = Location::find($id);
-        if ($location) {
-            $location->delete();
-            session()->flash('message', 'Ubicación eliminada exitosamente');
-        } else {
-            session()->flash('warning', 'No se encontró la ubicación');
-        }
-
-        return redirect()->route('location.index');
+        Location::destroy($id); 
+        return redirect()->route('location.index')->with('success', 'Sede eliminada correctamente');
     }
 }

@@ -3,7 +3,8 @@
 @section('header', 'Crear Carrera')
 @section('content')
 
-    <div class="mt-8">
+    <div>
+        <label class="fs-3">Crear carerra</label>
         <div class="col-lg-12 mb-4">
             <form action="{{ route('career.store') }}" method="POST">
                 @csrf
@@ -17,13 +18,18 @@
                 <div class="row form-group">
                     <div class="col-lg-12 mb-4">
                         <label for="type">Tipo</label>
-                        <input type="text" class="form-control" name="type" id="type"
-                         required value="{{ old('type') }}">
+                        <select name="type" id="type" class="form-control" required value="{{ old('type') }}">
+                            @foreach ($types as $type)
+                                <option value="{{ $type['value'] }}" @if(old('type') == $type['name']) selected @endif>
+                                    {{ $type['name'] }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary w-50">Guardar</button>
+                    <button type="submit" class="btn btn-success w-50">Guardar</button>
                     <a href="{{ route('career.index') }}" class="btn btn-secondary w-50">Cancelar</a>
                     </div>
                 </div>
