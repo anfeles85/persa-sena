@@ -51,18 +51,17 @@ class CareerController extends Controller
 
     public function edit($id)
     {
-        $careers = Career::find($id);
-        if($careers) //si existe
+        $career = Career::find($id);
+        if ($career) // si existe
         {
-            return view('career.edit', compact('technician'));
+            $types = $this->types;
+            return view('career.edit', compact('career', 'types'));
         }
         else
         {
             session()->flash('warning', 'No se encuentra el técnico solicitado');
-            return redirect()->route('technician.index');
+            return redirect()->route('career.index');
         }
-        
-        return redirect()->route('career.index')->with('success', 'El registro editado correctamente.');
     }
 
     public function update(Request $request, $id)
@@ -85,7 +84,7 @@ class CareerController extends Controller
             return redirect()->route('career.index');
         }
 
-        return redirect()->route('career.index');
+        return redirect()->route('career.index')->with('success', 'El programa se editó correctamente.');
     }
 
     public function destroy($id)

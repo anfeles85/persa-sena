@@ -46,12 +46,39 @@ class PermissionTypeController extends Controller
 
     public function edit($id)
     {
-       return redirect()->back()->with('success', 'Tipo de permiso editado correctamente.');
+       $permission_types = PermissionType::find($id);
+        if ($permission_types) // si existe
+        {
+            return view('permission_type.edit', compact('permission_type'));
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra el técnico solicitado');
+            return redirect()->route('permission_type.index');
+        }
     }
 
     public function update(Request $request, $id)
     {
-        
+        $validator = Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return redirect()->route('permission_type.edit', $id)->withInput()->withErrors($errors);
+        }
+        $permission_types = PermissionType::find($id);
+        if($permission_types) 
+        {
+            $permission_types->update($request->all());
+            session()->flash('message', 'Actividad actualizada exitosamente');
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra la actividad solicitado');
+            return redirect()->route('permission_type.index');
+        }
+
+        return redirect()->route('permission_type.index')->with('success', 'El tipo de permiso se editó correctamente.');
     }
 
     public function destroy($id)

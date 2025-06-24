@@ -45,12 +45,39 @@ class LocationController extends Controller
 
     public function edit($id)
     {
-        return redirect()->back()->with('success', 'La sede se edito correctamente.');
+        $locations = Location::find($id);
+        if ($locations) // si existe
+        {
+            return view('location.edit', compact('location'));
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra el técnico solicitado');
+            return redirect()->route('location.index');
+        }
     }
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return redirect()->route('location.edit', $id)->withInput()->withErrors($errors);
+        }
+        $locations = Location::find($id);
+        if($locations) 
+        {
+            $locations->update($request->all());
+            session()->flash('message', 'Actividad actualizada exitosamente');
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra la actividad solicitado');
+            return redirect()->route('location.index');
+        }
 
+        return redirect()->route('location.index')->with('success', 'La sede se editó correctamente.');
     }
 
     public function destroy($id)
