@@ -1,6 +1,6 @@
 @extends('templates.base')
-@section('title', 'permission_type')
-@section('header', 'permission_type')
+@section('title', 'Tipos de Permiso')
+@section('header', 'Tipos de Permiso')
 @section('content')
 
 <div class="row">

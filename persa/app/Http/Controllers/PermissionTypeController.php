@@ -51,25 +51,7 @@ class PermissionTypeController extends Controller
 
     public function update(Request $request, $id)
     {
-<<<<<<< HEAD
-        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
-
-        if ($validator->fails()) {
-            return redirect()->route('permission_type.edit', $id)->withInput()->withErrors($validator->errors());
-        }
-
-        $permissionType = PermissionType::find($id);
-        if ($permissionType) {
-            $permissionType->update($request->all());
-            session()->flash('message', 'Tipo de permiso actualizado exitosamente');
-        } else {
-            session()->flash('warning', 'Tipo de permiso no encontrado');
-        }
-
-        return redirect()->route('permission_type.index');
-=======
         
->>>>>>> 7e3fdcf (Implementacion de librería y actualizacion de menu)
     }
 
     public function destroy($id)

@@ -40,65 +40,22 @@ class LocationController extends Controller
         }
 
         Location::create($request->all());
-<<<<<<< HEAD
-        session()->flash('message', 'Sede creada exitosamente');
-        return redirect()->route('location.index');
-=======
         return redirect()->route('location.index')->with('created_successfully', true);
->>>>>>> 7e3fdcf (Implementacion de librería y actualizacion de menu)
     }
 
     public function edit($id)
     {
-<<<<<<< HEAD
-        $location = Location::find($id);
-        if ($location) {
-            return view('location.edit', compact('location'));
-        } else {
-            session()->flash('warning', 'No se encontró la sede');
-            return redirect()->route('location.index');
-        }
-=======
         return redirect()->back()->with('success', 'La sede se edito correctamente.');
->>>>>>> 7e3fdcf (Implementacion de librería y actualizacion de menu)
     }
 
     public function update(Request $request, $id)
     {
 
-<<<<<<< HEAD
-        if ($validator->fails()) {
-            return redirect()->route('location.edit', $id)->withInput()->withErrors($validator->errors());
-        }
-
-        $location = Location::find($id);
-        if ($location) {
-            $location->update($request->all());
-            session()->flash('message', 'Sede actualizada exitosamente');
-        } else {
-            session()->flash('warning', 'No se encontró la sede');
-        }
-
-        return redirect()->route('location.index');
-=======
->>>>>>> 7e3fdcf (Implementacion de librería y actualizacion de menu)
     }
 
     public function destroy($id)
     {
-<<<<<<< HEAD
-        $location = Location::find($id);
-        if ($location) {
-            $location->delete();
-            session()->flash('message', 'Sede eliminada exitosamente');
-        } else {
-            session()->flash('warning', 'No se encontró la sede');
-        }
-
-        return redirect()->route('location.index');
-=======
         Location::destroy($id); 
         return redirect()->route('location.index')->with('success', 'Sede eliminada correctamente');
->>>>>>> 7e3fdcf (Implementacion de librería y actualizacion de menu)
     }
 }
