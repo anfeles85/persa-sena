@@ -1,6 +1,6 @@
 @extends('templates.base')
-@section('title', 'roles')
-@section('header', 'roles')
+@section('title', 'Roles')
+@section('header', 'Roles')
 @section('content')
 
 <div class="row">
