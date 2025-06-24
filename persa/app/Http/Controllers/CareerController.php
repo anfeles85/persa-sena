@@ -46,8 +46,11 @@ class CareerController extends Controller
 
         Career::create($request->all());
 <<<<<<< HEAD
+<<<<<<< HEAD
         return redirect()->route('career.index')->with('created_successfully', true);
 =======
+=======
+>>>>>>> origin/G1
         session()->flash('message', 'Programa creado exitosamente');
         return redirect()->route('career.index');
 >>>>>>> deb5c7d (Fix's)

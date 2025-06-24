@@ -41,8 +41,11 @@ class LocationController extends Controller
 
         Location::create($request->all());
 <<<<<<< HEAD
+<<<<<<< HEAD
         return redirect()->route('location.index')->with('created_successfully', true);
 =======
+=======
+>>>>>>> origin/G1
         session()->flash('message', 'Sede creada exitosamente');
         return redirect()->route('location.index');
 >>>>>>> deb5c7d (Fix's)
