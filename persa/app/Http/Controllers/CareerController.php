@@ -20,7 +20,8 @@ class CareerController extends Controller
 
     private $types = [
         ['name' => 'TECNICO', 'value' => 'TECNICO'],
-        ['name' => 'TECNOLOGO', 'value' => 'TECNOLOGO']
+        ['name' => 'TECNOLOGO', 'value' => 'TECNOLOGO'],
+        ['name' => 'AUXILIAR', 'value' => 'AUXILIAR']
     ];
 
     public function index()
