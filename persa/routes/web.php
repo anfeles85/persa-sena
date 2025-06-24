@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\CareerController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionTypeController;
-use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -71,6 +73,6 @@ Route::prefix('pemission')->group(function(){
     Route::delete('/destroy/{id}',[PermissionController::class, 'destroy'])->name('apprentice_course.destroy');
 });
 Route::prefix('users')->group(function(){
-    Route::get('/index', [UserController::class, 'index'])->name('users.index');
-    Route::post('/send_email', [UserController::class, 'send_email'])->name('users.send_email');
+    Route::get('/index', [UsersController::class, 'index'])->name('users.index');
+    Route::post('/send_email', [UsersController::class, 'send_email'])->name('users.send_email');
 });
