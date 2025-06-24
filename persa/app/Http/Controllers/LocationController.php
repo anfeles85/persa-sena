@@ -40,68 +40,22 @@ class LocationController extends Controller
         }
 
         Location::create($request->all());
-<<<<<<< HEAD
-<<<<<<< HEAD
         return redirect()->route('location.index')->with('created_successfully', true);
-=======
-=======
->>>>>>> origin/G1
-        session()->flash('message', 'Sede creada exitosamente');
-        return redirect()->route('location.index');
->>>>>>> deb5c7d (Fix's)
     }
 
     public function edit($id)
     {
-<<<<<<< HEAD
         return redirect()->back()->with('success', 'La sede se edito correctamente.');
-=======
-        $location = Location::find($id);
-        if ($location) {
-            return view('location.edit', compact('location'));
-        } else {
-            session()->flash('warning', 'No se encontró la sede');
-            return redirect()->route('location.index');
-        }
->>>>>>> deb5c7d (Fix's)
     }
 
     public function update(Request $request, $id)
     {
 
-<<<<<<< HEAD
-=======
-        if ($validator->fails()) {
-            return redirect()->route('location.edit', $id)->withInput()->withErrors($validator->errors());
-        }
-
-        $location = Location::find($id);
-        if ($location) {
-            $location->update($request->all());
-            session()->flash('message', 'Sede actualizada exitosamente');
-        } else {
-            session()->flash('warning', 'No se encontró la sede');
-        }
-
-        return redirect()->route('location.index');
->>>>>>> deb5c7d (Fix's)
     }
 
     public function destroy($id)
     {
-<<<<<<< HEAD
         Location::destroy($id); 
         return redirect()->route('location.index')->with('success', 'Sede eliminada correctamente');
-=======
-        $location = Location::find($id);
-        if ($location) {
-            $location->delete();
-            session()->flash('message', 'Sede eliminada exitosamente');
-        } else {
-            session()->flash('warning', 'No se encontró la sede');
-        }
-
-        return redirect()->route('location.index');
->>>>>>> deb5c7d (Fix's)
     }
 }
