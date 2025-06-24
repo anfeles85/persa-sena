@@ -72,10 +72,10 @@ class CareerController extends Controller
             $errors = $validator->errors();
             return redirect()->route('career.edit', $id)->withInput()->withErrors($errors);
         }
-        $careers = Career::find($id);
-        if($careers) 
+        $career = Career::find($id);
+        if($career) 
         {
-            $careers->update($request->all());
+            $career->update($request->all());
             session()->flash('message', 'Actividad actualizada exitosamente');
         }
         else
