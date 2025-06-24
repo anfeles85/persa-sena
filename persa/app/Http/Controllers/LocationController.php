@@ -45,8 +45,8 @@ class LocationController extends Controller
 
     public function edit($id)
     {
-        $locations = Location::find($id);
-        if ($locations) // si existe
+        $location = Location::find($id);
+        if ($location) // si existe
         {
             return view('location.edit', compact('location'));
         }
@@ -65,10 +65,10 @@ class LocationController extends Controller
             $errors = $validator->errors();
             return redirect()->route('location.edit', $id)->withInput()->withErrors($errors);
         }
-        $locations = Location::find($id);
-        if($locations) 
+        $location = Location::find($id);
+        if($location) 
         {
-            $locations->update($request->all());
+            $location->update($request->all());
             session()->flash('message', 'Actividad actualizada exitosamente');
         }
         else

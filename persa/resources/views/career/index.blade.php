@@ -3,6 +3,8 @@
 @section('header', 'Carerra')
 @section('content')
 
+
+<label class="fs-2">Programas</label>
 <div class="row">
     <div class="col-lg-12 mb-4 d-grid gap-2 d-md-block">
         <a href="{{ route('career.create') }}" class="btn btn-success">Crear</a>

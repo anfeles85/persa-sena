@@ -46,8 +46,8 @@ class PermissionTypeController extends Controller
 
     public function edit($id)
     {
-       $permission_types = PermissionType::find($id);
-        if ($permission_types) // si existe
+       $permission_type = PermissionType::find($id);
+        if ($permission_type) // si existe
         {
             return view('permission_type.edit', compact('permission_type'));
         }
@@ -66,10 +66,10 @@ class PermissionTypeController extends Controller
             $errors = $validator->errors();
             return redirect()->route('permission_type.edit', $id)->withInput()->withErrors($errors);
         }
-        $permission_types = PermissionType::find($id);
-        if($permission_types) 
+        $permission_type = PermissionType::find($id);
+        if($permission_type) 
         {
-            $permission_types->update($request->all());
+            $permission_type->update($request->all());
             session()->flash('message', 'Actividad actualizada exitosamente');
         }
         else

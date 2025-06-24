@@ -27,15 +27,14 @@
                         </div>
                     </div>
                 </div>
+{{-- BUTTONS --}}
                 <div class="row">
-                    <div class="col-lg-6">
-                        <button type="submit" class="btn btn-primary btn-block">Guardar</button>
-                    </div>
-                    <br><br>
-                    <div class="col-lg-6">
-                        <a href="{{ route('career.index') }}" class="btn btn-secondary btn-block">Cancelar</a>
+                    <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success w-50">Guardar</button>
+                    <a href="{{ route('career.index') }}" class="btn btn-secondary w-50">Cancelar</a>
                     </div>
                 </div>
+                
             </form>
         </div>
     </label>
