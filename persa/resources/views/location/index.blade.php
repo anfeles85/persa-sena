@@ -92,14 +92,10 @@
             Swal.fire("Sede creado exitosamente");
         </script>
     @endif
-    <script>
-        $(document).ready(function() {
-            $('#table_data').DataTable({
-            });
-        });
-    </script>
+    <script src="{{ asset('js/DataTables.js') }}"></script>
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/general.js') }}"></script>
     <script src="{{ asset('js/general.js') }}"></script>
 @endsection

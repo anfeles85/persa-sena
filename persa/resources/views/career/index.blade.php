@@ -92,14 +92,6 @@
             Swal.fire("Carrera creada exitosamente");
         </script>
     @endif
-    <script>
-        $(document).ready(function() {
-            $('#table_data').DataTable({
-            });
-        });
-    </script>
-@endsection
-
-@section('scripts')
+    <script src="{{ asset('js/DataTables.js') }}"></script>
     <script src="{{ asset('js/general.js') }}"></script>
 @endsection
