@@ -91,6 +91,12 @@
             Swal.fire("Carrera creada exitosamente");
         </script>
     @endif
+    <script>
+        $(document).ready(function() {
+            $('#table_career').DataTable({
+            });
+        });
+    </script>
 @endsection
 
 @section('scripts')

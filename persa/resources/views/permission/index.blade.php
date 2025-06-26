@@ -101,6 +101,12 @@
             Swal.fire("Permiso creado exitosamente");
         </script>
     @endif
+    <script>
+        $(document).ready(function() {
+            $('#table_permission').DataTable({
+            });
+        });
+    </script>
 @endsection
 
 @section('scripts')

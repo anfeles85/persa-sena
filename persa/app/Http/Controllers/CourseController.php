@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Career;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
@@ -69,7 +70,14 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
+
+        if ($validator->fails()) {
+            return redirect()->route('course.create')->withInput()->withErrors($validator->errors());
+        }
+
+        Course::create($request->all());
+        return redirect()->route('course.index')->with('created_successfully', true);
     }
 
     /**
@@ -77,7 +85,7 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -85,7 +93,16 @@ class CourseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $course = Course::find($id);
+        if ($course) // si existe
+        {
+            return view('course.edit', compact('course'));
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra el técnico solicitado');
+            return redirect()->route('course.index');
+        }
     }
 
     /**
@@ -93,7 +110,25 @@ class CourseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return redirect()->route('course.edit', $id)->withInput()->withErrors($errors);
+        }
+        $course = Course::find($id);
+        if($course) 
+        {
+            $course->update($request->all());
+            session()->flash('message', 'Curso actualizado exitosamente');
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra el curso solicitado');
+            return redirect()->route('course.index');
+        }
+
+        return redirect()->route('course.index')->with('success', 'El curso se editó correctamente.');
     }
 
     /**
@@ -101,6 +136,7 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Course::destroy($id); 
+        return redirect()->route('course.index')->with('success', 'Curso eliminado correctamente');
     }
 }

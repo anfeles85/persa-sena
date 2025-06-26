@@ -92,6 +92,12 @@
             Swal.fire("Sede creado exitosamente");
         </script>
     @endif
+    <script>
+        $(document).ready(function() {
+            $('#table_location').DataTable({
+            });
+        });
+    </script>
 @endsection
 
 @section('scripts')
