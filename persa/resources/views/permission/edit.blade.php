@@ -13,7 +13,7 @@
                 <div class="row form-group">
                     <div class="col-lg-12 mb-4">
                         <label for="permission_date">Fecha de permiso</label>
-                        <input type="date" class="form-control" id="permission_date" name="permission_date" required value="{{ $permission['permission_date'] }}">
+                        <input type="date" class="form-control" id="permission_date" name="permission_date" required value="{{ $permission['permission_date'] }}"readonly>
                     </div>
                 </div>
 

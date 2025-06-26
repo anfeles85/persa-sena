@@ -11,9 +11,10 @@
                     <div class="col-lg-12 mb-4">
                         <label for="permission_date">Fecha Permiso</label>
                         <input type="date" class="form-control" name="permission_date" id="permission_date"
-                         required value="{{ old('permission_date') }}">
+                        required value="{{ old('permission_date', date('Y-m-d')) }}"readonly>
                     </div>
                 </div>
+
                 <div class="row form-group">
                     <div class="col-lg-12 mb-4">
                         <label for="start_time">Hora Inicio</label>
