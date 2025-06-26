@@ -17,7 +17,7 @@ class Course extends Model
         'career_id'
     ];
 
-     public function carrer(){
+     public function career(){
         return $this->belongsTo(Career::class, 'career_id');
     }
 
