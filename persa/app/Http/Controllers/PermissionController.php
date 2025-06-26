@@ -36,11 +36,6 @@ class PermissionController extends Controller
         'permission_type_id' => 'tipo de permiso id',
     ];
 
-    private $status = [
-        ['name' => 'APROBADO', 'value' => 'APROBADO'],
-        ['name' => 'PENDIENTE', 'value' => 'PENDIENTE'],
-        ['name' => 'DESAPROBADO', 'value' => 'DESAPROBADO'],
-    ];
     
     public function index()
     {
@@ -54,15 +49,9 @@ class PermissionController extends Controller
     public function create()
     {
         $permissions = Permission::all();
-        $instructors = User::where('role_id', 2)->get(); // Rol 2 = INSTRUCTOR
-        $guards = User::where('role_id', 5)->get();      // Rol 5 = GUARDA
         $locations = Location::all();
         $permissionTypes = PermissionType::all();
-        $status = $this->status;
-
-        return view('permission.create', compact(
-        'instructors', 'guards', 'locations', 'permissionTypes', 'status'
-    ));
+        return view('permission.create', compact('locations', 'permissionTypes',));
 
     }
 

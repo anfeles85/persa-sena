@@ -28,58 +28,12 @@
                          required value="{{ old('end_time') }}">
                     </div>
                 </div>
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
-                        <label for="departure_time">Hora Salida</label>
-                        <input type="time" class="form-control" name="departure_time" id="departure_time"
-                         required value="{{ old('departure_time') }}">
-                    </div>
-                </div>
+                
                 <div class="row form-group">
                     <div class="col-lg-12 mb-4">
                         <label for="reasons">Razon de Salida</label>
                         <input type="text" class="form-control" name="reasons" id="reasons" 
                         required value="{{ old('reasons') }}">
-                    </div>
-                </div>
-                 <div class="row form-group">
-                    <div class="col-lg-6 mb-4">
-                        <label for="instructor_id">Instructor</label>
-                        <select name="instructor_id" id="instructor_id" class="form-control">
-                            <option value="">Seleccione</option>
-                            @foreach ($instructors as $instructor)
-                                <option value="{{ $instructor['id'] }}" 
-                                @if(old('instructor_id') == $instructor['id']) selected @endif>
-                                    {{ $instructor['fullname'] }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-6 mb-4">
-                        <label for="guard_id">Guarda</label>
-                        <select name="guard_id" id="guard_id" class="form-control">
-                            <option value="">Seleccione</option>
-                            @foreach ($guards as $guard)
-                                <option value="{{ $guard['id'] }}" 
-                                @if(old('guard_id') == $guard['id']) selected @endif>
-                                    {{ $guard['fullname'] }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
-                        <label for="type">Estado</label>
-                        <select name="status" id="status" class="form-control" required value="{{ old('status') }}">
-                            @foreach ($status as $status)
-                                <option value="{{ $status['value'] }}" @if(old('status') == $status['name']) selected @endif>
-                                    {{ $status['name'] }}
-                                </option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
                 <div class="row form-group">
