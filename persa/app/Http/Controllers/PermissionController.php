@@ -111,12 +111,24 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        
         $validator = Validator::make($request->all(), $this->rules);
         $validator->setAttributeNames($this->traductionAttributes);
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-            return redirect()->route('permission.edit', $id)->withInput()->withErrors($errors);
-        }
+
+        $data = $request->only([
+        'permission_date',
+        'start_time',
+        'end_time',
+        'reasons',
+        'location_id',
+        'permission_type_id',
+    ]);
+        $data['instructor_id']  = 1;          
+        $data['guard_id']       = 1;
+        $data['status']         = 'PENDIENTE'; 
+        $data['departure_time'] = now()->format('H:i');
+        $data['apprentice_id']  = 1;
+        
         $permission = Permission::find($id);
         if($permission) 
         {

@@ -96,7 +96,11 @@ class CourseController extends Controller
         $course = Course::find($id);
         if ($course) // si existe
         {
-            return view('course.edit', compact('course'));
+            $careers = Career::all();
+            $shifts = $this->shifts;
+            $trimesters = $this->trimesters;
+            $status = $this->status;
+            return view('course.edit', compact('course', 'careers', 'shifts', 'trimesters', 'status'));
         }
         else
         {
