@@ -94,7 +94,7 @@
     @endif
     <script>
         $(document).ready(function() {
-            $('#table_location').DataTable({
+            $('#table_data').DataTable({
             });
         });
     </script>

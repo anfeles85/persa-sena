@@ -19,6 +19,7 @@
                     <th>Id</th>
                     <th>Nombre</th>
                     <th>Tipo</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -93,7 +94,7 @@
     @endif
     <script>
         $(document).ready(function() {
-            $('#table_career').DataTable({
+            $('#table_data').DataTable({
             });
         });
     </script>
