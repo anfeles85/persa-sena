@@ -18,15 +18,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('roles.*') ? 'active' : '' }}" href="{{ route('roles.index') }}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-user-friends text-dark text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Roles</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../pages/tables.html">
+          <a class="nav-link {{ request()->routeIs('permission.*') ? 'active' : '' }}" href="{{ route('permission.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fas fa-folder text-dark text-sm opacity-10"></i>
             </div>
@@ -44,9 +36,9 @@
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('career.*') ? 'active' : '' }}" href="{{ route('career.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-book-open text-dark text-sm opacity-10"></i>
+              <i class="fas fa-users-viewfinder text-dark text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Fichas</span>
+            <span class="nav-link-text ms-1">Programa</span>
           </a>
         </li>
         <li class="nav-item">
@@ -55,6 +47,14 @@
               <i class="fas fa-search text-dark text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Sede</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('course.*') ? 'active' : '' }}" href="{{ route('course.index') }}">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-book-open text-dark text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Grupos</span>
           </a>
         </li>
         <li class="nav-item mt-3">

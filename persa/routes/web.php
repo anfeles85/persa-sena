@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\CareerController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionTypeController;
-use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 
@@ -28,8 +30,8 @@ Route::prefix('location')->group(function(){
     Route::get('/create', [LocationController::class, 'create'])->name('location.create');
     Route::get('/edit/{id}', [LocationController::class, 'edit'])->name('location.edit');
     Route::post('/store', [LocationController::class, 'store'])->name('location.store');
-    Route::put('/update{id}', [LocationController::class, 'update'])->name('location.update');
-    Route::delete('/destroy{id}', [LocationController::class, 'destroy'])->name('location.destroy');
+    Route::put('/update/{id}', [LocationController::class, 'update'])->name('location.update');
+    Route::delete('/destroy/{id}', [LocationController::class, 'destroy'])->name('location.destroy');
 });
 
 Route::prefix('career')->group(function(){
@@ -47,15 +49,30 @@ Route::prefix('permission_type')->group(function(){
     Route::get('/create',[PermissionTypeController::class, 'create'])->name('permission_type.create');
     Route::get('/edit{id}',[PermissionTypeController::class, 'edit'])->name('permission_type.edit');
     Route::post('/store',[PermissionTypeController::class, 'store'])->name('permission_type.store');
-    Route::put('/update{id}',[PermissionTypeController::class, 'update'])->name('permission_type.update');
-    Route::delete('/destroy{id}',[PermissionTypeController::class, 'destroy'])->name('permission_type.destroy');
+    Route::put('/update/{id}',[PermissionTypeController::class, 'update'])->name('permission_type.update');
+    Route::delete('/destroy/{id}',[PermissionTypeController::class, 'destroy'])->name('permission_type.destroy');
 });
 
-Route::prefix('roles')->group(function(){
-    Route::get('/index', [RolesController::class, 'index'])->name('roles.index');
-    Route::get('/create', [RolesController::class, 'create'])->name('roles.create');
-    Route::get('/edit/{id}', [RolesController::class, 'edit'])->name('roles.edit');
-    Route::post('/store', [RolesController::class, 'store'])->name('roles.store');
-    Route::put('/update/{id}', [RolesController::class, 'update'])->name('roles.update');
-    Route::delete('/destroy/{id}', [RolesController::class, 'destroy'])->name('roles.destroy');
+
+Route::prefix('course')->group(function(){
+    Route::get('/index',[CourseController::class, 'index'])->name('course.index');
+    Route::get('/create',[CourseController::class, 'create'])->name('course.create');
+    Route::get('/edit{id}',[CourseController::class, 'edit'])->name('course.edit');
+    Route::post('/store',[CourseController::class, 'store'])->name('course.store');
+    Route::put('/update/{id}',[CourseController::class, 'update'])->name('course.update');
+    Route::delete('/destroy/{id}',[CourseController::class, 'destroy'])->name('course.destroy');
+});
+
+
+Route::prefix('pemission')->group(function(){
+    Route::get('/index',[PermissionController::class, 'index'])->name('apprentice_course.index');
+    Route::get('/create',[PermissionController::class, 'create'])->name('apprentice_course.create');
+    Route::get('/edit{id}',[PermissionController::class, 'edit'])->name('apprentice_course.edit');
+    Route::post('/store',[PermissionController::class, 'store'])->name('apprentice_course.store');
+    Route::put('/update/{id}',[PermissionController::class, 'update'])->name('apprentice_course.update');
+    Route::delete('/destroy/{id}',[PermissionController::class, 'destroy'])->name('apprentice_course.destroy');
+});
+Route::prefix('users')->group(function(){
+    Route::get('/index', [UsersController::class, 'index'])->name('users.index');
+    Route::post('/send_email', [UsersController::class, 'send_email'])->name('users.send_email');
 });

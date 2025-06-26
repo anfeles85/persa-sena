@@ -46,30 +46,39 @@ class PermissionTypeController extends Controller
 
     public function edit($id)
     {
-       return redirect()->back()->with('success', 'Tipo de permiso editado correctamente.');
+       $permission_type = PermissionType::find($id);
+        if ($permission_type) // si existe
+        {
+            return view('permission_type.edit', compact('permission_type'));
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra el técnico solicitado');
+            return redirect()->route('permission_type.index');
+        }
     }
 
     public function update(Request $request, $id)
     {
-<<<<<<< HEAD
-        
-=======
-        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
-
+        $validator = Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
         if ($validator->fails()) {
-            return redirect()->route('permission_type.edit', $id)->withInput()->withErrors($validator->errors());
+            $errors = $validator->errors();
+            return redirect()->route('permission_type.edit', $id)->withInput()->withErrors($errors);
+        }
+        $permission_type = PermissionType::find($id);
+        if($permission_type) 
+        {
+            $permission_type->update($request->all());
+            session()->flash('message', 'Actividad actualizada exitosamente');
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra la actividad solicitado');
+            return redirect()->route('permission_type.index');
         }
 
-        $permissionType = PermissionType::find($id);
-        if ($permissionType) {
-            $permissionType->update($request->all());
-            session()->flash('message', 'Tipo de permiso actualizado exitosamente');
-        } else {
-            session()->flash('warning', 'Tipo de permiso no encontrado');
-        }
-
-        return redirect()->route('permission_type.index');
->>>>>>> origin/G1
+        return redirect()->route('permission_type.index')->with('success', 'El tipo de permiso se editó correctamente.');
     }
 
     public function destroy($id)

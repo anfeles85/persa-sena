@@ -40,65 +40,49 @@ class LocationController extends Controller
         }
 
         Location::create($request->all());
-<<<<<<< HEAD
         return redirect()->route('location.index')->with('created_successfully', true);
-=======
-        session()->flash('message', 'Sede creada exitosamente');
-        return redirect()->route('location.index');
->>>>>>> origin/G1
     }
 
     public function edit($id)
     {
-<<<<<<< HEAD
-        return redirect()->back()->with('success', 'La sede se edito correctamente.');
-=======
         $location = Location::find($id);
-        if ($location) {
+        if ($location) // si existe
+        {
             return view('location.edit', compact('location'));
-        } else {
-            session()->flash('warning', 'No se encontró la sede');
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra el técnico solicitado');
             return redirect()->route('location.index');
         }
->>>>>>> origin/G1
     }
 
     public function update(Request $request, $id)
     {
-
-<<<<<<< HEAD
-=======
+        $validator = Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
         if ($validator->fails()) {
-            return redirect()->route('location.edit', $id)->withInput()->withErrors($validator->errors());
+            $errors = $validator->errors();
+            return redirect()->route('location.edit', $id)->withInput()->withErrors($errors);
         }
-
         $location = Location::find($id);
-        if ($location) {
+        if($location) 
+        {
             $location->update($request->all());
-            session()->flash('message', 'Sede actualizada exitosamente');
-        } else {
-            session()->flash('warning', 'No se encontró la sede');
+            session()->flash('message', 'Actividad actualizada exitosamente');
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra la actividad solicitado');
+            return redirect()->route('location.index');
         }
 
-        return redirect()->route('location.index');
->>>>>>> origin/G1
+        return redirect()->route('location.index')->with('success', 'La sede se editó correctamente.');
     }
 
     public function destroy($id)
     {
-<<<<<<< HEAD
         Location::destroy($id); 
         return redirect()->route('location.index')->with('success', 'Sede eliminada correctamente');
-=======
-        $location = Location::find($id);
-        if ($location) {
-            $location->delete();
-            session()->flash('message', 'Sede eliminada exitosamente');
-        } else {
-            session()->flash('warning', 'No se encontró la sede');
-        }
-
-        return redirect()->route('location.index');
->>>>>>> origin/G1
     }
 }
