@@ -47,8 +47,8 @@
                             @csrf
                             @method('DELETE')
 
-                            <button type="submit" class="btn btn-danger btn-circle" title="Eliminar" 
-                            onclick="event.preventDefault(); remove({{ $permission['id'] }})">
+                            <button type="button" class="btn btn-danger btn-circle" title="Eliminar" 
+                            onclick="remove({{ $permission['id'] }})">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -60,53 +60,6 @@
     </div>
 </div>
 
-@endsection
-
-@section('scripts')
-
-    @if(session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: '¡OK!',
-                text: '{{ session('success') }}',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
-
-    <script>
-        function remove(id) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡Esta acción no se puede deshacer!",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar',
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('form-delete-' + id).submit();
-                }
-            });
-    
-        }
-    </script>    
-    @if(session('created_successfully'))
-        <script>
-            Swal.fire("Permiso creado exitosamente");
-        </script>
-    @endif
-    <script>
-        $(document).ready(function() {
-            $('#table_permission').DataTable({
-            });
-        });
-    </script>
 @endsection
 
 @section('scripts')

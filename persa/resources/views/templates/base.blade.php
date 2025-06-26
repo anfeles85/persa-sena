@@ -50,12 +50,36 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
+        
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
 
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('js/argon-dashboard.min.js?v=2.1.0')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: '¡OK!',
+            text: '{{ session("success") }}',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    </script>
+    @endif
+
+    @if(session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: '{{ session("error") }}',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'OK'
+        });
+    </script>
+    @endif
 
     @yield('scripts')
 </body>
