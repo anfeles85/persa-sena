@@ -1,9 +1,9 @@
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl custom-navbar"
      id="navbarBlur" data-scroll="false">
       <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">          
+        <a aria-label="breadcrumb" href="https://www.sena.edu.co" class="navbar-brand font-weight-bolder text-white" target="_blank">          
           <img src="{{ asset('img/sena-logo.png') }}" alt="logo-sena" width="70px" height="70px">
-        </nav>
+        </a>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
