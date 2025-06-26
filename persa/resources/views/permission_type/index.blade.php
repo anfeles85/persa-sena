@@ -93,6 +93,6 @@
             Swal.fire("Tipo de permiso creado exitosamente");
         </script>
     @endif
-    <script src="{{ asset('js/general.js') }}"></script>
     <script src="{{ asset('js/DataTables.js') }}"></script>
+    <script src="{{ asset('js/general.js') }}"></script>
 @endsection
