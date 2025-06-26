@@ -92,6 +92,12 @@
             Swal.fire("Tipo de permiso creado exitosamente");
         </script>
     @endif
+    <script>
+        $(document).ready(function() {
+            $('#table_permission_type').DataTable({
+            });
+        });
+    </script>
 @endsection
 
 @section('scripts')
