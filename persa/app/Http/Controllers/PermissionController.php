@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use App\Models\Permission;
+use App\Models\PermissionType;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -50,7 +53,17 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        $permissions = Permission::all();
+        $instructors = User::where('role_id', 2)->get(); // Rol 2 = INSTRUCTOR
+        $guards = User::where('role_id', 5)->get();      // Rol 5 = GUARDA
+        $locations = Location::all();
+        $permissionTypes = PermissionType::all();
+        $status = $this->status;
+
+        return view('permission.create', compact(
+        'instructors', 'guards', 'locations', 'permissionTypes', 'status'
+    ));
+
     }
 
     /**
