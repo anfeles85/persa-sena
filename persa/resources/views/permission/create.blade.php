@@ -8,30 +8,26 @@
             <form action="{{ route('permission.store') }}" method="POST">
                 @csrf
                 <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    <div class="col-lg-6 mb-4">
                         <label for="permission_date">Fecha Permiso</label>
                         <input type="date" class="form-control" name="permission_date" id="permission_date"
                         required value="{{ old('permission_date', date('Y-m-d')) }}"readonly>
                     </div>
-                </div>
-
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    
+                    <div class="col-lg-6 mb-4">
                         <label for="start_time">Hora Inicio</label>
                         <input type="time" class="form-control" name="start_time" id="start_time"
                          required value="{{ old('start_time') }}">
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    <div class="col-lg-6 mb-4">
                         <label for="end_time">Hora Fin</label>
                         <input type="time" class="form-control" name="end_time" id="end_time"
                          required value="{{ old('end_time') }}">
                     </div>
-                </div>
-                
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+
+                    <div class="col-lg-6 mb-4">
                         <label for="reasons">Razon de Salida</label>
                         <input type="text" class="form-control" name="reasons" id="reasons" 
                         required value="{{ old('reasons') }}">
@@ -51,8 +47,6 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="row form-group">
                     <div class="col-lg-6 mb-4">
                         <label for="permission_type_id">Tipo de Permiso</label>
                         <select name="permission_type_id" id="permission_type_id" class="form-control">
