@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Career;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -33,6 +34,17 @@ class CourseController extends Controller
         ['name' => 'T7', 'value' => 'T7']
     ];
 
+    private $shifts = [
+        ['name' => 'DIURNA', 'value' => 'DIURNA'],
+        ['name' => 'MIXTA', 'value' => 'MIXTA'],
+        ['name' => 'NOCTURNA', 'value' => 'NOCTURNA']
+    ];
+
+     private $status = [
+        ['name' => 'ACTIVO', 'value' => 'ACTIVO'],
+        ['name' => 'INACTIVO', 'value' => 'INACTIVO']
+     ];
+
     public function index()
     {
         $courses = Course::all();
@@ -44,7 +56,12 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        $courses = Course::all();
+        $careers = Career::all();
+        $shifts = $this->shifts;
+        $trimesters = $this->trimesters;
+        $status = $this->status;
+        return view('course.create', compact('courses','careers','shifts','trimesters','status'));
     }
 
     /**
