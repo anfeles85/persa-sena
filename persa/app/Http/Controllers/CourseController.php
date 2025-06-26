@@ -22,7 +22,7 @@ class CourseController extends Controller
         'trimester' => 'trimestre',
         'year' => 'año',
         'status' => 'estado',
-        'career_id' => 'programa id'
+        'career_id' => 'programa'
     ];
 
     private $trimesters = [
@@ -30,9 +30,6 @@ class CourseController extends Controller
         ['name' => 'T2', 'value' => 'T2'],
         ['name' => 'T3', 'value' => 'T3'],
         ['name' => 'T4', 'value' => 'T4'],
-        ['name' => 'T5', 'value' => 'T5'],
-        ['name' => 'T6', 'value' => 'T6'],
-        ['name' => 'T7', 'value' => 'T7']
     ];
 
     private $shifts = [

@@ -8,7 +8,7 @@
             <form action="{{ route('course.store') }}" method="POST">
                 @csrf
                 <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    <div class="col-lg-6 mb-4">
                         <label for="shift">Jornada</label>
                         <select name="shift" id="shift" class="form-control" required value="{{ old('shift') }}">
                             @foreach ($shifts as $shift)
@@ -18,9 +18,8 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    
+                    <div class="col-lg-6 mb-4">
                         <label for="trimester">Trimestre</label>
                         <select name="trimester" id="trimester" class="form-control" required value="{{ old('trimester') }}">
                             @foreach ($trimesters as $trimester)
@@ -32,14 +31,12 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    <div class="col-lg-6 mb-4">
                         <label for="year">Año</label>
                         <input type="number" class="form-control" name="year" id="year"
                          required value="{{ old('year') }}">
                     </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    <div class="col-lg-6 mb-4">
                         <label for="type">Estado</label>
                         <select name="status" id="status" class="form-control" required value="{{ old('status') }}">
                             @foreach ($status as $status)
@@ -50,9 +47,10 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="row form-group">
-                    <div class="col-lg-6 mb-4">
-                        <label for="career_id">Carrera</label>
+                    <div class="col-lg-12 mb-4">
+                        <label for="career_id">Programa</label>
                         <select name="career_id" id="career_id" class="form-control">
                             <option value="">Seleccione</option>
                             @foreach ($careers as $career)

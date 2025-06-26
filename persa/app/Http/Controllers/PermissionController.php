@@ -25,8 +25,8 @@ class PermissionController extends Controller
         'start_time' => 'hora de inicio',
         'end_time' => 'hora de fin',
         'reasons' => 'motivo',
-        'location_id' => 'sede id',
-        'permission_type_id' => 'tipo de permiso id',
+        'location_id' => 'sede',
+        'permission_type_id' => 'tipo de permiso',
     ];
 
     
@@ -60,15 +60,16 @@ class PermissionController extends Controller
             ->route('permission.create')
             ->withInput()
             ->withErrors($validator);
-    }
+        }
         $data = $request->only([
-        'permission_date',
-        'start_time',
-        'end_time',
-        'reasons',
-        'location_id',
-        'permission_type_id',
-    ]);
+            'permission_date',
+            'start_time',
+            'end_time',
+            'reasons',
+            'location_id',
+            'permission_type_id',
+        ]);
+
         $data['instructor_id']  = 1;          
         $data['guard_id']       = 1;
         $data['status']         = 'PENDIENTE'; 
@@ -92,6 +93,7 @@ class PermissionController extends Controller
      */
     public function edit(string $id)
     {
+        
         $permission = Permission::find($id);
         if ($permission) // si existe
         {
