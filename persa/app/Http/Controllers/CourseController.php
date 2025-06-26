@@ -12,7 +12,7 @@ class CourseController extends Controller
     private $rules = [
         'shift' => 'required|string|min:3|max:50',
         'trimester' => 'required|string|min:1|max:50',
-        'year' => 'required|numeric|min:1|max:10',
+        'year' => 'required|numeric|min:1|max:2100',
         'status' => 'required|string|min:3|max:50',
         'career_id' => 'required|numeric|min:1|max:99999999999999999999'
     ];

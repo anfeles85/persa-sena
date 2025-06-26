@@ -15,26 +15,16 @@ class PermissionController extends Controller
         'permission_date' => 'required|date|date_format:Y-m-d',
         'start_time' => 'required|date_format:H:i',
         'end_time' => 'required|date_format:H:i',
-        'departure_time' => 'required|date_format:H:i',
-        'reasons' => 'required|string|min:3|max:60',
-        'instructor_id' => 'required|numeric|min:1|max:99999999999999999999',
-        'apprentice_id' => 'required|numeric|min:1|max:99999999999999999999',
-        'guard_id' => 'required|numeric|min:1|max:99999999999999999999',
-        'status' => 'required|string|min:3|max:50',
+        'reasons' => 'required|string|min:3|max:60', 
         'location_id' => 'required|numeric|min:1|max:99999999999999999999',
-        'permission_type_id' => 'required|numeric|min:1|max:99999999999999999999'
+        'permission_type_id' => 'required|numeric|min:1|max:99999999999999999999',
     ];
 
     private $traductionAttributes = [
         'permission_date' => 'fecha de permiso',
         'start_time' => 'hora de inicio',
         'end_time' => 'hora de fin',
-        'departure_time' => 'hora de salida',
         'reasons' => 'motivo',
-        'instructor_id' => 'instructor id',
-        'apprentice_id' => 'aprendiz id',
-        'guard_id' => 'guarda id',
-        'status' => 'estado',
         'location_id' => 'sede id',
         'permission_type_id' => 'tipo de permiso id',
     ];
@@ -54,7 +44,7 @@ class PermissionController extends Controller
         $permissions = Permission::all();
         $locations = Location::all();
         $permissionTypes = PermissionType::all();
-        return view('permission.create', compact('locations', 'permissionTypes',));
+        return view('permission.create', compact('locations','permissionTypes'));
 
     }
 
@@ -66,10 +56,26 @@ class PermissionController extends Controller
         $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
 
         if ($validator->fails()) {
-            return redirect()->route('permission.create')->withInput()->withErrors($validator->errors());
-        }
+        return redirect()
+            ->route('permission.create')
+            ->withInput()
+            ->withErrors($validator);
+    }
+        $data = $request->only([
+        'permission_date',
+        'start_time',
+        'end_time',
+        'reasons',
+        'location_id',
+        'permission_type_id',
+    ]);
+        $data['instructor_id']  = 1;          
+        $data['guard_id']       = 1;
+        $data['status']         = 'PENDIENTE'; 
+        $data['departure_time'] = now()->format('H:i');
+        $data['apprentice_id']  = 1;
 
-        Permission::create($request->all());
+        Permission::create($data);
         return redirect()->route('permission.index')->with('created_successfully', true);
     }
 
