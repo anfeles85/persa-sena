@@ -51,6 +51,8 @@ class PermissionController extends Controller
     public function create()
     {
         $permissions = Permission::all();
+        $instructors = User::where('role_id', 2)->get(); // Rol 2 = INSTRUCTOR
+        $apprentices = User::where('role_id', 3)->get(); // Rol 2 = APRENDIZ
         $guards = User::where('role_id', 5)->get();      // Rol 5 = GUARDA
         $locations = Location::all();
         $permissionTypes = PermissionType::all();
