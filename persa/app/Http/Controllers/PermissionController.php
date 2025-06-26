@@ -17,6 +17,7 @@ class PermissionController extends Controller
         'departure_time' => 'required|date_format:H:i',
         'reasons' => 'required|string|min:3|max:60',
         'instructor_id' => 'required|numeric|min:1|max:99999999999999999999',
+        'apprentice_id' => 'required|numeric|min:1|max:99999999999999999999',
         'guard_id' => 'required|numeric|min:1|max:99999999999999999999',
         'status' => 'required|string|min:3|max:50',
         'location_id' => 'required|numeric|min:1|max:99999999999999999999',
@@ -30,6 +31,7 @@ class PermissionController extends Controller
         'departure_time' => 'hora de salida',
         'reasons' => 'motivo',
         'instructor_id' => 'instructor id',
+        'apprentice_id' => 'aprendiz id',
         'guard_id' => 'guarda id',
         'status' => 'estado',
         'location_id' => 'sede id',
@@ -55,6 +57,7 @@ class PermissionController extends Controller
     {
         $permissions = Permission::all();
         $instructors = User::where('role_id', 2)->get(); // Rol 2 = INSTRUCTOR
+        $apprentices = User::where('role_id', 3)->get(); // Rol 2 = APRENDIZ
         $guards = User::where('role_id', 5)->get();      // Rol 5 = GUARDA
         $locations = Location::all();
         $permissionTypes = PermissionType::all();

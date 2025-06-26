@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         //crear 3 usuario de rol aprendiz
-        User::factory(3)->create([
+        User::factory(5)->create([
             'role_id' => 3
         ]);
        
