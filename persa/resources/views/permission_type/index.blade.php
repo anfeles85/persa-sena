@@ -21,6 +21,7 @@
                 <tr>
                 <th>Id</th>
                 <th>Nombre</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -94,7 +95,7 @@
     @endif
     <script>
         $(document).ready(function() {
-            $('#table_permission_type').DataTable({
+            $('#table_data').DataTable({
             });
         });
     </script>

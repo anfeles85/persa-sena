@@ -17,13 +17,15 @@ class Permission extends Model
      protected $fillable =[
         'permission_date',
         'start_time',
+        'end_time',
         'departure_time',
         'reasons',
         'instructor_id',
         'guard_id',
         'status',
         'location_id',
-        'permission_type_id'
+        'permission_type_id',
+        'apprentice_id'
      ];
 
     /**

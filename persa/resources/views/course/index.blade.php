@@ -22,6 +22,7 @@
                     <th>Trimestre</th>
                     <th>Año</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -99,7 +100,7 @@
     @endif
     <script>
         $(document).ready(function() {
-            $('#table_course').DataTable({
+            $('#table_data').DataTable({
             });
         });
     </script>
