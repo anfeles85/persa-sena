@@ -73,7 +73,7 @@ Route::prefix('course')->group(function(){
 });
 
 
-Route::prefix('pemission')->group(function(){
+Route::prefix('permission')->group(function(){
     Route::get('/index',[PermissionController::class, 'index'])->name('permission.index');
     Route::get('/create',[PermissionController::class, 'create'])->name('permission.create');
     Route::get('/edit{id}',[PermissionController::class, 'edit'])->name('permission.edit');
