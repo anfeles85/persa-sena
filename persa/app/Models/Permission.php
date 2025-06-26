@@ -33,6 +33,13 @@ class Permission extends Model
         return $this->belongsTo(User::class, 'instructor_id');
     }
 
+     /**
+     * relación con la tabla user, instructor_id
+     */
+    public function apprentice_user(){
+        return $this->belongsTo(User::class, 'apprentice_id');
+    }
+
     /**
      * relación con la tabla user, guard_id
      */
