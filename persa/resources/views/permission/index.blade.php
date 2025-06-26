@@ -18,7 +18,7 @@
                 <tr class="text-center">
                     <th>Id</th>
                     <th>Fecha</th>
-                    <th>Hora de incio</th>
+                    <th>Hora de inicio</th>
                     <th>Hora de fin</th>
                     <th>Hora de llegada</th>
                     <th>Razón</thh>
@@ -102,14 +102,10 @@
             Swal.fire("Permiso creado exitosamente");
         </script>
     @endif
-    <script>
-        $(document).ready(function() {
-            $('#table_data').DataTable({
-            });
-        });
-    </script>
+    <script src="{{ asset('js/DataTables.js') }}"></script>
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/general.js') }}"></script>
     <script src="{{ asset('js/general.js') }}"></script>
 @endsection
