@@ -97,6 +97,12 @@
             Swal.fire("Ficha creada exitosamente");
         </script>
     @endif
+    <script>
+        $(document).ready(function() {
+            $('#table_course').DataTable({
+            });
+        });
+    </script>
 @endsection
 
 @section('scripts')
