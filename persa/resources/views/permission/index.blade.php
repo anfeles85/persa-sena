@@ -103,9 +103,5 @@
         </script>
     @endif
     <script src="{{ asset('js/DataTables.js') }}"></script>
-@endsection
-
-@section('scripts')
-    <script src="{{ asset('js/general.js') }}"></script>
     <script src="{{ asset('js/general.js') }}"></script>
 @endsection
