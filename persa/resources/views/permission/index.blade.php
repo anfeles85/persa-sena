@@ -20,7 +20,7 @@
                     <th>Fecha</th>
                     <th>Hora de inicio</th>
                     <th>Hora de fin</th>
-                    <th>Hora de llegada</th>
+                    <th>Hora de salida</th>
                     <th>Razón</thh>
                     <th>Sede</th>
                     <th>Estado</th>
