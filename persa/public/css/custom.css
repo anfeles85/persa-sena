@@ -3,4 +3,11 @@
   border-top: none !important;
   background-color: #f8f9fae4;
   border-top: none !important;
+  text-align: center;
+  vertical-align: middle;
 }
+
+#table_data th {
+        text-align: center;
+        vertical-align: middle;
+    }

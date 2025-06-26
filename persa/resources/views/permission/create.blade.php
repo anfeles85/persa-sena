@@ -36,6 +36,7 @@
                         required value="{{ old('reasons') }}">
                     </div>
                 </div>
+
                 <div class="row form-group">
                     <div class="col-lg-6 mb-4">
                         <label for="location_id">Lugar</label>
