@@ -65,6 +65,8 @@
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('js/argon-dashboard.min.js?v=2.1.0')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/general.js') }}"></script>
+    
     @if(session('success'))
     <script>
         Swal.fire({
@@ -77,6 +79,8 @@
     </script>
     @endif
 
+    
+
     @if(session('error'))
     <script>
         Swal.fire({
@@ -88,6 +92,12 @@
         });
     </script>
     @endif
+
+    @if(session('updated'))
+    <script>
+        update(); 
+    </script>
+    @endif
 
     @yield('scripts')
 </body>

@@ -39,3 +39,23 @@ function remove(id) {
     });
 }
 
+function update() {
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Actualizado correctamente',
+        showConfirmButton: false,
+        timer: 1500
+    });
+    
+}
+
+function create() {
+    Swal.fire({
+        title: 'Creado exitosamente',
+        text: 'El registro se ha creado con exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    });
+    
+}
