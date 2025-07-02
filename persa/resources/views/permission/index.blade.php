@@ -14,16 +14,17 @@
 <div class="row">
     <div class="col-lg-12 mb-4">
         <table id="table_data" class="table table-striped align-items-center text-center">
-            <thead>
-                <tr>
+            <thead class="align-middle text-center" >
+                <tr class="text-center">
                     <th>Id</th>
                     <th>Fecha</th>
-                    <th>Hora de incio</th>
+                    <th>Hora de inicio</th>
                     <th>Hora de fin</th>
-                    <th>Hora de llegada</th>
-                    <th>Razón</th>
+                    <th>Hora de salida</th>
+                    <th>Razón</thh>
                     <th>Sede</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>

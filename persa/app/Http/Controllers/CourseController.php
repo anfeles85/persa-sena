@@ -12,7 +12,7 @@ class CourseController extends Controller
     private $rules = [
         'shift' => 'required|string|min:3|max:50',
         'trimester' => 'required|string|min:1|max:50',
-        'year' => 'required|numeric|min:1|max:10',
+        'year' => 'required|numeric|min:1|max:2100',
         'status' => 'required|string|min:3|max:50',
         'career_id' => 'required|numeric|min:1|max:99999999999999999999'
     ];
@@ -22,7 +22,7 @@ class CourseController extends Controller
         'trimester' => 'trimestre',
         'year' => 'año',
         'status' => 'estado',
-        'career_id' => 'programa id'
+        'career_id' => 'programa'
     ];
 
     private $trimesters = [
@@ -30,9 +30,6 @@ class CourseController extends Controller
         ['name' => 'T2', 'value' => 'T2'],
         ['name' => 'T3', 'value' => 'T3'],
         ['name' => 'T4', 'value' => 'T4'],
-        ['name' => 'T5', 'value' => 'T5'],
-        ['name' => 'T6', 'value' => 'T6'],
-        ['name' => 'T7', 'value' => 'T7']
     ];
 
     private $shifts = [
@@ -96,7 +93,11 @@ class CourseController extends Controller
         $course = Course::find($id);
         if ($course) // si existe
         {
-            return view('course.edit', compact('course'));
+            $careers = Career::all();
+            $shifts = $this->shifts;
+            $trimesters = $this->trimesters;
+            $status = $this->status;
+            return view('course.edit', compact('course', 'careers', 'shifts', 'trimesters', 'status'));
         }
         else
         {

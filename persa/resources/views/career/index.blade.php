@@ -19,6 +19,7 @@
                     <th>Id</th>
                     <th>Nombre</th>
                     <th>Tipo</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -91,14 +92,6 @@
             Swal.fire("Carrera creada exitosamente");
         </script>
     @endif
-    <script>
-        $(document).ready(function() {
-            $('#table_career').DataTable({
-            });
-        });
-    </script>
-@endsection
-
-@section('scripts')
+    <script src="{{ asset('js/DataTables.js') }}"></script>
     <script src="{{ asset('js/general.js') }}"></script>
 @endsection

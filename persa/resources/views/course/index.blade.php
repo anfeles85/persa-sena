@@ -22,6 +22,7 @@
                     <th>Trimestre</th>
                     <th>Año</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -97,14 +98,7 @@
             Swal.fire("Ficha creada exitosamente");
         </script>
     @endif
-    <script>
-        $(document).ready(function() {
-            $('#table_course').DataTable({
-            });
-        });
-    </script>
-@endsection
-
-@section('scripts')
+    <script src="{{ asset('js/DataTables.js') }}"></script>
     <script src="{{ asset('js/general.js') }}"></script>
 @endsection
+

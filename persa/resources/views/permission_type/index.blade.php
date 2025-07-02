@@ -21,6 +21,7 @@
                 <tr>
                 <th>Id</th>
                 <th>Nombre</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -92,14 +93,6 @@
             Swal.fire("Tipo de permiso creado exitosamente");
         </script>
     @endif
-    <script>
-        $(document).ready(function() {
-            $('#table_permission_type').DataTable({
-            });
-        });
-    </script>
-@endsection
-
-@section('scripts')
+    <script src="{{ asset('js/DataTables.js') }}"></script>
     <script src="{{ asset('js/general.js') }}"></script>
 @endsection
