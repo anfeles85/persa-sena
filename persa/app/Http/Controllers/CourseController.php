@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Career;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
     private $rules = [
         'shift' => 'required|string|min:3|max:50',
         'trimester' => 'required|string|min:1|max:50',
-        'year' => 'required|numeric|min:1|max:10',
+        'year' => 'required|numeric|min:1|max:2100',
         'status' => 'required|string|min:3|max:50',
         'career_id' => 'required|numeric|min:1|max:99999999999999999999'
     ];
@@ -20,7 +22,7 @@ class CourseController extends Controller
         'trimester' => 'trimestre',
         'year' => 'año',
         'status' => 'estado',
-        'career_id' => 'programa id'
+        'career_id' => 'programa'
     ];
 
     private $trimesters = [
@@ -28,10 +30,18 @@ class CourseController extends Controller
         ['name' => 'T2', 'value' => 'T2'],
         ['name' => 'T3', 'value' => 'T3'],
         ['name' => 'T4', 'value' => 'T4'],
-        ['name' => 'T5', 'value' => 'T5'],
-        ['name' => 'T6', 'value' => 'T6'],
-        ['name' => 'T7', 'value' => 'T7']
     ];
+
+    private $shifts = [
+        ['name' => 'DIURNA', 'value' => 'DIURNA'],
+        ['name' => 'MIXTA', 'value' => 'MIXTA'],
+        ['name' => 'NOCTURNA', 'value' => 'NOCTURNA']
+    ];
+
+     private $status = [
+        ['name' => 'ACTIVO', 'value' => 'ACTIVO'],
+        ['name' => 'INACTIVO', 'value' => 'INACTIVO']
+     ];
 
     public function index()
     {
@@ -44,7 +54,12 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        $courses = Course::all();
+        $careers = Career::all();
+        $shifts = $this->shifts;
+        $trimesters = $this->trimesters;
+        $status = $this->status;
+        return view('course.create', compact('courses','careers','shifts','trimesters','status'));
     }
 
     /**
@@ -52,7 +67,14 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
+
+        if ($validator->fails()) {
+            return redirect()->route('course.create')->withInput()->withErrors($validator->errors());
+        }
+
+        Course::create($request->all());
+        return redirect()->route('course.index')->with('created_successfully', true);
     }
 
     /**
@@ -60,7 +82,7 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -68,7 +90,20 @@ class CourseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $course = Course::find($id);
+        if ($course) // si existe
+        {
+            $careers = Career::all();
+            $shifts = $this->shifts;
+            $trimesters = $this->trimesters;
+            $status = $this->status;
+            return view('course.edit', compact('course', 'careers', 'shifts', 'trimesters', 'status'));
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra el técnico solicitado');
+            return redirect()->route('course.index');
+        }
     }
 
     /**
@@ -76,7 +111,25 @@ class CourseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return redirect()->route('course.edit', $id)->withInput()->withErrors($errors);
+        }
+        $course = Course::find($id);
+        if($course) 
+        {
+            $course->update($request->all());
+            session()->flash('message', 'Curso actualizado exitosamente');
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra el curso solicitado');
+            return redirect()->route('course.index');
+        }
+
+        return redirect()->route('course.index')->with('success', 'El curso se editó correctamente.');
     }
 
     /**
@@ -84,6 +137,7 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Course::destroy($id); 
+        return redirect()->route('course.index')->with('success', 'Curso eliminado correctamente');
     }
 }

@@ -16,6 +16,14 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="{{ asset('css/argon-dashboard.css?v=2.1.0') }}" rel="stylesheet" />
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+  <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
 
 </head>
 
@@ -50,12 +58,46 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
+        
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
 
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('js/argon-dashboard.min.js?v=2.1.0')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/general.js') }}"></script>
+    
+    @if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: '¡OK!',
+            text: '{{ session("success") }}',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    </script>
+    @endif
+
+    
+
+    @if(session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: '{{ session("error") }}',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'OK'
+        });
+    </script>
+    @endif
+
+    @if(session('updated'))
+    <script>
+        update(); 
+    </script>
+    @endif
 
     @yield('scripts')
 </body>
