@@ -14,51 +14,48 @@ $(document).ready(function() {
     });
 });
 
-function remove() {
-    var x = confirm("¿Está seguro de que desea eliminar el registro?");
-    if (x)
-        return true;
-    else
-        return false;
-}
-
-
-// Función para mostrar alerta de éxito si existe un mensaje en sessionStorage
-function showSuccessAlert() {
-    const successMessage = sessionStorage.getItem('success');
-    if (successMessage) {
-        Swal.fire({
-            icon: 'success',
-            title: '¡OK!',
-            text: successMessage,
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK'
-        });
-        // Limpiar el mensaje después de mostrarlo
-        sessionStorage.removeItem('success');
-    }
-}
-
-// Función para confirmar eliminación
-function confirmRemove(id) {
+function remove(id) {
     Swal.fire({
         title: '¿Estás seguro?',
-        text: "¡Esta acción no se puede deshacer!",
-        icon: 'question',
+        text: "¡No podrás revertir esto!",
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar',
-        allowOutsideClick: false
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminarlo',
+        cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            document.getElementById('form-delete-' + id).submit();
+            // Envía el formulario de eliminación
+            document.getElementById(`form-delete-${id}`).submit();
+            
+            // Mostrar mensaje de éxito 
+            Swal.fire(
+                'Eliminado',
+                'El permiso ha sido eliminado.',
+                'success'
+            );
         }
     });
 }
 
-// Llamar a la función cuando el DOM esté cargado
-document.addEventListener('DOMContentLoaded', function() {
-    showSuccessAlert();
-});
+function update() {
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Actualizado correctamente',
+        showConfirmButton: false,
+        timer: 1500
+    });
+    
+}
+
+function create() {
+    Swal.fire({
+        title: 'Creado exitosamente',
+        text: 'El registro se ha creado con exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    });
+    
+}
