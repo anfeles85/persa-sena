@@ -25,11 +25,11 @@
             <tbody>
                 @foreach ($careers as $career)
                 <tr>
-                    <td>{{ $career['id'] }}</td>
-                    <td>{{ $career['name'] }}</td>
-                    <td>{{ $career['type'] }}</td>
-                    <td class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
-                        <a href="{{ route('career.edit', $career["id"]) }}" class="btn btn-primary btn-circle" title="Editar">
+                    <td data-label="Id">{{ $career['id'] }}</td>
+                    <td data-label="Nombre">{{ $career['name'] }}</td>
+                    <td data-label="Tipo">{{ $career['type'] }}</td>
+                    <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
+                        <a href="{{ route('career.edit', $career["id"]) }}" class="btn btn-primary btn-circle table-btn" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
 
@@ -38,7 +38,7 @@
                             @csrf
                             @method('DELETE')
 
-                            <button type="submit" class="btn btn-danger btn-circle" title="Eliminar" 
+                            <button type="submit" class="btn btn-danger btn-circle table-btn" title="Eliminar" 
                             onclick="remove({{ $career['id'] }})">
                                 <i class="fas fa-trash"></i>
                             </button>

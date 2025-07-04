@@ -30,26 +30,24 @@
             <tbody>
                 @foreach ($permissions as $permission)
                 <tr>
-                    <td>{{ $permission['id'] }}</td>
-                    <td>{{ $permission['permission_date'] }}</td>
-                    <td>{{ $permission['start_time'] }}</td>
-                    <td>{{ $permission['end_time'] }}</td>
-                    <td>{{ $permission['departure_time'] }}</td>
-                    <td>{{ $permission['reasons'] }}</td>
-                    <td>{{ $permission->location->name }}</td>
-                    <td>{{ $permission['status'] }}</td>
-                    <td class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
-                        <a href="{{ route('permission.edit', $permission["id"]) }}" class="btn btn-primary btn-circle" title="Editar">
+                    <td data-label="Id">{{ $permission['id'] }}</td>
+                    <td data-label="Fecha">{{ $permission['permission_date'] }}</td>
+                    <td data-label="Hora de inicio">{{ $permission['start_time'] }}</td>
+                    <td data-label="Hora de fin">{{ $permission['end_time'] }}</td>
+                    <td data-label="Hora de salida">{{ $permission['departure_time'] }}</td>
+                    <td data-label="Razón">{{ $permission['reasons'] }}</td>
+                    <td data-label="Sede">{{ $permission->location->name }}</td>
+                    <td data-label="Estado">{{ $permission['status'] }}</td>
+                    <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
+                        <a href="{{ route('permission.edit', $permission["id"]) }}" class="btn btn-primary btn-circle table-btn" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
 
-                       <form id="form-delete-{{ $permission['id'] }}" action="{{ route('permission.destroy', $permission["id"]) }}"
-                            method="post">
+                        <form id="form-delete-{{ $permission['id'] }}" action="{{ route('permission.destroy', $permission["id"]) }}" method="post">
                             @csrf
                             @method('DELETE')
-
-                            <button type="button" class="btn btn-danger btn-circle" title="Eliminar" 
-                            onclick="remove({{ $permission['id'] }})">
+                            <button type="button" class="btn btn-danger btn-circle table-btn" title="Eliminar" 
+                                onclick="remove({{ $permission['id'] }})">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
