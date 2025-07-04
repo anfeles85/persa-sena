@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionTypeController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -84,4 +85,10 @@ Route::prefix('permission')->group(function(){
 Route::prefix('users')->group(function(){
     Route::get('/index', [UsersController::class, 'index'])->name('users.index');
     Route::post('/send_email', [UsersController::class, 'send_email'])->name('users.send_email');
+});
+Route::prefix('reports')->group(function(){
+    Route::get('/index', [ReportsController::class, 'index'])->name('reports.index');
+    Route::get('/export_technicians', [ReportsController::class, 'export_technicians'])->name('reports.technicians');
+    Route::post('/export_activities_by_technician', [ReportsController::class, 'export_activities_by_technician'])->name('reports.activities_technician');
+    Route::post('/export_users_by_date_range', [ReportsController::class, 'export_users_by_date_range'])->name('reports.orders_date');
 });
