@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html>    
-    <body>
-              
-        <footer class="footer pt-3 ">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; PERSA 2025</span>
-                </div>
+<html>
+
+<body>
+
+    <footer class="footer pt-3 ">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <a href="https://sena-clem.blogspot.com/" target="_blank">
+                    <span style="color: #00304D; font-weight: bold;" class="text-start">©
+                    PERSA -
+                    Desarrollado con &hearts; por
+                    ADSO 2921881 - SENA CLEM</span>
+                </a>
+                
             </div>
-        </footer>
-        
-    </body>
+        </div>
+    </footer>
+
+</body>
+
 </html>

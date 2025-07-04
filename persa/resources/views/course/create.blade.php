@@ -1,31 +1,29 @@
 @extends('templates.base')
-@section('title', 'Editar Curso')
-@section('header', 'Editar Curso')
+@section('title', 'Crear Curso')
+@section('header', 'Crear Curso')
 @section('content')
     <div>
-        <label class="fs-3">Editar Curso</label>
+        <label class="fs-3">Crear Curso</label>
         <div class="col-lg-12 mb-4">
-            <form action="{{ route('course.update', $course['id']) }}" method="POST">
+            <form action="{{ route('course.store') }}" method="POST">
                 @csrf
-                @method('PUT')
                 <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    <div class="col-lg-6 mb-4">
                         <label for="shift">Jornada</label>
-                        <select name="shift" id="shift" class="form-control" required value="{{ $course['shift'] }}">
+                        <select name="shift" id="shift" class="form-control" required value="{{ old('shift') }}">
                             @foreach ($shifts as $shift)
-                                <option value="{{ $shift['value'] }}" @if($shift['value'] == $course['shift']) selected @endif>
+                                <option value="{{ $shift['value'] }}" @if(old('shift') == $shift['name']) selected @endif>
                                     {{ $shift['name'] }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    
+                    <div class="col-lg-6 mb-4">
                         <label for="trimester">Trimestre</label>
-                        <select name="trimester" id="trimester" class="form-control" required value="{{ $course['trimester'] }}">
+                        <select name="trimester" id="trimester" class="form-control" required value="{{ old('trimester') }}">
                             @foreach ($trimesters as $trimester)
-                                <option value="{{ $trimester['value'] }}" @if($trimester['value'] == $course['trimester']) selected @endif>
+                                <option value="{{ $trimester['value'] }}" @if(old('trimester') == $trimester['name']) selected @endif>
                                     {{ $trimester['name'] }}
                                 </option>
                             @endforeach
@@ -33,32 +31,31 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    <div class="col-lg-6 mb-4">
                         <label for="year">Año</label>
-                        <input type="number" class="form-control" name="year" id="year" 
-                         required value="{{ $course['year'] }}">
+                        <input type="number" class="form-control" name="year" id="year"
+                         required value="{{ old('year') }}">
                     </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
-                        <label for="status">Estado</label>
-                        <select name="status" id="status" class="form-control" required value="{{ $course['status'] }}">
+                    <div class="col-lg-6 mb-4">
+                        <label for="type">Estado</label>
+                        <select name="status" id="status" class="form-control" required value="{{ old('status') }}">
                             @foreach ($status as $status)
-                                <option value="{{ $status['value'] }}" @if($status['value'] == $course['status']) selected @endif>
+                                <option value="{{ $status['value'] }}" @if(old('status') == $status['name']) selected @endif>
                                     {{ $status['name'] }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                 </div>
+
                 <div class="row form-group">
-                    <div class="col-lg-6 mb-4">
-                        <label for="career_id">Carrera</label>
+                    <div class="col-lg-12 mb-4">
+                        <label for="career_id">Programa</label>
                         <select name="career_id" id="career_id" class="form-control">
                             <option value="">Seleccione</option>
                             @foreach ($careers as $career)
                                 <option value="{{ $career['id'] }}" 
-                                @if($career['id'] == $course['career_id']) selected @endif>
+                                @if(old('career_id') == $career['id']) selected @endif>
                                     {{ $career['name'] }}
                                 </option>
                             @endforeach

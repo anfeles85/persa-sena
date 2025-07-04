@@ -17,13 +17,15 @@ class Permission extends Model
      protected $fillable =[
         'permission_date',
         'start_time',
+        'end_time',
         'departure_time',
         'reasons',
         'instructor_id',
         'guard_id',
         'status',
         'location_id',
-        'permission_type_id'
+        'permission_type_id',
+        'apprentice_id'
      ];
 
     /**
@@ -31,6 +33,13 @@ class Permission extends Model
      */
     public function instructor_user(){
         return $this->belongsTo(User::class, 'instructor_id');
+    }
+
+     /**
+     * relación con la tabla user, instructor_id
+     */
+    public function apprentice_user(){
+        return $this->belongsTo(User::class, 'apprentice_id');
     }
 
     /**

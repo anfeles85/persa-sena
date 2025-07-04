@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use App\Models\Permission;
+use App\Models\PermissionType;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PermissionController extends Controller
 {
@@ -11,33 +15,20 @@ class PermissionController extends Controller
         'permission_date' => 'required|date|date_format:Y-m-d',
         'start_time' => 'required|date_format:H:i',
         'end_time' => 'required|date_format:H:i',
-        'departure_time' => 'required|date_format:H:i',
-        'reasons' => 'required|string|min:3|max:60',
-        'instructor_id' => 'required|numeric|min:1|max:99999999999999999999',
-        'guard_id' => 'required|numeric|min:1|max:99999999999999999999',
-        'status' => 'required|string|min:3|max:50',
+        'reasons' => 'required|string|min:3|max:60', 
         'location_id' => 'required|numeric|min:1|max:99999999999999999999',
-        'permission_type_id' => 'required|numeric|min:1|max:99999999999999999999'
+        'permission_type_id' => 'required|numeric|min:1|max:99999999999999999999',
     ];
 
     private $traductionAttributes = [
         'permission_date' => 'fecha de permiso',
         'start_time' => 'hora de inicio',
         'end_time' => 'hora de fin',
-        'departure_time' => 'hora de salida',
         'reasons' => 'motivo',
-        'instructor_id' => 'instructor id',
-        'guard_id' => 'guarda id',
-        'status' => 'estado',
-        'location_id' => 'sede id',
-        'permission_type_id' => 'tipo de permiso id',
+        'location_id' => 'sede',
+        'permission_type_id' => 'tipo de permiso',
     ];
 
-    private $status = [
-        ['name' => 'APROBADO', 'value' => 'APROBADO'],
-        ['name' => 'PENDIENTE', 'value' => 'PENDIENTE'],
-        ['name' => 'DESAPROBADO', 'value' => 'DESAPROBADO'],
-    ];
     
     public function index()
     {
@@ -50,7 +41,11 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        $permissions = Permission::all();
+        $locations = Location::all();
+        $permissionTypes = PermissionType::all();
+        return view('permission.create', compact('locations','permissionTypes'));
+
     }
 
     /**
@@ -58,7 +53,31 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), $this->rules)->setAttributeNames($this->traductionAttributes);
+
+        if ($validator->fails()) {
+        return redirect()
+            ->route('permission.create')
+            ->withInput()
+            ->withErrors($validator);
+        }
+        $data = $request->only([
+            'permission_date',
+            'start_time',
+            'end_time',
+            'reasons',
+            'location_id',
+            'permission_type_id',
+        ]);
+
+        $data['instructor_id']  = 1;          
+        $data['guard_id']       = 1;
+        $data['status']         = 'PENDIENTE'; 
+        $data['departure_time'] = now()->format('H:i');
+        $data['apprentice_id']  = 1;
+
+        Permission::create($data);
+        return redirect()->route('permission.index')->with('created_successfully', true);
     }
 
     /**
@@ -74,7 +93,19 @@ class PermissionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
+        $permission = Permission::find($id);
+        if ($permission) // si existe
+        {
+            $locations = Location::all();
+            $permissionTypes = PermissionType::all();
+            return view('permission.edit', compact('permission', 'locations', 'permissionTypes'));
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra el técnico solicitado');
+            return redirect()->route('permission.index');
+        }
     }
 
     /**
@@ -82,7 +113,37 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
+        $validator = Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
+
+        $data = $request->only([
+        'permission_date',
+        'start_time',
+        'end_time',
+        'reasons',
+        'location_id',
+        'permission_type_id',
+    ]);
+        $data['instructor_id']  = 1;          
+        $data['guard_id']       = 1;
+        $data['status']         = 'PENDIENTE'; 
+        $data['departure_time'] = now()->format('H:i');
+        $data['apprentice_id']  = 1;
+        
+        $permission = Permission::find($id);
+        if($permission) 
+        {
+            $permission->update($request->all());
+            session()->flash('message', 'Permiso actualizado exitosamente');
+        }
+        else
+        {
+            session()->flash('warning', 'No se encuentra el permiso solicitado');
+            return redirect()->route('permission.index');
+        }
+
+        return redirect()->route('permission.index')->with('success', 'El permiso se editó correctamente.');
     }
 
     /**
@@ -90,6 +151,7 @@ class PermissionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Permission::destroy($id); 
+        return redirect()->route('permission.index')->with('success', 'Permiso eliminado correctamente');
     }
 }
