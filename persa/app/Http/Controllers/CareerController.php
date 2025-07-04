@@ -13,9 +13,13 @@ class CareerController extends Controller
         return view('career.index', compact('careers'));
     }
 
-    public function create()
-    {
-        return view('career.create');
+    public function create(){
+        $types = [
+            ['name' => 'Técnica', 'value' => 'tecnica'],
+            ['name' => 'Tecnológica', 'value' => 'tecnologica'],
+            ['name' => 'Especialización', 'value' => 'especializacion'],
+        ];
+        return view('career.create', compact('types'));
     }
 
     public function store(Request $request)
@@ -24,10 +28,14 @@ class CareerController extends Controller
         return redirect()->route('career.index')->with('success', 'Carrera creada correctamente.');
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
         $career = Career::findOrFail($id);
-        return view('career.edit', compact('career'));
+        $types = [
+            ['name' => 'Técnica', 'value' => 'tecnica'],
+            ['name' => 'Tecnológica', 'value' => 'tecnologica'],
+            ['name' => 'Especialización', 'value' => 'especializacion'],
+        ];
+        return view('career.edit', compact('career', 'types'));
     }
 
     public function update(Request $request, $id)

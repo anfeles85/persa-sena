@@ -28,14 +28,14 @@
             <tbody>
                 @foreach ($courses as $course)
                 <tr>
-                    <td>{{ $course['id'] }}</td>
-                    <td>{{ $course->career->name ?? 'Sin programa' }}</td>
-                    <td>{{ $course['shift'] }}</td>
-                    <td>{{ $course['trimester'] }}</td>
-                    <td>{{ $course['year'] }}</td>
-                    <td>{{ $course['status'] }}</td>
-                    <td class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
-                        <a href="{{ route('course.edit', $course["id"]) }}" class="btn btn-primary btn-circle" title="Editar">
+                    <td data-label="Id">{{ $course['id'] }}</td>
+                    <td data-label="Nombre">{{ $course->career->name ?? 'Sin programa' }}</td>
+                    <td data-label="Jornada">{{ $course['shift'] }}</td>
+                    <td data-label="Trimestre">{{ $course['trimester'] }}</td>
+                    <td data-label="Año">{{ $course['year'] }}</td>
+                    <td data-label="Estado">{{ $course['status'] }}</td>
+                    <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
+                        <a href="{{ route('course.edit', $course["id"]) }}" class="btn btn-primary btn-circle table-btn" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
 
@@ -44,7 +44,7 @@
                             @csrf
                             @method('DELETE')
 
-                            <button type="button" class="btn btn-danger btn-circle" title="Eliminar" 
+                            <button type="button" class="btn btn-danger btn-circle table-btn" title="Eliminar" 
                             onclick="remove({{ $course['id'] }})">
                                 <i class="fas fa-trash"></i>
                             </button>

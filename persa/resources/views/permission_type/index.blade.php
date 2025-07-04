@@ -27,10 +27,10 @@
             <tbody>
                 @foreach ($permissionTypes as $permissionType)
                 <tr>
-                    <td>{{ $permissionType['id'] }}</td>
-                    <td>{{ $permissionType['name'] }}</td>
-                    <td class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
-                        <a href="{{ route('permission_type.edit', $permissionType["id"]) }}" class="btn btn-primary btn-circle" title="Editar">
+                    <td data-label="Id">{{ $permissionType['id'] }}</td>
+                    <td data-label="Nombre">{{ $permissionType['name'] }}</td>
+                    <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
+                        <a href="{{ route('permission_type.edit', $permissionType["id"]) }}" class="btn btn-primary btn-circle table-btn" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
 
@@ -39,7 +39,7 @@
                             @csrf
                             @method('DELETE')
 
-                            <button type="button" class="btn btn-danger btn-circle" title="Eliminar" 
+                            <button type="button" class="btn btn-danger btn-circle table-btn" title="Eliminar" 
                             onclick="remove({{ $permissionType['id'] }})">
                                 <i class="fas fa-trash"></i>
                             </button>
