@@ -1,7 +1,6 @@
 #table_data {
   width: 100%;
   overflow-x: auto;
-  display: block;
 }
 
 #table_data thead, 
@@ -21,7 +20,7 @@
   vertical-align: middle;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 1520px) {
   #table_data,
   #table_data thead,
   #table_data tbody,
