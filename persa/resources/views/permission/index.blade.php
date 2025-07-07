@@ -47,7 +47,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="button" class="btn btn-danger btn-circle table-btn" title="Eliminar" 
-                                onclick="remove({{ $permission['id'] }})">
+                                onclick="remove(event, {{ $permission['id'] }})">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>

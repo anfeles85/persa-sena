@@ -20,29 +20,40 @@ function initDataTable() {
     });
 }
 
-function remove(id) {
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: "¡No podrás revertir esto!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminarlo',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Envía el formulario de eliminación
-            document.getElementById(`form-delete-${id}`).submit();
-
-            // Mostrar mensaje de éxito 
-            Swal.fire(
-                'Eliminado',
-                'El permiso ha sido eliminado.',
-                'success'
-            );
-        }
+function remove(event ,id) {
+    event.preventDefault(); //previene el envio inmediaro del formulario
+    const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: "btn btn-success",
+    cancelButton: "btn btn-danger"
+  },
+  buttonsStyling: false
+});
+swalWithBootstrapButtons.fire({
+  title: "¿Estas seguro?",
+  text: "¡esta acción no se puede revertir!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonText: "Eliminar",
+  cancelButtonText: "cancelar",
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    swalWithBootstrapButtons.fire({
+      title: "Eliminar",
+      text: "Registro eliminado exitosamente",
+      icon: "success"
     });
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire({
+      text: "Acción cancelada",
+      icon: "error"
+    });
+  }
+});
 }
 
 function update() {

@@ -39,7 +39,7 @@
                             @method('DELETE')
 
                             <button type="submit" class="btn btn-danger btn-circle table-btn" title="Eliminar" 
-                            onclick="remove({{ $career['id'] }})">
+                            onclick="remove(event, {{ $career['id'] }})">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>

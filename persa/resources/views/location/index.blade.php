@@ -39,7 +39,7 @@
                   @method('DELETE')
 
                   <button type="button" class="btn btn-danger btn-circle table-btn" title="Eliminar" 
-                  onclick="remove({{ $location['id'] }})">
+                  onclick="remove(event, {{ $location['id'] }})">
                     <i class="fas fa-trash"></i>
                   </button>
                 </form>

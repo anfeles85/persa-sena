@@ -40,7 +40,7 @@
                             @method('DELETE')
 
                             <button type="button" class="btn btn-danger btn-circle table-btn" title="Eliminar" 
-                            onclick="remove({{ $permissionType['id'] }})">
+                            onclick="remove(event, {{ $permissionType['id'] }})">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
