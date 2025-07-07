@@ -26,24 +26,24 @@
       <tbody>
         @foreach ($locations as $location)
         <tr>
-          <td>{{ $location['id'] }}</td>
-          <td>{{ $location['name'] }}</td>
-          <td>{{ $location['address'] }}</td>
-          <td class="d-flex align-items-center justify-content-center gap-2">
-            <a href="{{ route('location.edit', $location["id"]) }}" class="btn btn-primary btn-circle" title="Editar">
-                <i class="far fa-edit"></i>
-            </a>
-            <form id="form-delete-{{ $location['id'] }}" action="{{ route('location.destroy', $location["id"]) }}"
-              method="post">
-              @csrf
-              @method('DELETE')
+            <td data-label="Id">{{ $location['id'] }}</td>
+            <td data-label="Nombre">{{ $location['name'] }}</td>
+            <td data-label="Direccion">{{ $location['address'] }}</td>
+            <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2">
+                <a href="{{ route('location.edit', $location["id"]) }}" class="btn btn-primary btn-circle table-btn" title="Editar">
+                    <i class="far fa-edit"></i>
+                </a>
+                <form id="form-delete-{{ $location['id'] }}" action="{{ route('location.destroy', $location["id"]) }}"
+                  method="post">
+                  @csrf
+                  @method('DELETE')
 
-              <button type="button" class="btn btn-danger btn-circle" title="Eliminar" 
-              onclick="remove({{ $location['id'] }})">
-                <i class="fas fa-trash"></i>
-              </button>
-            </form>
-          </td>
+                  <button type="button" class="btn btn-danger btn-circle table-btn" title="Eliminar" 
+                  onclick="remove({{ $location['id'] }})">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </form>
+            </td>
         </tr>
         @endforeach
       </tbody>

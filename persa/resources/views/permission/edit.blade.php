@@ -52,9 +52,6 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-
-                <div class="row form-group">
                     <div class="col-lg-6 mb-4">
                         <label for="permission_type_id">Tipo de Permiso</label>
                         <select name="permission_type_id" id="permission_type_id" class="form-control">
@@ -73,7 +70,7 @@
 {{-- BUTTONS --}}
                 <div class="row">
                     <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-success w-50" onclick="{{ create() }}">Guardar</button>
+                    <button type="submit" class="btn btn-success w-50">Guardar</button>
                     <a href="{{ route('permission.index') }}" class="btn btn-secondary w-50">Cancelar</a>
                     </div>
                 </div>

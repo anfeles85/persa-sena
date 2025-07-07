@@ -29,7 +29,7 @@
                 </div>
                 <div class="row">
                     <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-success w-50" onclick="{{ create() }}">Guardar</button>
+                    <button type="submit" class="btn btn-success w-50" >Guardar</button>
                     <a href="{{ route('career.index') }}" class="btn btn-secondary w-50">Cancelar</a>
                     </div>
                 </div>

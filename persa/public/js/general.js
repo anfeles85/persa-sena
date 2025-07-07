@@ -1,4 +1,10 @@
-$(document).ready(function() {
+function initDataTable() {
+    // Verifica si ya está inicializada y la destruye (sin borrar datos)
+    if ($.fn.DataTable.isDataTable('#table_data')) {
+        $('#table_data').DataTable().destroy();
+    }
+
+    // Ahora sí vuelve a crearla
     $('#table_data').DataTable({
         "pageLength": 10,
         "lengthChange": false,
@@ -8,11 +14,11 @@ $(document).ready(function() {
                 "next": "Sgte"
             },
             "search": "Buscar:",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            "info": "Mostrando START a END de TOTAL registros",
             "infoEmpty": "No existen registros",
         }
     });
-});
+}
 
 function remove(id) {
     Swal.fire({
@@ -28,7 +34,7 @@ function remove(id) {
         if (result.isConfirmed) {
             // Envía el formulario de eliminación
             document.getElementById(`form-delete-${id}`).submit();
-            
+
             // Mostrar mensaje de éxito 
             Swal.fire(
                 'Eliminado',
@@ -47,7 +53,6 @@ function update() {
         showConfirmButton: false,
         timer: 1500
     });
-    
 }
 
 function create() {
@@ -57,5 +62,4 @@ function create() {
         icon: 'success',
         confirmButtonText: 'Aceptar'
     });
-    
 }

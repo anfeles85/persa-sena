@@ -43,18 +43,13 @@ class LocationController extends Controller
         return redirect()->route('location.index')->with('created_successfully', true);
     }
 
-    public function edit($id)
-    {
-        $location = Location::find($id);
-        if ($location) // si existe
-        {
-            return view('location.edit', compact('location'));
-        }
-        else
-        {
-            session()->flash('warning', 'No se encuentra el técnico solicitado');
-            return redirect()->route('location.index');
-        }
+    public function edit($id){
+        $location = Location::findOrFail($id);
+        $types = [
+            ['name' => 'Principal', 'value' => 'principal'],
+            ['name' => 'Secundaria', 'value' => 'secundaria'],
+        ];
+        return view('location.edit', compact('location', 'types'));
     }
 
     public function update(Request $request, $id)
