@@ -3,9 +3,9 @@
   overflow-x: auto;
 }
 
-#table_data thead, 
-#table_data tbody, 
-#table_data td, 
+#table_data thead,
+#table_data tbody,
+#table_data td,
 #table_data th {
   border-bottom: none !important;
   border-top: none !important;
@@ -20,6 +20,26 @@
   vertical-align: middle;
 }
 
+/* Estilo de botones para escritorio */
+.table-btn {
+  display: inline-block;
+  width: auto;
+  font-size: 1em;
+  margin: 0 0.3em;
+  padding: 6px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+#buttons_DE {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+
+/* RESPONSIVE TABLE */
 @media (max-width: 1520px) {
   #table_data,
   #table_data thead,
@@ -38,7 +58,7 @@
   #table_data tr {
     margin-bottom: 1.5rem;
     border: none;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
@@ -61,7 +81,6 @@
     font-size: 1em;
     color: #222;
     border-bottom: 1px solid #f1f3f4;
-    position: relative;
     z-index: 1;
   }
 
@@ -93,54 +112,51 @@
     z-index: 0;
   }
 
-  }
-
+  /* Botones en móviles */
   .table-btn {
     display: block;
-    width: 500%;
+    width: 100%;
     font-size: 1.15em;
     margin-bottom: 0.7em;
     border-radius: 10px;
     align-items: center;
+    padding: 8px;
+    position: relative;
+    z-index: 2;
   }
 
   .table-btn:last-child {
     margin-bottom: 0;
   }
 
-  #buttons_DE{
+  #buttons_DE {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-
   #table_data td#buttons_DE {
     display: block !important;
     text-align: center;
     padding-left: 0;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    justify-content: flex-start !important;
-    gap: 0 !important;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
   }
 
   #table_data td#buttons_DE .table-btn {
-    display: block;
     width: 100%;
     margin-bottom: 0.7em;
-    font-size: 1.15em;
-    padding: 8px;
-    border-radius: 10px;
-    position: relative;
-    z-index: 2;
   }
-  
+
   #table_data td#buttons_DE .table-btn:last-child {
     margin-bottom: 0;
   }
 
+  /* Eliminar fondo del data-label si se usa la clase */
   #table_data td.no-label-bg:before {
-  background: transparent !important;
-  border-right: none !important;
+    background: transparent;
+    border-right: none;
+  }
 }
