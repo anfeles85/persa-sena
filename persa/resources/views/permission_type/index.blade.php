@@ -29,7 +29,7 @@
                 <tr>
                     <td data-label="Id">{{ $permissionType['id'] }}</td>
                     <td data-label="Nombre">{{ $permissionType['name'] }}</td>
-                    <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
+                    <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2 no-label-bg" style="border-top: none;">
                         <a href="{{ route('permission_type.edit', $permissionType["id"]) }}" class="btn btn-primary btn-circle table-btn" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
