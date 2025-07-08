@@ -61,6 +61,8 @@
     font-size: 1em;
     color: #222;
     border-bottom: 1px solid #f1f3f4;
+    position: relative;
+    z-index: 1;
   }
 
   #table_data td:last-child {
@@ -88,6 +90,9 @@
     box-sizing: border-box;
     white-space: normal;
     letter-spacing: 0.01em;
+    z-index: 0;
+  }
+
   }
 
   .table-btn {
@@ -127,8 +132,15 @@
     font-size: 1.15em;
     padding: 8px;
     border-radius: 10px;
+    position: relative;
+    z-index: 2;
   }
+  
   #table_data td#buttons_DE .table-btn:last-child {
     margin-bottom: 0;
   }
+
+  #table_data td.no-label-bg:before {
+  background: transparent !important;
+  border-right: none !important;
 }

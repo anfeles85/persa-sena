@@ -28,7 +28,7 @@
                     <td data-label="Id">{{ $career['id'] }}</td>
                     <td data-label="Nombre">{{ $career['name'] }}</td>
                     <td data-label="Tipo">{{ $career['type'] }}</td>
-                    <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
+                    <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2 no-label-bg" style="border-top: none;">
                         <a href="{{ route('career.edit', $career["id"]) }}" class="btn btn-primary btn-circle table-btn" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
@@ -39,7 +39,7 @@
                             @method('DELETE')
 
                             <button type="submit" class="btn btn-danger btn-circle table-btn" title="Eliminar" 
-                            onclick="remove({{ $career['id'] }})">
+                            onclick="remove(event, {{ $career['id'] }})">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
