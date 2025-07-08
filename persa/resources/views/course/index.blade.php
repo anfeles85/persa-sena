@@ -34,7 +34,7 @@
                     <td data-label="Trimestre">{{ $course['trimester'] }}</td>
                     <td data-label="Año">{{ $course['year'] }}</td>
                     <td data-label="Estado">{{ $course['status'] }}</td>
-                    <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2 no-label-bg" style="border-top: none;">
+                    <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
                         <a href="{{ route('course.edit', $course["id"]) }}" class="btn btn-primary btn-circle table-btn" title="Editar">
                             <i class="far fa-edit"></i>
                         </a>
