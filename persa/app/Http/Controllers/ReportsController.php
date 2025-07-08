@@ -15,8 +15,8 @@ class ReportsController extends Controller
      */
     public function index()
     {
-         $courses = Course::all();
-        return view('reports.index', compact('Course'));
+        $courses = Course::all();
+        return view('reports.index', compact('courses'));
     }
 
     /**
@@ -40,42 +40,44 @@ class ReportsController extends Controller
                     'isRemoteEnabled'=>true
                 ]); //landscape: horizontal
                 
-        return $pdf->download('permission_type.pdf');
+        return $pdf->download('courses.pdf');
     }   
     /**
-     * reporte que genera el listado de actividades de un técnico
+     * reporte que genera el permiso de un aprendiz en especifico
      */
-    public function export_reason_by_permission(Request $request)
-    {
-        $permissions = Permission::where('permission_type_id', $request['permission_id'])->get();
-                
-        $data = array(
-            'permissions' => $permissions
-        );
+    public function export_permissions_by_apprentice(Request $request)
+{
+    // Filtrar permisos por el aprendiz que los solicitó
+    $permissions = Permission::where('user_id', $request['apprentice_id'])->get();
 
-        $pdf = Pdf::loadView('reports.export_reason_by_permission', $data)
-                ->setPaper('letter', 'portrait')
-                ->setOptions([
-                    'defaultFont'=>'sans-serif', 
-                    'isRemoteEnabled'=>true
-                ]); 
-                
-        return $pdf->download('Permission_typeByPermission-' . $request['permission_type_id'] . '.pdf');
-    }
+    $data = [
+        'permissions' => $permissions
+    ];
+
+    $pdf = Pdf::loadView('reports.export_permissions_by_apprentice', $data)
+        ->setPaper('letter', 'portrait')
+        ->setOptions([
+            'defaultFont' => 'sans-serif',
+            'isRemoteEnabled' => true
+        ]);
+
+    return $pdf->download('Permisos_Aprendiz_' . $request['apprentice_id'] . '.pdf');
+}
+
      /**
      * reporte que genera listado ordenes en un rango de fechas 
      */
-    public function export_users_by_date_range(Request $request)
+    public function export_permissions_by_date_range(Request $request)
     {
-        $users = User::whereBetween('legalization_date', [$request['date1'], $request['date2']])->get();
+        $permissions = Permission::whereBetween('permission_date', [$request['date1'], $request['date2']])->get();
                 
         $data = array(
-            'users' => $users,
+            'permissions' => $permissions,
             'date1' => $request['date1'],
             'date2' => $request['date2']
         );
 
-        $pdf = Pdf::loadView('reports.export_users_by_date_range', $data)
+        $pdf = Pdf::loadView('reports.export_permissions_by_date_range', $data)
                 ->setPaper('letter', 'portrait')
                 ->setOptions([
                     'defaultFont'=>'sans-serif', 
