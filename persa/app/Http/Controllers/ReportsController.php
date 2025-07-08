@@ -16,7 +16,8 @@ class ReportsController extends Controller
     public function index()
     {
         $courses = Course::all();
-        return view('reports.index', compact('courses'));
+        $users = User::where('role_id', 3)->get();
+        return view('reports.index', compact('courses', 'users'));
     }
 
     /**
@@ -47,21 +48,26 @@ class ReportsController extends Controller
      */
     public function export_permissions_by_apprentice(Request $request)
 {
-    // Filtrar permisos por el aprendiz que los solicitó
-    $permissions = Permission::where('user_id', $request['apprentice_id'])->get();
+    // Validar que el aprendiz exista y tenga rol de aprendiz (role_id = 3)
+    $apprentice = User::where('id', $request->input('apprentice_id'))
+                      ->where('role_id', 3)
+                      ->firstOrFail();
 
-    $data = [
-        'permissions' => $permissions
-    ];
+    // Obtener permisos de ese aprendiz
+    $permissions = Permission::where('apprentice_id', $apprentice->id)->get();
 
-    $pdf = Pdf::loadView('reports.export_permissions_by_apprentice', $data)
+    // Generar PDF
+    $pdf = Pdf::loadView('reports.export_permissions_by_apprentice', [
+            'permissions' => $permissions,
+            'apprentice' => $apprentice
+        ])
         ->setPaper('letter', 'portrait')
         ->setOptions([
             'defaultFont' => 'sans-serif',
             'isRemoteEnabled' => true
         ]);
 
-    return $pdf->download('Permisos_Aprendiz_' . $request['apprentice_id'] . '.pdf');
+    return $pdf->download('Permisos_Aprendiz_' . $apprentice->id . '.pdf');
 }
 
      /**
