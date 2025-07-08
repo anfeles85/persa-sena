@@ -34,7 +34,7 @@ class ReportsController extends Controller
          * dompdf version 3.x
          * se debe agregar setOptions
          */
-         $pdf = Pdf::loadView('reports.export_course', $data)
+         $pdf = Pdf::loadView('reports.export_courses', $data)
                 ->setPaper('letter', 'portrait')
                 ->setOptions([
                     'defaultFont'=>'sans-serif', 
