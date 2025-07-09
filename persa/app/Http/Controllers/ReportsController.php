@@ -41,7 +41,7 @@ class ReportsController extends Controller
                     'isRemoteEnabled'=>true
                 ]); //landscape: horizontal
                 
-        return $pdf->download('courses.pdf');
+        return $pdf->download('Courses.pdf');
     }   
     /**
      * reporte que genera el permiso de un aprendiz en especifico

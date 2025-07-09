@@ -1,5 +1,5 @@
 @extends('templates.base_reports')
-@section('header', 'Reporte general de técnicos')
+@section('header', 'Reporte general de cursos')
 @section('content')
     <section id="results">
         @if ($courses)
