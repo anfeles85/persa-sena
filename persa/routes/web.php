@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CareerController;
+use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PermissionController;
@@ -81,7 +82,18 @@ Route::prefix('permission')->group(function(){
     Route::put('/update/{id}',[PermissionController::class, 'update'])->name('permission.update');
     Route::delete('/destroy/{id}',[PermissionController::class, 'destroy'])->name('permission.destroy');
 });
+
 Route::prefix('users')->group(function(){
     Route::get('/index', [UsersController::class, 'index'])->name('users.index');
     Route::post('/send_email', [UsersController::class, 'send_email'])->name('users.send_email');
+});
+
+Route::prefix('users')->group(function(){
+    Route::get('/index', [UsersController::class, 'index'])->name('users.index');
+    Route::post('/send_email', [UsersController::class, 'send_email'])->name('users.send_email');
+});
+
+Route::prefix('auth')->group(function(){
+    Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
+    Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
 });
