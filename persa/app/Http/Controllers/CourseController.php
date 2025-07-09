@@ -74,7 +74,7 @@ class CourseController extends Controller
         }
 
         Course::create($request->all());
-        return redirect()->route('course.index')->with('created_successfully', true);
+        return redirect()->route('course.index')->with('success', 'Curso creado exitosamente');
     }
 
     /**

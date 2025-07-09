@@ -41,7 +41,7 @@ class PermissionTypeController extends Controller
         ]); 
 
         PermissionType::create($request->all());
-        return redirect()->route('permission_type.index')->with('created_successfully', true);
+        return redirect()->route('permission_type.index')->with('success', 'Tipo de permiso creado exitosamente');
     }
 
     public function edit($id)
