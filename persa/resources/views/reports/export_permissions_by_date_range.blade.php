@@ -21,7 +21,7 @@
                             <td>{{ $permission['id'] }}</td>
                             <td>{{ $permission['permission_date'] }}</td>
                             <td>{{ $permission['reasons'] }}</td>
-                            <td>{{ $permission->apprentice_id->user->fullname }}</td>
+                            <td>{{ $permission->apprentice_user->fullname }}</td>
                             <td>{{ $permission['status'] }}</td>
                             <td>{{ $permission->location->name }}</td>
                         </tr>

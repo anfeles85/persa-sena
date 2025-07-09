@@ -22,14 +22,14 @@
         </table>
     </section>
 
-
     <section id="infoReport">
         <p style="font-size: 14px">
             <strong>Fecha reporte: </strong>
-            @php
-                $time = time();
-                echo date('Y-m-d (H:i:s)', $time);
+           @php
+                date_default_timezone_set('America/Bogota');
+                echo date('Y-m-d (H:i:s)');
             @endphp
+
         </p>
     </section>
 
