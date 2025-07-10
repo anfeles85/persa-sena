@@ -100,3 +100,9 @@ Route::prefix('auth')->group(function(){
     Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
     Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
 });
+
+
+Route::prefix('auth')->group(function(){
+    Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
+    Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
+});
