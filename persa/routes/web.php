@@ -88,9 +88,15 @@ Route::prefix('users')->group(function(){
     Route::get('/index', [UsersController::class, 'index'])->name('users.index');
     Route::post('/send_email', [UsersController::class, 'send_email'])->name('users.send_email');
 });
+
 Route::prefix('reports')->group(function(){
     Route::get('/index', [ReportsController::class, 'index'])->name('reports.index');
     Route::get('/export_courses', [ReportsController::class, 'export_courses'])->name('reports.course');
     Route::post('/export_permissions_by_apprentice', [ReportsController::class, 'export_permissions_by_apprentice'])->name('reports.permission_apprentice');
     Route::post('/export_permissions_by_date_range', [ReportsController::class, 'export_permissions_by_date_range'])->name('reports.permission_date');
+});
+
+Route::prefix('auth')->group(function(){
+    Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
+    Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
 });
