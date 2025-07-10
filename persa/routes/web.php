@@ -95,15 +95,6 @@ Route::prefix('reports')->group(function(){
     Route::post('/export_permissions_by_apprentice', [ReportsController::class, 'export_permissions_by_apprentice'])->name('reports.permission_apprentice');
     Route::post('/export_permissions_by_date_range', [ReportsController::class, 'export_permissions_by_date_range'])->name('reports.permission_date');
 });
-<<<<<<< HEAD
-=======
-
-Route::prefix('auth')->group(function(){
-    Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
-    Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
-});
-
->>>>>>> origin/G2
 
 Route::prefix('auth')->group(function(){
     Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
