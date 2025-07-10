@@ -88,10 +88,6 @@ Route::prefix('users')->group(function(){
     Route::post('/send_email', [UsersController::class, 'send_email'])->name('users.send_email');
 });
 
-Route::prefix('users')->group(function(){
-    Route::get('/index', [UsersController::class, 'index'])->name('users.index');
-    Route::post('/send_email', [UsersController::class, 'send_email'])->name('users.send_email');
-});
 
 Route::prefix('auth')->group(function(){
     Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
