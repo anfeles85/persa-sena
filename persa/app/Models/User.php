@@ -78,6 +78,6 @@ class User extends Authenticatable
      * relación con la tabla instrcutor_course
      */
     public function instructorCourses(){
-        return $this->belongsToMany(Course::class, 'instrcutor_course', 'instructor_id', 'course_id');
+        return $this->belongsToMany(Course::class, 'instructor_course', 'instructor_id', 'course_id');
     }
 }
