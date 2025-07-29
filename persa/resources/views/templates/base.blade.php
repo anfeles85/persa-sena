@@ -79,7 +79,6 @@
     </script>
     @endif
 
-    
 
     @if(session('error'))
     <script>
