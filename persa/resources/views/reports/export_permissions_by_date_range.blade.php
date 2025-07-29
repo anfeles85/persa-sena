@@ -12,6 +12,7 @@
                     <th>Fecha de permiso</th>
                     <th>Motivo</th>
                     <th>Aprendiz</th>
+                    <th>Documento</th>
                     <th>Estado</th>
                     <th>Sede</th>
                 </thead>
@@ -22,6 +23,7 @@
                             <td>{{ $permission['permission_date'] }}</td>
                             <td>{{ $permission['reasons'] }}</td>
                             <td>{{ $permission->apprentice_user->fullname }}</td>
+                            <td>{{ $permission->apprentice_user->id }}</td> 
                             <td>{{ $permission['status'] }}</td>
                             <td>{{ $permission->location->name }}</td>
                         </tr>
