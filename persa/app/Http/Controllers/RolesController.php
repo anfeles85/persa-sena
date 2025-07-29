@@ -41,7 +41,7 @@ class RolesController extends Controller
         ]); 
 
         Roles::create($request->all());
-        return redirect()->route('roles.index')->with('created_successfully', true);
+        return redirect()->route('roles.index')->with('success', 'Rol creado exitosamente');
     }
 
     public function edit($id)

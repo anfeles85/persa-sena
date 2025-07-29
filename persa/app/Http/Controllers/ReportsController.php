@@ -16,7 +16,8 @@ class ReportsController extends Controller
     public function index()
     {
         $courses = Course::all();
-        return view('reports.index', compact('courses'));
+        $users = User::where('role_id', 3)->get();
+        return view('reports.index', compact('courses', 'users'));
     }
 
     /**
@@ -33,35 +34,40 @@ class ReportsController extends Controller
          * dompdf version 3.x
          * se debe agregar setOptions
          */
-         $pdf = Pdf::loadView('reports.export_course', $data)
+         $pdf = Pdf::loadView('reports.export_courses', $data)
                 ->setPaper('letter', 'portrait')
                 ->setOptions([
                     'defaultFont'=>'sans-serif', 
                     'isRemoteEnabled'=>true
                 ]); //landscape: horizontal
                 
-        return $pdf->download('courses.pdf');
+        return $pdf->download('Courses.pdf');
     }   
     /**
      * reporte que genera el permiso de un aprendiz en especifico
      */
     public function export_permissions_by_apprentice(Request $request)
 {
-    // Filtrar permisos por el aprendiz que los solicitó
-    $permissions = Permission::where('user_id', $request['apprentice_id'])->get();
+    // Validar que el aprendiz exista y tenga rol de aprendiz (role_id = 3)
+    $apprentice = User::where('id', $request->input('apprentice_id'))
+                      ->where('role_id', 3)
+                      ->firstOrFail();
 
-    $data = [
-        'permissions' => $permissions
-    ];
+    // Obtener permisos de ese aprendiz
+    $permissions = Permission::where('apprentice_id', $apprentice->id)->get();
 
-    $pdf = Pdf::loadView('reports.export_permissions_by_apprentice', $data)
+    // Generar PDF
+    $pdf = Pdf::loadView('reports.export_permissions_by_apprentice', [
+            'permissions' => $permissions,
+            'apprentice' => $apprentice
+        ])
         ->setPaper('letter', 'portrait')
         ->setOptions([
             'defaultFont' => 'sans-serif',
             'isRemoteEnabled' => true
         ]);
 
-    return $pdf->download('Permisos_Aprendiz_' . $request['apprentice_id'] . '.pdf');
+    return $pdf->download('Permisos_Aprendiz_' . $apprentice->id . '.pdf');
 }
 
      /**
@@ -70,7 +76,8 @@ class ReportsController extends Controller
     public function export_permissions_by_date_range(Request $request)
     {
         $permissions = Permission::whereBetween('permission_date', [$request['date1'], $request['date2']])->get();
-                
+        
+
         $data = array(
             'permissions' => $permissions,
             'date1' => $request['date1'],

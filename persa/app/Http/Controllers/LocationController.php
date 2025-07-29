@@ -40,7 +40,7 @@ class LocationController extends Controller
         }
 
         Location::create($request->all());
-        return redirect()->route('location.index')->with('created_successfully', true);
+        return redirect()->route('location.index')->with('success', 'Ubicacion creada exitosamente');
     }
 
     public function edit($id){

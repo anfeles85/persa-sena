@@ -29,7 +29,7 @@
             <td data-label="Id">{{ $location['id'] }}</td>
             <td data-label="Nombre">{{ $location['name'] }}</td>
             <td data-label="Direccion">{{ $location['address'] }}</td>
-            <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2 no-label-bg">
+            <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2">
                 <a href="{{ route('location.edit', $location["id"]) }}" class="btn btn-primary btn-circle table-btn" title="Editar">
                     <i class="far fa-edit"></i>
                 </a>
