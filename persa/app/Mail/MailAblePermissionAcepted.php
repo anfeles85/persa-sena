@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Permission;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -9,19 +10,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class mail extends Mailable
+class MailAblePermissionAcepted extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $user;
-    public $content;
+    public $permission;
     /**
      * Create a new message instance.
      */
-    public function __construct($user, $content)
+    public function __construct(Permission $permission)
     {
-        $this->user = $user;
-        $this->content = $content;
+        $this->permission = $permission;
+        $this->permission->load(['apprentice', 'permissionType','location']);
     }
 
     /**
@@ -30,7 +29,7 @@ class mail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Alerta de Persa Sena',
+            subject: 'Permiso Aceptado - Persa Sena',
         );
     }
 
@@ -40,7 +39,7 @@ class mail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.advertising_supervisor',
+            view: 'emails.permission.approved',
         );
     }
 
