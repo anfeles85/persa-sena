@@ -14,34 +14,35 @@ class ChangePasswordController extends Controller
         'password_confirmation' => 'confirmación de contraseña',
     ];
 
-    public function index(){
+    public function index()
+    {
         return view('auth.change_password');
     }
 
-
     public function changePassword(Request $request)
     {
-    $request->validate([
-    'current_password' => 'required|string|min:6',
-    'password' => 'required|string|min:6|confirmed',
-    ], [], $this->traductionAttributes);
+        $request->validate([
+            'current_password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
+        ], [], $this->traductionAttributes);
 
+        $user = User::where('email', 'dameon82@example.com')->first();
 
+        if (!$user) {
+            return redirect()->back()->with('error', 'Usuario no encontrado');
+        }
 
-    $user = User::where('email', 'dameon82@example.com')->first();
+        //Permite comparar contraseñas sin tener que desencriptar
+        $currentPasswordStatus = Hash::check($request->current_password, $user->password);
 
-    if (!$user) {
-        return redirect()->back()->with('error', 'Usuario no encontrado');
-    }
+        if ($currentPasswordStatus) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
 
-    $currentPasswordstatus = Hash::check($request->current_password, $user->password);
-    if ($currentPasswordstatus) {
-        $user->update([
-            'password' => Hash::make($request->password),
-        ]);
-        return redirect()->back()->with('success', 'Contraseña cambiada exitosamente');
-    } else {
-        return redirect()->back()->with('error', 'La contraseña actual no coincide con la contraseña antigua');
-    }
+            return redirect()->back()->with('success', 'Contraseña cambiada exitosamente');
+        } else {
+            return redirect()->back()->with('error', 'La contraseña actual no coincide con la contraseña antigua');
+        }
     }
 }
