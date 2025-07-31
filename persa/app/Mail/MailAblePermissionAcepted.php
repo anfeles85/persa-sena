@@ -20,7 +20,6 @@ class MailAblePermissionAcepted extends Mailable
     public function __construct(Permission $permission)
     {
         $this->permission = $permission;
-        $this->permission->load(['apprentice', 'permissionType','location']);
     }
 
     /**
@@ -39,7 +38,14 @@ class MailAblePermissionAcepted extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.permission.approved',
+            view: 'email.permission_approved',
+            with: [
+                'permission' => $this->permission,
+                'apprentice' => $this->permission->apprentice,
+                'course' => $this->permission->apprentice->apprenticeCourse->course,
+
+                //me falta algo de aqui jijijiji
+            ],
         );
     }
 
