@@ -28,22 +28,25 @@
                     <td data-label="Id">{{ $career['id'] }}</td>
                     <td data-label="Nombre">{{ $career['name'] }}</td>
                     <td data-label="Tipo">{{ $career['type'] }}</td>
-                    <td id="buttons_DE" class="d-flex align-items-center justify-content-center gap-2" style="border-top: none;">
-                        <a href="{{ route('career.edit', $career["id"]) }}" class="btn btn-primary btn-circle table-btn" title="Editar">
-                            <i class="far fa-edit"></i>
-                        </a>
-
-                       <form id="form-delete-{{ $career['id'] }}" action="{{ route('career.destroy', $career["id"]) }}"
-                            method="post">
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="btn btn-danger btn-circle table-btn" title="Eliminar" 
-                            onclick="remove(event, {{ $career['id'] }})">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
-                    </td>
+                    <td id="buttons_DE" style="border-top: none;">
+                    <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
+                        <div class="col-lg-6 mb-4">
+                            <a href="{{ route('career.edit', $career["id"]) }}" class="btn btn-primary btn-circle table-btn w-100" title="Editar">
+                                <i class="far fa-edit"></i>
+                            </a>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <form id="form-delete-{{ $career['id'] }}" action="{{ route('career.destroy', $career["id"]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" class="btn btn-danger btn-circle table-btn w-100" title="Eliminar" 
+                                    onclick="remove(event, {{ $career['id'] }})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </td>
                 </tr>
                 @endforeach
             </tbody>

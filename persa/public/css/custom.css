@@ -20,7 +20,6 @@
   vertical-align: middle;
 }
 
-/* Estilo de botones para escritorio */
 .table-btn {
   display: inline-block;
   width: auto;
@@ -39,7 +38,6 @@
   gap: 0.5em;
 }
 
-/* RESPONSIVE TABLE */
 @media (max-width: 1520px) {
   #table_data,
   #table_data thead,
@@ -112,7 +110,6 @@
     z-index: 0;
   }
 
-  /* Botones en móviles */
   .table-btn {
     display: block;
     width: 100%;
@@ -154,9 +151,22 @@
     margin-bottom: 0;
   }
 
-  /* Eliminar fondo del data-label si se usa la clase */
   #table_data td.no-label-bg:before {
     background: transparent;
     border-right: none;
+  }
+}
+
+@media (max-width: 1520px) {
+  #table_data td#buttons_DE:before {
+    content: none !important;
+    background: transparent !important;
+    border-right: none !important;
+    padding: 0 !important;
+    height: 0 !important;
+  }
+
+  #table_data td#buttons_DE {
+    padding-left: 0 !important;
   }
 }
