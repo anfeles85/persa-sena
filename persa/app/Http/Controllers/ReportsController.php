@@ -75,7 +75,13 @@ class ReportsController extends Controller
      */
     public function export_permissions_by_date_range(Request $request)
     {
-        $permissions = Permission::whereBetween('permission_date', [$request['date1'], $request['date2']])->get();
+        $permissions = Permission::with([
+            'apprentice_user.apprenticeCourse.course.career',
+            'instructor_user',
+            'guard_user',
+            'location',
+            'permissionType',
+        ])->whereBetween('permission_date', [$request['date1'], $request['date2']])->get();
         
 
         $data = array(
