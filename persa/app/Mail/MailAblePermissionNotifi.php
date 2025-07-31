@@ -6,6 +6,7 @@ use App\Models\Permission;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -21,7 +22,6 @@ class MailAblePermission extends Mailable
     public function __construct(Permission $permission)
     {
         $this->permission = $permission;
-        $this->permission->load(['apprentice', 'permissionType','location']);
     }
 
     /**
@@ -30,7 +30,11 @@ class MailAblePermission extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Solicitud de permiso enviada - Persa Sena',
+            subject: 'Registro de salida de permiso - Persa Sena',
+            cc:[ 
+               new Address($this->permission->instructor_user->email, $this->permission->instructor_user->fullname),
+            ]
+        
         );
     }
 
@@ -40,9 +44,15 @@ class MailAblePermission extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.permission.requested',
+            view: 'emails.permission_requested',
+            with: [
+                'permission' => $this->permission,
+                'apprentice' => $this->permission->apprentice_user,
+                'course' => $this->permission->apprentice_user->course()->first(),
+            ]
         );
     }
+
 
     /**
      * Get the attachments for the message.

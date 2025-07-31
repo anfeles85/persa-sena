@@ -4,23 +4,23 @@ namespace App\Mail;
 
 use App\Models\Permission;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+
 class MailAblePermissionAcepted extends Mailable
 {
     use Queueable, SerializesModels;
     public $permission;
+
     /**
      * Create a new message instance.
      */
     public function __construct(Permission $permission)
     {
         $this->permission = $permission;
-        $this->permission->load(['apprentice', 'permissionType','location']);
     }
 
     /**
@@ -39,7 +39,12 @@ class MailAblePermissionAcepted extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.permission.approved',
+            view: 'emails.permission_approved',
+            with: [
+            'apprentice' => $this->permission->apprentice_user,
+            'permission' => $this->permission,
+            'course' => $this->permission->apprentice_user->course()->first(),
+        ]
         );
     }
 

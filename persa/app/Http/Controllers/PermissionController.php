@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MailAblePermission;
+use App\Mail\MailAblePermissionAcepted;
+use App\Mail\MailAblePermissionCancel;
+use App\Mail\MailAblePermissionDeclined;
 use App\Models\Location;
 use App\Models\Permission;
 use App\Models\PermissionType;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class PermissionController extends Controller
@@ -153,5 +158,46 @@ class PermissionController extends Controller
     {
         Permission::destroy($id); 
         return redirect()->route('permission.index')->with('success', 'Permiso eliminado correctamente');
+    }
+    
+    
+    // Metodos para enviar correos
+    public function approve(Request $request, Permission $permission)
+    {
+        $permission->status = 'APROBADO';
+        $permission->save();
+
+        Mail::to($permission->apprentice->email)->send(new MailAblePermissionAcepted($permission));
+
+        return redirect()->back()-with('success', 'El permiso ha sido aprobado y se ha notificado al aprendiz.');
+
+    }
+    
+    public function reject(Request $request, Permission $permission)
+    {
+        $permission->status = 'RECHAZADO';
+        $permission->save();
+
+        Mail::to($permission->apprentice->email)->send(new MailAblePermissionDeclined($permission, $request));
+    
+        return redirect()->back()->with('success', 'El permiso ha sido rechazado y se ha notificado al aprendiz.');
+    }
+
+    public function cancel(Request $request, Permission $permission)
+    {
+        $permission->status = 'CANCELADO';
+        $permission->save();
+
+        Mail::to($permission->apprentice->email)->send(new MailAblePermissionCancel($permission));
+
+        return redirect()->back()->with('success', 'El permiso ha sido cancelado');
+    }
+
+    public function notify(Request $request, Permission $permission)
+    {
+        $permission->load(['apprentice', 'permissionType', 'location']);
+        Mail::to($permission->apprentice->email)->send(new MailAblePermission($permission));
+
+        return redirect()->back()->with('success', 'Se ha registrado la salida del aprendiz');
     }
 }
