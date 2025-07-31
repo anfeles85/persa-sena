@@ -19,7 +19,7 @@
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-lg-6">
-                                <img src="{{ asset('img/supervisor.jpg') }}" alt="register"
+                                <img src="{{ asset('img/persa-logo.png') }}" alt="register"
                                 class="img-fluid">
                             </div>
                             <div class="col-lg-6">
