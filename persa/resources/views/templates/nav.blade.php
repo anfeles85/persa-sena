@@ -60,7 +60,7 @@
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}" href="{{ route('reports.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-book-open text-dark text-sm opacity-10"></i>
+              <i class="fas fa-warning text-dark text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Reportes</span>
           </a>
