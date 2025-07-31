@@ -13,6 +13,7 @@
                     <th>Motivo</th>
                     <th>Aprendiz</th>
                     <th>Documento</th>
+                     <th>Carrera</th>
                     <th>Estado</th>
                     <th>Sede</th>
                 </thead>
@@ -24,6 +25,15 @@
                             <td>{{ $permission['reasons'] }}</td>
                             <td>{{ $permission->apprentice_user->fullname }}</td>
                             <td>{{ $permission->apprentice_user->id }}</td> 
+                            <td>
+                                @if ($permission->apprentice_user->apprenticeCourse)
+                                    {{ $permission->apprentice_user->apprenticeCourse->course->career->name }}
+                                    {{ $permission->apprentice_user->apprenticeCourse->course->trimester }}
+                                    {{ $permission->apprentice_user->apprenticeCourse->course->shift }}
+                                @else
+                                    No tiene curso asignado
+                                @endif
+                            </td>
                             <td>{{ $permission['status'] }}</td>
                             <td>{{ $permission->location->name }}</td>
                         </tr>
