@@ -80,4 +80,10 @@ class User extends Authenticatable
     public function instructorCourses(){
         return $this->belongsToMany(Course::class, 'instructor_course', 'instructor_id', 'course_id');
     }
+
+    public function apprenticeCourse()
+    {
+       return $this->hasOne(\App\Models\ApprenticeCourse::class, 'user_id');
+    }
+        
 }
