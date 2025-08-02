@@ -22,7 +22,6 @@ class MailAblePermissionCancel extends Mailable
     public function __construct(Permission $permission)
     {
         $this->permission = $permission;
-        $this->permission->load(['apprentice', 'permissionType', 'location']);
     }
 
     /**
@@ -31,7 +30,7 @@ class MailAblePermissionCancel extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Permiso Cancelado - Persa Sena',
+            subject: 'Tu solicitud de permiso ha sido CANCELADA - Persa Sena',
         );
     }
 
@@ -41,9 +40,16 @@ class MailAblePermissionCancel extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.permission.cancelled',
+            view: 'emails.permission_canceled',
+            with: [
+            'apprentice' => $this->permission->apprentice_user,
+            'permission' => $this->permission,
+            'course' => $this->permission->apprentice_user->course()->first(),
+        ]
         );
     }
+    
+    
 
     /**
      * Get the attachments for the message.
