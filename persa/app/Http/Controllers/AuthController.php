@@ -89,10 +89,6 @@ class AuthController extends Controller
         //
     }
 
-    /** 
-     * Login de usuarios
-     */
-
     public function login(Request $request) {
         $credentials = $request->validate([
             'email' => 'required|email',
@@ -109,9 +105,6 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    /**
-     * Cerrar sesión del usuario
-     */
     public function logout(Request $request) {
         Auth::logout();
         $request->session()->invalidate();
