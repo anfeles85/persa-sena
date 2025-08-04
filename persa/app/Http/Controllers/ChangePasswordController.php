@@ -21,28 +21,29 @@ class ChangePasswordController extends Controller
 
     public function changePassword(Request $request)
     {
-        $request->validate([
+         $request->validate([
             'current_password' => 'required|string|min:6',
             'password' => 'required|string|min:6|confirmed',
         ], [], $this->traductionAttributes);
 
-        $user = User::where('email', 'dameon82@example.com')->first();
+        $user = User::where('email', 'lebsack.elton@example.org')->first();
 
         if (!$user) {
             return redirect()->back()->with('error', 'Usuario no encontrado');
         }
 
-        //Permite comparar contraseñas sin tener que desencriptar
-        $currentPasswordStatus = Hash::check($request->current_password, $user->password);
-
-        if ($currentPasswordStatus) {
-            $user->update([
-                'password' => Hash::make($request->password),
-            ]);
-
-            return redirect()->back()->with('success', 'Contraseña cambiada exitosamente');
-        } else {
-            return redirect()->back()->with('error', 'La contraseña actual no coincide con la contraseña antigua');
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->with('error', 'La contraseña es incorrecta');
         }
+
+        if (Hash::check($request->password, $user->password)) {
+            return redirect()->back()->with('error', 'La nueva contraseña no puede ser igual a la contraseña actual');
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->back()->with('success', 'Contraseña cambiada exitosamente');
     }
 }
