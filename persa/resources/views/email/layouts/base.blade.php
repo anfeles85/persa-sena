@@ -66,51 +66,26 @@
     </style>
 </head>
 <body>
-<div class="container">
+    <div class="container">
     <div class="header">
         <img src="{{ $message->embed(asset('img/persa-logo.png')) }}" alt="Logo Persa">
         <img src="{{ $message->embed(asset('img/sena-logo.png')) }}" alt="Logo SENA">
     </div>
 
-    <div class="content">
-        <h1>Salida del aprendiz</h1>
-        <p>Aprendiz <strong>{{ $apprentice->fullname }}</strong>. El guarda ha <strong>aprobado</strong> su salida.</p>
-
-        <!-- Datos del aprendiz -->
-        <div class="section-title">Datos del aprendiz</div>
+    <div class="section-title">Datos del aprendiz</div>
         <table class="info-table">
             <tr><td class="label">Nombre</td><td>{{ $apprentice->fullname }}</td></tr>
             <tr><td class="label">Correo</td><td>{{ $apprentice->email }}</td></tr>
             <tr><td class="label">Estado</td><td>{{ $apprentice->status }}</td></tr>
         </table>
 
-        <!-- Ficha -->
-        <div class="section-title">Ficha</div>
-        <table class="info-table">
-            <tr><td class="label">Número</td><td>#{{ $course->id }}</td></tr>
-            <tr><td class="label">Programa</td><td>{{ $course->career->name }} ({{ $course->career->type }})</td></tr>
-        </table>
-
-        <!-- Datos del permiso -->
-        <div class="section-title">Permiso</div>
-        <table class="info-table">
-            <tr><td class="label">Fecha</td><td>{{ $permission->permission_date }}</td></tr>
-            <tr><td class="label">Hora de inicio</td><td>{{ $permission->start_time }}</td></tr>
-            <tr><td class="label">Hora de fin</td><td>{{ $permission->end_time }}</td></tr>
-            <tr><td class="label">Hora de salida</td><td>{{ $permission->departure_time }}</td></tr>
-            <tr><td class="label">Motivo</td><td>{{ $permission->reasons }}</td></tr>
-            <tr><td class="label">Tipo</td><td>{{ $permission->type->name }}</td></tr>
-            <tr><td class="label">Lugar</td><td>{{ $permission->location->name }} - {{ $permission->location->address }}</td></tr>
-            <tr><td class="label">Estado</td><td style="color: green;"><strong>{{ $permission->status }}</strong></td></tr>
-        </table>
-    </div>
+    <br><hr>
 
     <div align="center">
         <em>Persa - Este es un correo generado automáticamente.
             Por favor, no responda a este mensaje.
         </em>
     </div>
-</div>
 </body>
 </html>
 

@@ -99,7 +99,6 @@
             <tr><td class="label">Fecha</td><td>{{ $permission->permission_date }}</td></tr>
             <tr><td class="label">Hora de inicio</td><td>{{ $permission->start_time }}</td></tr>
             <tr><td class="label">Hora de fin</td><td>{{ $permission->end_time }}</td></tr>
-            <tr><td class="label">Hora de salida</td><td>{{ $permission->departure_time }}</td></tr>
             <tr><td class="label">Motivo</td><td>{{ $permission->reasons }}</td></tr>
             <tr><td class="label">Tipo</td><td>{{ $permission->type->name }}</td></tr>
             <tr><td class="label">Lugar</td><td>{{ $permission->location->name }} - {{ $permission->location->address }}</td></tr>
@@ -107,9 +106,10 @@
         </table>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <em>Persa - Correo generado automáticamente.<br>Por favor, no respondas a este mensaje.</em>
+    <div align="center">
+        <em>Persa - Este es un correo generado automáticamente.
+            Por favor, no responda a este mensaje.
+        </em>
     </div>
 </div>
 </body>
