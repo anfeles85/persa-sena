@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\CourseController;
@@ -11,22 +12,9 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
-
-Route::prefix('location')->group(function(){
+Route::prefix('location')->group(function () {
     Route::get('/index', [LocationController::class, 'index'])->name('location.index');
     Route::get('/create', [LocationController::class, 'create'])->name('location.create');
     Route::get('/edit/{id}', [LocationController::class, 'edit'])->name('location.edit');
@@ -35,7 +23,7 @@ Route::prefix('location')->group(function(){
     Route::delete('/destroy/{id}', [LocationController::class, 'destroy'])->name('location.destroy');
 });
 
-Route::prefix('career')->group(function(){
+Route::prefix('career')->group(function () {
     Route::get('/index', [CareerController::class, 'index'])->name('career.index');
     Route::get('/create', [CareerController::class, 'create'])->name('career.create');
     Route::get('/edit/{id}', [CareerController::class, 'edit'])->name('career.edit');
@@ -44,58 +32,55 @@ Route::prefix('career')->group(function(){
     Route::delete('/destroy/{id}', [CareerController::class, 'destroy'])->name('career.destroy');
 });
 
-
-Route::prefix('permission_type')->group(function(){
-    Route::get('/index',[PermissionTypeController::class, 'index'])->name('permission_type.index');
-    Route::get('/create',[PermissionTypeController::class, 'create'])->name('permission_type.create');
-    Route::get('/edit{id}',[PermissionTypeController::class, 'edit'])->name('permission_type.edit');
-    Route::post('/store',[PermissionTypeController::class, 'store'])->name('permission_type.store');
-    Route::put('/update/{id}',[PermissionTypeController::class, 'update'])->name('permission_type.update');
-    Route::delete('/destroy/{id}',[PermissionTypeController::class, 'destroy'])->name('permission_type.destroy');
+Route::prefix('permission_type')->group(function () {
+    Route::get('/index', [PermissionTypeController::class, 'index'])->name('permission_type.index');
+    Route::get('/create', [PermissionTypeController::class, 'create'])->name('permission_type.create');
+    Route::get('/edit/{id}', [PermissionTypeController::class, 'edit'])->name('permission_type.edit');
+    Route::post('/store', [PermissionTypeController::class, 'store'])->name('permission_type.store');
+    Route::put('/update/{id}', [PermissionTypeController::class, 'update'])->name('permission_type.update');
+    Route::delete('/destroy/{id}', [PermissionTypeController::class, 'destroy'])->name('permission_type.destroy');
 });
 
-Route::prefix('permission')->group(function(){
-    Route::get('/index',[PermissionController::class, 'index'])->name('permission.index');
-    Route::get('/create',[PermissionController::class, 'create'])->name('permission.create');
-    Route::get('/edit{id}',[PermissionController::class, 'edit'])->name('permission.edit');
-    Route::post('/store',[PermissionController::class, 'store'])->name('permission.store');
-    Route::put('/update/{id}',[PermissionController::class, 'update'])->name('permission.update');
-    Route::delete('/destroy/{id}',[PermissionController::class, 'destroy'])->name('permission.destroy');
+Route::prefix('permission')->group(function () {
+    Route::get('/index', [PermissionController::class, 'index'])->name('permission.index');
+    Route::get('/create', [PermissionController::class, 'create'])->name('permission.create');
+    Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
+    Route::post('/store', [PermissionController::class, 'store'])->name('permission.store');
+    Route::put('/update/{id}', [PermissionController::class, 'update'])->name('permission.update');
+    Route::delete('/destroy/{id}', [PermissionController::class, 'destroy'])->name('permission.destroy');
 });
 
-
-Route::prefix('course')->group(function(){
-    Route::get('/index',[CourseController::class, 'index'])->name('course.index');
-    Route::get('/create',[CourseController::class, 'create'])->name('course.create');
-    Route::get('/edit{id}',[CourseController::class, 'edit'])->name('course.edit');
-    Route::post('/store',[CourseController::class, 'store'])->name('course.store');
-    Route::put('/update/{id}',[CourseController::class, 'update'])->name('course.update');
-    Route::delete('/destroy/{id}',[CourseController::class, 'destroy'])->name('course.destroy');
+Route::prefix('course')->group(function () {
+    Route::get('/index', [CourseController::class, 'index'])->name('course.index');
+    Route::get('/create', [CourseController::class, 'create'])->name('course.create');
+    Route::get('/edit/{id}', [CourseController::class, 'edit'])->name('course.edit');
+    Route::post('/store', [CourseController::class, 'store'])->name('course.store');
+    Route::put('/update/{id}', [CourseController::class, 'update'])->name('course.update');
+    Route::delete('/destroy/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
 });
 
-
-Route::prefix('permission')->group(function(){
-    Route::get('/index',[PermissionController::class, 'index'])->name('permission.index');
-    Route::get('/create',[PermissionController::class, 'create'])->name('permission.create');
-    Route::get('/edit{id}',[PermissionController::class, 'edit'])->name('permission.edit');
-    Route::post('/store',[PermissionController::class, 'store'])->name('permission.store');
-    Route::put('/update/{id}',[PermissionController::class, 'update'])->name('permission.update');
-    Route::delete('/destroy/{id}',[PermissionController::class, 'destroy'])->name('permission.destroy');
-});
-
-Route::prefix('users')->group(function(){
+Route::prefix('users')->group(function () {
     Route::get('/index', [UsersController::class, 'index'])->name('users.index');
     Route::post('/send_email', [UsersController::class, 'send_email'])->name('users.send_email');
 });
 
-Route::prefix('reports')->group(function(){
+Route::prefix('reports')->group(function () {
     Route::get('/index', [ReportsController::class, 'index'])->name('reports.index');
     Route::get('/export_courses', [ReportsController::class, 'export_courses'])->name('reports.course');
     Route::post('/export_permissions_by_apprentice', [ReportsController::class, 'export_permissions_by_apprentice'])->name('reports.permission_apprentice');
     Route::post('/export_permissions_by_date_range', [ReportsController::class, 'export_permissions_by_date_range'])->name('reports.permission_date');
 });
 
-Route::prefix('auth')->group(function(){
+Route::prefix('auth')->group(function () {
+    Route::get('/index', [AuthController::class, 'index'])->name('auth.index');
+    Route::get('/login', [AuthController::class, 'index'])->name('auth.login.get'); // <- importante para GET
+    Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
     Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
     Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
+    Route::get('/register', [AuthController::class, 'create'])->name('auth.register');
+    Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
+});
+
+Route::middleware(['auth', 'can:admin-supervisor'])->prefix('auth')->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
