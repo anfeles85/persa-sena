@@ -173,7 +173,7 @@
 
 /*LOGIN - REGISTER*/
 
-body {
+.body-login {
     background: linear-gradient(135deg, #0a2f9f 0%, #764ba2 100%) !important;
     min-height: 100vh !important;
     font-family: 'Nunito', sans-serif !important;
