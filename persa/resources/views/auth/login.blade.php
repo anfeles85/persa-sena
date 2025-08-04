@@ -17,7 +17,7 @@
 
 </head>
 <body>
-    <div class="login-container">
+    <div class="login-container body-login">
         <div class="login-card">
             <div class="row g-0 h-100">
                 <div class="col-lg-6 login-left">
