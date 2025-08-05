@@ -26,7 +26,7 @@ class ChangePasswordController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ], [], $this->traductionAttributes);
 
-        $user = User::where('email', 'lebsack.elton@example.org')->first();
+        $user = User::where('email', 'software.clem@gmail.com')->first();
 
         if (!$user) {
             return redirect()->back()->with('error', 'Usuario no encontrado');

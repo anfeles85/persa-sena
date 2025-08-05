@@ -26,24 +26,23 @@
                             <img src="{{ asset('img/sena-logo.png') }}" alt="SENA Logo">
                         </div>
                         <div class="text-logo">
-                            <h2 class="system-title">Sistema P.E.R.S.A</h2>
+                            <h2 class="system-title">P.E.R.S.A</h2>
                             <p class="system-subtitle">
-                                Bienvenido al sistema de gestión de aprendizaje.
-                                Inicia sesión para acceder a tu cuenta o regístrate si eres nuevo.
+                                Bienvenido al sistema de permisos de salidas de aprendices del SENA
                             </p>
                         </div>
                         
                     </div>
                 </div>
-
                 <div class="col-lg-6 login-right">
+                    <img src="{{ asset('img/persa-logo.png') }}" alt="register" class="img-fluid logo-persa">
                     <div class="login-tabs">
                         <button class="tab-button active">Iniciar sesión</button>
                         <a href="{{ route('auth.register') }}" class="tab-button">Registrarse</a>
                     </div>
 
                     @if($errors->any())
-                        <div class="alert alert-danger">
+                        <div class="alert no-credentials">
                             <ul style="margin-bottom: 0;">
                                 @foreach($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -53,24 +52,16 @@
                     @endif
 
                     @if(session('message'))
-                        <div class="alert alert-success">
+                        <div class="alert correct-credentials">
                             {{ session('message') }}
                         </div>
                     @endif
 
                     <form class="login-form" action="{{ route('auth.login') }}" method="POST">
                         @csrf
-                        <div class="form-group">
-                            <select class="form-control" name="document_type" required>
-                                <option value="">Tipo de documento:</option>
-                                <option value="cc">Cédula de ciudadanía</option>
-                                <option value="ti">Tarjeta de identidad</option>
-                                <option value="ce">Cédula de extranjería</option>
-                            </select>
-                        </div>
 
                         <div class="form-group">
-                            <input type="text" name="email" class="form-control" placeholder="Ingrese su número de documento" value="{{ old('email') }}" required>
+                            <input type="text" name="email" class="form-control" placeholder="Ingrese su correo eléctronico" value="{{ old('email') }}" required>
                         </div>
 
                         <div class="form-group">
