@@ -69,6 +69,8 @@ Route::prefix('reports')->group(function () {
     Route::get('/export_courses', [ReportsController::class, 'export_courses'])->name('reports.course');
     Route::post('/export_permissions_by_apprentice', [ReportsController::class, 'export_permissions_by_apprentice'])->name('reports.permission_apprentice');
     Route::post('/export_permissions_by_date_range', [ReportsController::class, 'export_permissions_by_date_range'])->name('reports.permission_date');
+    Route::post('/export_permissions_by_course', [ReportsController::class, 'export_permissions_by_course'])->name('reports.permissions_course');
+
 });
 
 Route::prefix('auth')->group(function () {
