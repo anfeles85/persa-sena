@@ -73,38 +73,9 @@
     </div>
 
     <div class="content">
-        <h1>Permiso aprobado</h1>
-        <p>Aprendiz <strong>{{ $apprentice->fullname }}</strong>. Tu solicitud de permiso ha sido <strong>aprobada</strong> por el instructor.</p>
+        <h1>Permiso Cancelado</h1>
+        <p>Aprendiz <strong>{{ $apprentice->fullname }}</strong>. Usted ha cancelado su solicitud de permiso.</p>
 
-        <!-- Datos del aprendiz -->
-        <div class="section-title">Datos del aprendiz</div>
-        <table class="info-table">
-            <tr><td class="label">Nombre</td><td>{{ $apprentice->fullname }}</td></tr>
-            <tr><td class="label">Correo</td><td>{{ $apprentice->email }}</td></tr>
-            <tr><td class="label">Estado</td><td>{{ $apprentice->status }}</td></tr>
-        </table>
-
-        <!-- Ficha -->
-        <div class="section-title">Ficha</div>
-        <table class="info-table">
-            <tr><td class="label">Número</td><td>#{{ $course->id }}</td></tr>
-            <tr><td class="label">Programa</td><td>{{ $course->career->name }} ({{ $course->career->type }})</td></tr>
-            <tr><td class="label">Jornada</td><td>{{ $course->shift }}</td></tr>
-            <tr><td class="label">Trimestre</td><td>{{ $course->trimester }} - {{ $course->year }}</td></tr>
-        </table>
-
-        <!-- Datos del permiso -->
-        <div class="section-title">Permiso</div>
-        <table class="info-table">
-            <tr><td class="label">Fecha</td><td>{{ $permission->permission_date }}</td></tr>
-            <tr><td class="label">Hora de inicio</td><td>{{ $permission->start_time }}</td></tr>
-            <tr><td class="label">Hora de fin</td><td>{{ $permission->end_time }}</td></tr>
-            <tr><td class="label">Motivo</td><td>{{ $permission->reasons }}</td></tr>
-            <tr><td class="label">Tipo</td><td>{{ $permission->type->name }}</td></tr>
-            <tr><td class="label">Lugar</td><td>{{ $permission->location->name }} - {{ $permission->location->address }}</td></tr>
-            <tr><td class="label">Estado</td><td style="color: green;"><strong>{{ $permission->status }}</strong></td></tr>
-        </table>
-    </div>
 
     <div align="center">
         <em>Persa - Este es un correo generado automáticamente.
