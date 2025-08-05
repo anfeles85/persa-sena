@@ -62,6 +62,7 @@ INSERT INTO `career` (`id`, `name`, `type`, `created_at`, `updated_at`) VALUES
 -- Volcando estructura para tabla persa_db.course
 CREATE TABLE IF NOT EXISTS `course` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `number_group` bigint NOT NULL COMMENT 'Numero de ficha',
   `shift` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Jornada',
   `trimester` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Trimestre académico',
   `year` int NOT NULL COMMENT 'Año',
@@ -70,16 +71,19 @@ CREATE TABLE IF NOT EXISTS `course` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `number_group` (`number_group`),
   KEY `course_career_id_foreign` (`career_id`),
   CONSTRAINT `course_career_id_foreign` FOREIGN KEY (`career_id`) REFERENCES `career` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.course: ~4 rows (aproximadamente)
-INSERT INTO `course` (`id`, `shift`, `trimester`, `year`, `status`, `career_id`, `created_at`, `updated_at`) VALUES
-	(1, 'DIURNA', 'T1', 2023, 'ACTIVO', 1, NULL, NULL),
-	(2, 'NOCTURNA', 'T2', 2023, 'ACTIVO', 2, NULL, NULL),
-	(3, 'DIURNA', 'T3', 2025, 'ACTIVO', 3, NULL, NULL),
-	(4, 'DIURNA', 'T4', 2023, 'INACTIVO', 4, NULL, NULL);
+-- Volcando datos para la tabla persa_db.course: ~5 rows (aproximadamente)
+INSERT INTO `course` (`id`, `number_group`, `shift`, `trimester`, `year`, `status`, `career_id`, `created_at`, `updated_at`) VALUES
+	(1, 2921889, 'DIURNA', 'T1', 2023, 'ACTIVO', 1, NULL, NULL),
+	(2, 2921874, 'NOCTURNA', 'T2', 2023, 'ACTIVO', 2, NULL, '2025-08-05 19:07:31'),
+	(3, 3257211, 'DIURNA', 'T3', 2025, 'ACTIVO', 3, NULL, NULL),
+	(4, 4374821, 'DIURNA', 'T4', 2023, 'INACTIVO', 4, NULL, NULL),
+	(5, 234532, 'DIURNA', 'T2', 2025, 'ACTIVO', 2, '2025-08-05 19:06:05', '2025-08-05 19:06:14'),
+	(6, 2921881, 'DIURNA', 'T4', 2024, 'ACTIVO', 2, '2025-08-05 19:07:48', '2025-08-05 19:07:48');
 
 -- Volcando estructura para tabla persa_db.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
@@ -274,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Volcando datos para la tabla persa_db.users: ~13 rows (aproximadamente)
 INSERT INTO `users` (`id`, `document`, `fullname`, `email`, `password`, `status`, `role_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 123, 'Miss Sallie Zieme PhD', 'marlen74@example.org', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'INACTIVO', 1, '8p7TnqZlXH', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
+	(1, 123, 'Miss Sallie Zieme PhD', 'software.clem@gmail.com', '$2y$12$ic131//9JxY/UZ3ot.anhOfn.WViaorftj.q9iUkRIEClhV2cFpXi', 'ACTIVO', 1, '8p7TnqZlXH', '2025-06-26 18:11:51', '2025-08-05 19:02:36'),
 	(2, 456, 'Miss Reta Runolfsdottir', 'magnus.schaden@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 1, 'dL2DvyMDgP', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(3, 789, 'Miss Millie Davis', 'jordy70@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 2, 'w1cjRzH9SG', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(4, 134, 'Dr. Taylor Klein', 'murazik.ahmad@example.net', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 2, '5HrBam9TXJ', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),

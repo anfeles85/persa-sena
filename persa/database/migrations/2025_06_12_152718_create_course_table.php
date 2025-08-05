@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('course', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('number_group')->unique()->comment('Numero de ficha');
             $table->string('shift', 50)->comment('Jornada');
             $table->string('trimester', 50)->comment('Trimestre académico');
             $table->integer('year')->comment('Año');
