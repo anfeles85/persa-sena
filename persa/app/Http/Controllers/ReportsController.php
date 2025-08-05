@@ -23,26 +23,7 @@ class ReportsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-     public function export_courses()
-    {
-        $courses = Course::all();
-        $data = array(
-            'courses' => $courses
-        );
-
-        /**
-         * dompdf version 3.x
-         * se debe agregar setOptions
-         */
-         $pdf = Pdf::loadView('reports.export_courses', $data)
-                ->setPaper('letter', 'portrait')
-                ->setOptions([
-                    'defaultFont'=>'sans-serif', 
-                    'isRemoteEnabled'=>true
-                ]); //landscape: horizontal
-                
-        return $pdf->download('Courses.pdf');
-    }   
+    
     /**
      * reporte que genera el permiso de un aprendiz en especifico
      */
