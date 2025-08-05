@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class CourseController extends Controller
 {
     private $rules = [
+        'number_group' => 'required|numeric|min:1|max:99999999999999999999',
         'shift' => 'required|string|min:3|max:50',
         'trimester' => 'required|string|min:1|max:50',
         'year' => 'required|numeric|min:1|max:2100',
@@ -18,6 +19,7 @@ class CourseController extends Controller
     ];
 
     private $traductionAttributes = [
+        'number_group' => 'numero de ficha',
         'shift' => 'jornada',
         'trimester' => 'trimestre',
         'year' => 'año',

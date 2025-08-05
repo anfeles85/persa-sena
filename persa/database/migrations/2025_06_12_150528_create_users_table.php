@@ -13,6 +13,7 @@ return new class extends Migration
     {
        Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('document')->unique()->comment('cédula');
             $table->string('fullname')->comment('Nombre completo');
             $table->string('email')->unique()->comment('Correo electrónico');
             $table->string('password')->comment('Contraseña');

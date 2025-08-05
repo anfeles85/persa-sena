@@ -47,9 +47,9 @@
                         </select>
                     </div>
                 </div>
-
+                
                 <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    <div class="col-lg-6 mb-4">
                         <label for="career_id">Programa</label>
                         <select name="career_id" id="career_id" class="form-control">
                             <option value="">Seleccione</option>
@@ -61,7 +61,13 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="col-lg-6 mb-4">
+                        <label for="number_group">Numero de ficha</label>
+                        <input type="number" class="form-control" name="number_group" id="number_group"
+                         required value="{{ old('number_group') }}">
+                    </div>
                 </div>
+                
                 <div class="row">
                     <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-success w-50" >Guardar</button>
