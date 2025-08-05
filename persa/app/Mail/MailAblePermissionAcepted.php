@@ -4,16 +4,17 @@ namespace App\Mail;
 
 use App\Models\Permission;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+
 class MailAblePermissionAcepted extends Mailable
 {
     use Queueable, SerializesModels;
     public $permission;
+
     /**
      * Create a new message instance.
      */

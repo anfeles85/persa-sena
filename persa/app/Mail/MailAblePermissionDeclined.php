@@ -16,15 +16,14 @@ class MailAblePermissionDeclined extends Mailable
     use Queueable, SerializesModels;
 
     public $permission;
-    public String $rejeactionReason;
+    
     /**
      * Create a new message instance.
      */
     public function __construct(Permission $permission, String $rejeactionReason)
     {
         $this->permission = $permission;
-        $this->rejeactionReason = $rejeactionReason;
-        $this->permission->load(['apprentice', 'permissionType', 'location']);
+
     }
 
     /**
@@ -33,7 +32,7 @@ class MailAblePermissionDeclined extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Solicitud de permiso rechazada - Persa Sena',
+            subject: 'Tu solicitud de permiso ha sido rechazada - Persa Sena',
         );
     }
 
@@ -43,7 +42,13 @@ class MailAblePermissionDeclined extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.permission.declined',
+            view: 'emails.permission_rejected',
+            with: [
+                'permission' => $this->permission,
+                'apprentice' => $this->permission->apprentice,
+                'course' => $this->permission->course,
+                'reason' => $this->permission->rejeactionReason,
+            ],
         );
     }
 
