@@ -85,5 +85,10 @@ class User extends Authenticatable
     {
        return $this->hasOne(\App\Models\ApprenticeCourse::class, 'user_id');
     }
+
+    public function permissions()
+    {
+    return $this->hasMany(Permission::class, 'apprentice_id');
+    }
         
 }
