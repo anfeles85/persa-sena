@@ -79,7 +79,32 @@ class ReportsController extends Controller
                 ]); 
                 
         return $pdf->download('PersaByData.pdf');
-    }
+}
 
-    
+    /**
+     * reporte que genera listado de permisos por curso
+     */
+    public function export_permissions_by_course(Request $request)
+{
+    $courseId = $request->input('course_id');
+    $course = Course::with([
+        'career',
+        'apprentices.permissions.permissionType',
+        'apprentices.permissions.location'
+    ])->findOrFail($courseId);
+
+    $data = [
+        'course' => $course,
+        'apprentices' => $course->apprentices,
+    ];
+
+    $pdf = Pdf::loadView('reports.export_permissions_by_course', $data)
+        ->setPaper('letter', 'portrait')
+        ->setOptions([
+            'defaultFont' => 'sans-serif',
+            'isRemoteEnabled' => true
+        ]);
+
+    return $pdf->download('Permisos_Curso_' . $course->id . '.pdf');
+}
 }
