@@ -12,20 +12,20 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/', [AuthController::class, 'index'])->name('auth.index');
 
-Route::middleware('auth')->get('/index', function () {
-    return view('index');
-})->name('index');
+Route::middleware('auth')->get('/index', [IndexController::class, 'index'])->name('index');
 
 Route::prefix('auth')->group(function () {
-    Route::get('/index', [AuthController::class, 'index'])->name('auth.index');
-    Route::get('/login', [AuthController::class, 'index'])->name('auth.login.get'); // <- importante para GET
+    
+    Route::get('/login', [AuthController::class, 'index'])->name('auth.login');
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
-    Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
-    Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
+
     Route::get('/register', [AuthController::class, 'create'])->name('auth.register');
     Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
+
+    Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
+    Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
 });
 
 Route::middleware(['auth'])->prefix('auth')->group(function () {

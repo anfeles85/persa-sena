@@ -247,11 +247,16 @@
 .logo img {
     display: block;
     margin: 0 auto;
-    max-width: 180px;
-    max-height: 180px;
+    max-width: 160px;
+    max-height: 160px;
 }
 
-
+.logo-persa {
+    max-width: 180px;
+    max-height: 180px;
+    display: block;
+    margin: 0 auto 30px auto;
+}
 
 .system-title {
     font-size: 28px;
@@ -398,16 +403,16 @@
     font-size: 14px;
 }
 
-.alert-danger {
-    background-color: #fef2f2;
-    color: #dc2626;
-    border: 1px solid #fecaca;
+.no-credentials {
+    background-color: #eb3333;
+    color: #ffff !important;
+    border: 1px solid #000000;
 }
 
-.alert-success {
-    background-color: #f0fdf4;
-    color: #16a34a;
-    border: 1px solid #bbf7d0;
+.correct-credentials {
+    background-color: #5ceb87;
+    color: #ffff !important;
+    border: 1px solid #000000;
 }
 
 /* Responsive */
