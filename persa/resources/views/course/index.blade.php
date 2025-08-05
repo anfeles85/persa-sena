@@ -17,6 +17,7 @@
             <thead>
                 <tr>
                     <th>Id</th>
+                    <th>Ficha</th>
                     <th>Nombre</th>
                     <th>Jornada</th>
                     <th>Trimestre</th>
@@ -29,6 +30,7 @@
                 @foreach ($courses as $course)
                 <tr>
                     <td data-label="Id">{{ $course['id'] }}</td>
+                    <td data-label="Ficha">{{ $course['number_group'] }}</td>
                     <td data-label="Nombre">{{ $course->career->name ?? 'Sin programa' }}</td>
                     <td data-label="Jornada">{{ $course['shift'] }}</td>
                     <td data-label="Trimestre">{{ $course['trimester'] }}</td>

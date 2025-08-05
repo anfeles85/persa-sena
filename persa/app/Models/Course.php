@@ -10,6 +10,7 @@ class Course extends Model
     use HasFactory;
     protected $table = 'course';
     protected $fillable =[
+        'number_group',
         'shift',
         'trimester',
         'year',
