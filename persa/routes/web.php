@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
-
 Route::middleware('auth')->get('/index', function () {
     return view('index');
 })->name('index');
@@ -32,7 +31,6 @@ Route::prefix('auth')->group(function () {
 Route::middleware(['auth'])->prefix('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
-
 
 
 Route::middleware (['auth', 'can:coordinador'])->prefix('location')->group(function () {
@@ -87,9 +85,10 @@ Route::middleware (['auth', 'can:coordinador'])->prefix('users')->group(function
 
 Route::middleware (['auth', 'can:coordinador-instructor'])->prefix('reports')->group(function () {
     Route::get('/index', [ReportsController::class, 'index'])->name('reports.index');
-    Route::get('/export_courses', [ReportsController::class, 'export_courses'])->name('reports.course');
     Route::post('/export_permissions_by_apprentice', [ReportsController::class, 'export_permissions_by_apprentice'])->name('reports.permission_apprentice');
     Route::post('/export_permissions_by_date_range', [ReportsController::class, 'export_permissions_by_date_range'])->name('reports.permission_date');
+    Route::post('/export_permissions_by_course', [ReportsController::class, 'export_permissions_by_course'])->name('reports.permissions_course');
+
 });
 
 
