@@ -20,9 +20,11 @@ class User extends Authenticatable
     protected $fillable = [
         'fullname',
         'email',
+        'document',
         'password',
         'status',
-        'role_id'
+        'role_id',
+        'document',
     ];
 
     /**
@@ -80,15 +82,16 @@ class User extends Authenticatable
     public function instructorCourses(){
         return $this->belongsToMany(Course::class, 'instructor_course', 'instructor_id', 'course_id');
     }
-
-    public function apprenticeCourse()
-    {
-       return $this->hasOne(\App\Models\ApprenticeCourse::class, 'user_id');
-    }
+    
+    /**
+     * relación con la tabla permission
+     */
 
     public function permissions()
     {
-    return $this->hasMany(Permission::class, 'apprentice_id');
+        return $this->hasMany(Permission::class, 'apprentice_id');
     }
+
+
         
 }
