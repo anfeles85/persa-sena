@@ -175,7 +175,7 @@
 
 .body-login {
     background: linear-gradient(135deg, #4ba261 0%, #0a2f9f 100%) !important;
-    min-height: 100vh !important;
+    min-height: 200px !important;
     font-family: 'Nunito', sans-serif !important;
     margin: 0;
 }
@@ -196,7 +196,6 @@
     margin-bottom: 30px;
 }
 
-
 .login-card {
     background: white !important;
     border-radius: 20px !important;
@@ -205,6 +204,7 @@
     max-width: 900px !important;
     width: 100% !important;
     min-height: 500px !important;
+    display: flex;
 }
 
 .login-left {
@@ -217,7 +217,7 @@
     align-items: center !important;
     text-align: center !important;
     position: relative !important;
-    flex: 1 !important;
+    flex: 1 !important; /* Original flex for login */
 }
 
 .login-left::before {
@@ -255,7 +255,7 @@
     max-width: 180px;
     max-height: 180px;
     display: block;
-    margin: 0 auto 30px auto;
+    margin: 0 auto 10px auto;
 }
 
 .system-title {
@@ -281,7 +281,7 @@
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    flex: 1 !important;
+    flex: 1 !important; /* Original flex for login */
 }
 
 .login-tabs {
@@ -333,6 +333,7 @@
     transition: all 0.3s ease !important;
     background: #f8fafc !important;
     box-shadow: none !important;
+    box-sizing: border-box;
 }
 
 .form-control:focus {
@@ -403,6 +404,17 @@
     font-size: 14px;
 }
 
+.alert-danger {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.alert ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
 .no-credentials {
     background-color: #eb3333;
     color: #ffff !important;
@@ -415,11 +427,71 @@
     border: 1px solid #000000;
 }
 
-/* Responsive */
+.input-password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-password-wrapper .password-input {
+    padding-right: 50px !important;
+}
+
+.input-password-wrapper .toggle-password-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #6c757d;
+    z-index: 10;
+    transition: all 0.3s ease;
+    padding: 5px;
+    border-radius: 50%;
+    line-height: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-password-wrapper .toggle-password-icon:hover {
+    color: #22c55e;
+    background-color: rgba(34, 197, 94, 0.1);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.input-password-wrapper .toggle-password-icon:active {
+    transform: translateY(-50%) scale(0.9);
+}
+
+.password-field:focus + .toggle-password,
+.password-field:not(:placeholder-shown) + .toggle-password {
+    opacity: 1;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 10px;
+}
+
 @media (max-width: 768px) {
     .login-card {
+        flex-direction: column;
         margin: 20px;
         min-height: auto;
+    }
+
+    .col-lg-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
     }
 
     .login-left {
@@ -443,6 +515,11 @@
         max-width: 100px;
         max-height: 100px;
     }
+
+    .logo-persa {
+        max-width: 120px;
+        max-height: 120px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -464,5 +541,72 @@
 
     .system-subtitle {
         font-size: 14px;
+    }
+
+    .row {
+        margin: 0 -5px;
+    }
+
+    .col-lg-6 {
+        padding: 0 5px;
+    }
+
+    .input-password-wrapper .toggle-password-icon {
+        font-size: 16px;
+        padding: 3px;
+    }
+}
+
+.login-card-register {
+    max-width: 1200px !important;
+    width: 100% !important;
+    min-height: 600px !important;
+    display: flex;
+}
+
+.login-left-register {
+    flex: 0.5 !important;
+}
+
+.login-right-register {
+    flex: 1.8 !important;
+    padding: 50px 40px !important;
+}
+
+.form-login-register .row {
+    gap: 0;
+}
+
+.form-login-register .form-group {
+    margin-bottom: 1rem;
+}
+
+.form-login-register .form-control {
+    min-height: 44px;
+    font-size: 1rem;
+}
+
+@media (max-width: 900px) {
+    .login-card_register {
+        max-width: 98vw !important;
+        padding: 18px 8px;
+        flex-direction: column;
+    }
+    .login-left_register, .login-right_register {
+        flex: 1 !important;
+        padding: 30px 10px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .login-card-register {
+        padding: 8px 2px;
+    }
+    .form-login-register .row {
+        flex-direction: column;
+    }
+    .form-login-register .col-md-6 {
+        max-width: 100%;
+        flex: 0 0 100%;
     }
 }
