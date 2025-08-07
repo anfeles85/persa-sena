@@ -14,7 +14,8 @@ class ApprenticeController extends Controller
     private $rules = [  
         'document' => 'required|string|max:20|unique:users,document',
         'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
+        'lastname' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email',
         'email_confirmation' => 'required|same:email',
         'password' => 'required|string|min:8|confirmed',
         'password_confirmation' => 'required|same:password',
@@ -23,7 +24,8 @@ class ApprenticeController extends Controller
 
     private $traductionAttributes = [
         'document' => 'documento',
-        'name' => 'nombre',
+        'name' => 'nombres',
+        'lastname' => 'apellidos',
         'email' => 'correo electrónico',
         'email_confirmation' => 'confirmar correo electrónico',
         'password' => 'contraseña',
@@ -31,37 +33,37 @@ class ApprenticeController extends Controller
         'course_id' => 'ficha'
     ];
 
-    public function index()
+    public function create()
     {
-        $courses = Course::all();
+        $courses = Course::with('career')->where('status', 'ACTIVO')->get();
         return view('auth.register', compact('courses'));
     }
 
     public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), $this->rules);
-        $validator->setAttributeNames($this->traductionAttributes);
+{
+    $validator = Validator::make($request->all(), $this->rules);
+    $validator->setAttributeNames($this->traductionAttributes);
 
-        if ($validator->fails()) {
-            return redirect()->route('auth.register')
-                             ->withInput()
-                             ->withErrors($validator);
-        }
-
-        DB::transaction(function () use ($request) {
-            $user = User::create([
-                'document' => $request->input('document'),
-                'fullname' => strtoupper($request->input('name')),
-                'email' => $request->input('email'),
-                'password' => Hash::make($request->input('password')),
-                'role_id' => 3,
-                'status' => 'ACTIVO'
-            ]);
-
-            $user->courses()->attach($request->input('course_id'));
-        });
-
-        session()->flash('success', 'Registro exitoso. Por favor inicia sesión.');
-        return redirect()->route('auth.login');
+    if ($validator->fails()) {
+        return redirect()->route('auth.register')
+                         ->withInput()
+                         ->withErrors($validator);
     }
+
+    $user = User::create([
+        'document' => $request->input('document'),
+        'fullname' => strtoupper($request->input('name') . ' ' . $request->input('lastname')),
+        'email' => $request->input('email'),
+        'password' => Hash::make($request->input('password')),
+        'role_id' => 3,
+        'status' => 'ACTIVO'
+    ]);
+
+    $user->courses()->attach($request->input('course_id'));
+
+    session()->flash('success', 'Registro exitoso. Por favor inicia sesión.');
+    return redirect()->route('auth.login');
 }
+
+
+    }
