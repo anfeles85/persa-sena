@@ -27,9 +27,7 @@
                         </div>
                         <div class="text-logo">
                             <h2 class="system-title">P.E.R.S.A</h2>
-                            <p class="system-subtitle">
-                                Bienvenido al sistema de permisos de salidas de aprendices del SENA
-                            </p>
+                            <p class="system-subtitle">Bienvenido al sistema de permisos de salidas de aprendices del SENA.</p>
                         </div>
                         
                     </div>
@@ -37,7 +35,7 @@
                 <div class="col-lg-6 login-right">
                     <img src="{{ asset('img/persa-logo.png') }}" alt="register" class="img-fluid logo-persa">
                     <div class="login-tabs">
-                        <button class="tab-button active">Iniciar sesión</button>
+                        <span class="tab-button active">Iniciar sesión</span>
                         <a href="{{ route('auth.register') }}" class="tab-button">Registrarse</a>
                     </div>
 

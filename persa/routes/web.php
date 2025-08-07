@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApprenticeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ChangePasswordController;
@@ -21,8 +22,8 @@ Route::prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'index'])->name('auth.login');
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
-    Route::get('/register', [AuthController::class, 'create'])->name('auth.register');
-    Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
+    Route::get('/register', [ApprenticeController::class, 'create'])->name('auth.register');
+    Route::post('/register', [ApprenticeController::class, 'store'])->name('auth.store');
 
     Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
     Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
