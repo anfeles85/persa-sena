@@ -4,71 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registro</title>
+    <title>Register</title>
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet" />
-    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+    <!-- Argon Dashboard CSS -->
+    <link rel="stylesheet" href="{{ asset('css/argon-dashboard.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/argon-dashboard.min.css') }}?v=2">
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v=2">
+
 </head>
-<body class="bg-gradient-primary">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12">
-                <div class="card 0-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <img src="{{ asset('img/persa-logo.png') }}" alt="register"
-                                class="img-fluid">
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="text-gray-900">Registro</h1>
-                                    </div>
-
-                                    @include('templates.messages')
-
-                                    <form class="user" action="{{ route('auth.store') }}" method="POST">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input type="text" name="name" id="name" class="form-control form-control-user"
-                                             placeholder="Nombre completo" value="{{ old('name') }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="email" name="email" id="email" class="form-control form-control-user"
-                                             placeholder="Correo electrónico" value="{{ old('email') }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="password" id="password" 
-                                            class="form-control form-control-user" placeholder="Contraseña" required>
-                                        </div>  
-                                        <div class="form-group">
-                                            <input type="password" name="password_confirmation" id="password_confirmation" 
-                                            class="form-control form-control-user" placeholder="Confirmar contraseña" required>
-                                        </div>
-
-                                        <input type="hidden" name="role_id" name="role_id" value="2">    
-
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Registrar
-                                        </button>  
-                                    </form>
-
-                                    <hr>
-
-                                    <div class="text-center">
-                                        <a href="{{ route('auth.index') }}" class="small">Iniciar sesión</a>
-                                    </div>
-                                </div>
-                            </div>
+<body>
+    <div class="login-container body-login">
+        <div class="login-card">
+            <div class="row g-0 h-100">
+                <div class="col-lg-6 login-left">
+                    <div class="logo-container">
+                        <div class="logo">
+                            <img src="{{ asset('img/sena-logo.png') }}" alt="SENA Logo">
                         </div>
+                        <div class="text-logo">
+                            <h2 class="system-title">Sistema P.E.R.S.A</h2>
+                            <p class="system-subtitle">
+                                Bienvenido al sistema de gestión de aprendizaje.
+                                Crea tu cuenta para acceder a todas las funcionalidades.
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="col-lg-6 login-right">
+                    <div class="login-tabs">
+                        <button class="tab-button active">Iniciar sesión</button>
+                        <a href="{{ route('auth.register') }}" class="tab-button">Registrarse</a>
+                    </div>
+
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul style="margin-bottom: 0;">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    @if(session('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
+                        </div>
+                    @endif
+
+                    <form class="login-form" action="{{ route('auth.register') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <select class="form-control" name="document_type" required>
+                                <option value="">Tipo de documento:</option>
+                                <option value="cc">Cédula de ciudadanía</option>
+                                <option value="ti">Tarjeta de identidad</option>
+                                <option value="ce">Cédula de extranjería</option>
+                            </select>
+                        </div>
+
+                         <div class="form-group">
+                            <select class="form-control" name="career_id" required>
+                                <option value="">Seleccione una ficha:</option>
+                                @if(isset($careers))
+                                    @foreach($careers as $career)
+                                        <option value="{{ $career->type }}" {{ old('career_type') == $career->type ? 'selected' : '' }}>
+                                            {{ $career->name }} - {{ $career->type }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control" placeholder="Ingrese su nombre completo" value="{{ old('name') }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="lastname" class="form-control" placeholder="Ingrese sus apellidos" value="{{ old('lastname') }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="email" class="form-control" placeholder="Ingrese su correo eléctronico" value="{{ old('email') }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="email" class="form-control" placeholder="Confirme su correo electronico" value="{{ old('email') }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control" placeholder="Ingrese su contraseña" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control" placeholder="Confirme su contraseña" required>
+                        </div>
+
+                        <button type="submit" class="btn-login">
+                            <i class="fas fa-sign-in-alt me-2"></i>
+                            INGRESAR
+                        </button>
+                    </form>
+
+                    <div class="forgot-password">
+                        <a href="#">¿Olvidaste tu contraseña?</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
+    <script>
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                if (this.textContent.includes('Registrarse')) {
+                    window.location.href = "{{ route('auth.register') }}";
+                }
+            });
+        });
+    </script>
 </body>
 </html>

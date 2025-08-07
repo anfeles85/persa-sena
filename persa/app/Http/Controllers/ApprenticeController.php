@@ -1,0 +1,67 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use App\Models\Course;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+
+class ApprenticeController extends Controller
+{
+    private $rules = [  
+        'document' => 'required|string|max:20|unique:users,document',
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'email_confirmation' => 'required|same:email',
+        'password' => 'required|string|min:8|confirmed',
+        'password_confirmation' => 'required|same:password',
+        'course_id' => 'required|exists:course,id'
+    ];
+
+    private $traductionAttributes = [
+        'document' => 'documento',
+        'name' => 'nombre',
+        'email' => 'correo electrónico',
+        'email_confirmation' => 'confirmar correo electrónico',
+        'password' => 'contraseña',
+        'password_confirmation' => 'confirmar contraseña',
+        'course_id' => 'ficha'
+    ];
+
+    public function index()
+    {
+        $courses = Course::all();
+        return view('auth.register', compact('courses'));
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
+
+        if ($validator->fails()) {
+            return redirect()->route('auth.register')
+                             ->withInput()
+                             ->withErrors($validator);
+        }
+
+        DB::transaction(function () use ($request) {
+            $user = User::create([
+                'document' => $request->input('document'),
+                'fullname' => strtoupper($request->input('name')),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'role_id' => 3,
+                'status' => 'ACTIVO'
+            ]);
+
+            $user->courses()->attach($request->input('course_id'));
+        });
+
+        session()->flash('success', 'Registro exitoso. Por favor inicia sesión.');
+        return redirect()->route('auth.login');
+    }
+}
