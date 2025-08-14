@@ -51,7 +51,7 @@ class ReportsController extends Controller
     public function export_permissions_by_date_range(Request $request)
     {
         $permissions = Permission::with([
-            'apprentice_user.apprenticeCourse.course.career',
+            'apprentice_user.apprenticeCourses.career',
             'instructor_user',
             'guard_user',
             'location',
