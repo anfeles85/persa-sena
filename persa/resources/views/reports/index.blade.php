@@ -87,7 +87,9 @@
                             <div class="col-lg-5">
                             <select name="course_id" id="course_id" class="form-control" required>
                                 @foreach ($courses as $course)
-                                    <option value="{{ $course->id }}">{{ $course->career->name}}</option>
+                                    <option value="{{ $course->id }}" {{ old('course_id') == $course->id ? 'selected' : '' }}>
+                                        {{ $course->number_group }} - {{ $course->career->name }}
+                                    </option>
                                 @endforeach
                             </select>
                             </div>
