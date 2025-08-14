@@ -1,10 +1,12 @@
 @extends('templates.base_reports')
+
 @section('header', 'Reporte permisos por aprendiz')
+
 @section('content')
     <section id="results">
-        @if (count($permissions) !=0)
-            <h4>Aprendiz: {{ $apprentice->fullname }} </h4>
-            <table id="reportTable">
+        @if ($permissions->isNotEmpty())
+            <h4>Aprendiz: {{ $apprentice->fullname }}</h4>
+            <table border="1" cellspacing="0" cellpadding="5" width="100%">
                 <thead>
                     <tr>
                         <th>Fecha de permiso</th>
@@ -17,21 +19,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($permissions as $permission )
-                    <tr>
-                        <td>{{ $permission['permission_date'] }}</td>
-                        <td>{{ $permission['start_time'] }}</td>
-                        <td>{{ $permission['end_time'] }}</td>
-                        <td>{{ $permission['reasons'] }}</td>
-                        <td>{{ $permission->location->name }}</td>
-                        <td>{{ $permission->permissionType->name}}</td>
-                        <td>{{ $permission['status'] }}</td>
-                    </tr>
+                    @foreach ($permissions as $permission)
+                        <tr>
+                            <td>{{ $permission->permission_date }}</td>
+                            <td>{{ $permission->start_time }}</td>
+                            <td>{{ $permission->end_time }}</td>
+                            <td>{{ $permission->reasons }}</td>
+                            <td>{{ $permission->location->name ?? 'N/A' }}</td>
+                            <td>{{ $permission->permissionType->name ?? 'N/A' }}</td>
+                            <td>{{ $permission->status }}</td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         @else
-            <p><strong>No existen resultados en el reporte</strong></p>
+            <p><strong>No existen resultados en el reporte.</strong></p>
         @endif
     </section>
 @endsection
