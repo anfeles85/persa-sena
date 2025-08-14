@@ -103,4 +103,20 @@ class ApprenticeController extends Controller
     }
 
 
+    
+    public function destroy($id)
+    {
+         $apprentice = User::findOrFail($id);
+
+        if ($apprentice->role_id != 3) {
+        return redirect()->back()->with('error', 'Solo se pueden inhabilitar aprendices.');
     }
+
+        $apprentice->update([
+        'status' => 'INACTIVO'
+    ]);
+
+        return redirect()->route('apprentice.index')->with('success', 'Aprendiz inhabilitado correctamente.');
+    }
+}
+
