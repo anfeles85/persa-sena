@@ -24,6 +24,13 @@ Route::prefix('auth')->group(function () {
 
     Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
     Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
+
+    Route::get('/profile', [ApprenticeController::class, 'edit'])->name('user.profile');
+    Route::put('/profile', [ApprenticeController::class, 'update'])->name('user.profile.update');
+    
+    Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+
 });
 
 Route::middleware('auth')->group(function () {
