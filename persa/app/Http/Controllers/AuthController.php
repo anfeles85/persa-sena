@@ -26,70 +26,55 @@ class AuthController extends Controller
 
     public function index()
     {
-        // if (Auth::check()) {
-        //     return redirect()->route('index');
-        // }
-        
         return view('auth.login');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('auth.register');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), $this->rules);
+        $validator = Validator::make($request->only('name', 'email', 'password', 'password_confirmation'), $this->rules);
         $validator->setAttributeNames($this->traductionAttributes);
+
         if ($validator->fails()) {
             $errors = $validator->errors();
             return redirect()->route('auth.register')->withInput()->withErrors($errors);
         }
-        
-        $request['password'] = bcrypt($request['password']);
-        $user = User::create($request->all());
+
+        $data = $request->only('name', 'email', 'password');
+        $data['password'] = bcrypt($data['password']);
+
+        User::create($data);
+
         session()->flash('message', 'Registro creado exitosamente');
         return redirect()->route('auth.index');
     }
-
 
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -97,7 +82,14 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('index');            
+
+            if (strtoupper(Auth::user()->status) !== 'ACTIVO') {
+                Auth::logout();
+                return redirect()->route('auth.index')
+                    ->withErrors(['email' => 'Su cuenta está inactiva. Contacte al administrador.']);
+            }
+
+            return redirect()->intended('index');
         }
 
         return back()->withErrors([
@@ -105,7 +97,8 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
