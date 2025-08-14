@@ -9,6 +9,8 @@
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
+
+        @can('coordinador')
         <li class="nav-item">
           <a class="nav-link " href="../pages/dashboard.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -17,6 +19,9 @@
             <span class="nav-link-text ms-1">Usuarios</span>
           </a>
         </li>
+        @endcan
+
+        @can('aprendiz')
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('permission.*') ? 'active' : '' }}" href="{{ route('permission.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -25,7 +30,10 @@
             <span class="nav-link-text ms-1">Permisos</span>
           </a>
         </li>
-         <li class="nav-item">
+        @endcan
+
+        @can('coordinador')
+        <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('permission_type.*') ? 'active' : '' }}" href="{{ route('permission_type.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fas fa-folder-open text-dark text-sm opacity-10"></i>
@@ -33,6 +41,9 @@
             <span class="nav-link-text ms-1">Tipo de permiso</span>
           </a>
         </li>
+        @endcan
+        
+        @can('administrador')
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('career.*') ? 'active' : '' }}" href="{{ route('career.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -41,6 +52,9 @@
             <span class="nav-link-text ms-1">Programa</span>
           </a>
         </li>
+        @endcan
+        
+        @can('coordinador')
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('location.*') ? 'active' : '' }}" href="{{ route('location.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -49,6 +63,9 @@
             <span class="nav-link-text ms-1">Sede</span>
           </a>
         </li>
+        @endcan
+        
+        @can('coordinador')
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('course.*') ? 'active' : '' }}" href="{{ route('course.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -57,6 +74,9 @@
             <span class="nav-link-text ms-1">Grupos</span>
           </a>
         </li>
+        @endcan
+
+        @can('coordinador-instructor')
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}" href="{{ route('reports.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -65,9 +85,14 @@
             <span class="nav-link-text ms-1">Reportes</span>
           </a>
         </li>
+        @endcan
+
+
         <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
+          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Cuenta</h6>
         </li>
+
+        @canany(['coordinador-instructor','aprendiz'])
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('auth*') ? 'active' : '' }}" href="{{ route('user.profile') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -76,6 +101,8 @@
             <span class="nav-link-text ms-1">Perfil</span>
           </a>
         </li>
+        @endcanany
+
         <li class="nav-item">
             <a class="nav-link" href="{{ route('auth.logout') }}">
                 <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
