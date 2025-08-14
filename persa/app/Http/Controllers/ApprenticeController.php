@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -64,6 +65,42 @@ class ApprenticeController extends Controller
     session()->flash('success', 'Registro exitoso. Por favor inicia sesión.');
     return redirect()->route('auth.login');
 }
+    public function edit()
+    {
+        $user = Auth::user();
+        
+        
+        if (method_exists($user, 'courses')) {
+            $user->load('courses.career');
+        }
+        
+        return view('user.profile', compact('user'));
+    }
+
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+        
+        
+        $updateRules = [
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        ];
+        
+        $validator = Validator::make($request->all(), $updateRules);
+        $validator->setAttributeNames($this->traductionAttributes);
+
+        if ($validator->fails()) {
+            return redirect()->route('user.profile')
+                             ->withInput()
+                             ->withErrors($validator);
+        }
+
+        $user->email = $request->input('email');
+        $user->save();
+
+        session()->flash('success', 'Perfil actualizado correctamente.');
+        return redirect()->route('user.profile');
+    }
 
 
     }
