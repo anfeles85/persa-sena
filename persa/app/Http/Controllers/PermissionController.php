@@ -11,6 +11,9 @@ use App\Models\Permission;
 use App\Models\PermissionType;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -37,7 +40,10 @@ class PermissionController extends Controller
     
     public function index()
     {
-        $permissions = Permission::all();
+        $permissions = Permission::where('apprentice_id', Auth::id())
+        ->with('location') 
+        ->get();
+
         return view('permission.index', compact('permissions'));
     }
 
@@ -66,6 +72,7 @@ class PermissionController extends Controller
             ->withInput()
             ->withErrors($validator);
         }
+
         $data = $request->only([
             'permission_date',
             'start_time',
@@ -74,12 +81,22 @@ class PermissionController extends Controller
             'location_id',
             'permission_type_id',
         ]);
+        
+        $apprenticeId = auth()->id();
 
-        $data['instructor_id']  = 1;          
+        $courseId = DB::table('apprentice_course')
+            ->where('user_id', $apprenticeId)
+            ->value('course_id');
+
+        $instructorId = DB::table('instructor_course')
+            ->where('course_id', $courseId)
+            ->value('instructor_id');
+
+        $data['instructor_id']  = $instructorId;
         $data['guard_id']       = 1;
-        $data['status']         = 'PENDIENTE'; 
+        $data['status']         = 'PENDIENTE';
         $data['departure_time'] = now()->format('H:i');
-        $data['apprentice_id']  = 1;
+        $data['apprentice_id']  = $apprenticeId;
 
         Permission::create($data);
         return redirect()->route('permission.index')->with('success', 'Permiso creado exitosamente');
@@ -123,18 +140,29 @@ class PermissionController extends Controller
         $validator->setAttributeNames($this->traductionAttributes);
 
         $data = $request->only([
-        'permission_date',
-        'start_time',
-        'end_time',
-        'reasons',
-        'location_id',
-        'permission_type_id',
-    ]);
-        $data['instructor_id']  = 1;          
+            'permission_date',
+            'start_time',
+            'end_time',
+            'reasons',
+            'location_id',
+            'permission_type_id',
+        ]);
+
+        $apprenticeId = auth()->id();
+
+        $courseId = DB::table('apprentice_course')
+            ->where('user_id', $apprenticeId)
+            ->value('course_id');
+
+        $instructorId = DB::table('instructor_course')
+            ->where('course_id', $courseId)
+            ->value('instructor_id');
+
+        $data['instructor_id']  = $instructorId;
         $data['guard_id']       = 1;
-        $data['status']         = 'PENDIENTE'; 
+        $data['status']         = 'PENDIENTE';
         $data['departure_time'] = now()->format('H:i');
-        $data['apprentice_id']  = 1;
+        $data['apprentice_id']  = $apprenticeId;
         
         $permission = Permission::find($id);
         if($permission) 

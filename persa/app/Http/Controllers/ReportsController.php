@@ -27,29 +27,23 @@ class ReportsController extends Controller
     /**
      * reporte que genera el permiso de un aprendiz en especifico
      */
-    public function export_permissions_by_apprentice(Request $request)
-{
-    // Validar que el aprendiz exista y tenga rol de aprendiz (role_id = 3)
-    $apprentice = User::where('id', $request->input('apprentice_id'))
-                      ->where('role_id', 3)
-                      ->firstOrFail();
+    public function export_permissions_by_apprentice(Request $request){
+        $apprentice = User::where('id', $request->input('apprentice_id'))
+                          ->where('role_id', 3)
+                          ->with(['permissions.permissionType', 'permissions.location'])
+                          ->firstOrFail();
 
-    // Obtener permisos de ese aprendiz
-    $permissions = Permission::where('apprentice_id', $apprentice->id)->get();
+        $permissions = $apprentice->permissions;
 
-    // Generar PDF
-    $pdf = Pdf::loadView('reports.export_permissions_by_apprentice', [
-            'permissions' => $permissions,
-            'apprentice' => $apprentice
-        ])
-        ->setPaper('letter', 'portrait')
-        ->setOptions([
-            'defaultFont' => 'sans-serif',
-            'isRemoteEnabled' => true
-        ]);
+        $pdf = Pdf::loadView('reports.export_permissions_by_apprentice', compact('permissions', 'apprentice'))
+            ->setPaper('letter', 'portrait')
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isRemoteEnabled' => true,
+            ]);
 
-    return $pdf->download('Permisos_Aprendiz_' . $apprentice->id . '.pdf');
-}
+        return $pdf->download('Permisos_Aprendiz_' . $apprentice->id . '.pdf');
+    }
 
      /**
      * reporte que genera listado ordenes en un rango de fechas 
@@ -57,7 +51,7 @@ class ReportsController extends Controller
     public function export_permissions_by_date_range(Request $request)
     {
         $permissions = Permission::with([
-            'apprentice_user.apprenticeCourse.course.career',
+            'apprentice_user.apprenticeCourses.career',
             'instructor_user',
             'guard_user',
             'location',
@@ -84,27 +78,24 @@ class ReportsController extends Controller
     /**
      * reporte que genera listado de permisos por curso
      */
-    public function export_permissions_by_course(Request $request)
-{
-    $courseId = $request->input('course_id');
-    $course = Course::with([
-        'career',
-        'apprentices.permissions.permissionType',
-        'apprentices.permissions.location'
-    ])->findOrFail($courseId);
+    public function export_permissions_by_course(Request $request){
+        $courseId = $request->input('course_id');
 
-    $data = [
-        'course' => $course,
-        'apprentices' => $course->apprentices,
-    ];
+        $course = Course::with([
+            'career',
+            'apprentices.permissions.permissionType',
+            'apprentices.permissions.location',
+        ])->findOrFail($courseId);
 
-    $pdf = Pdf::loadView('reports.export_permissions_by_course', $data)
-        ->setPaper('letter', 'portrait')
-        ->setOptions([
-            'defaultFont' => 'sans-serif',
-            'isRemoteEnabled' => true
-        ]);
+        $apprentices = $course->apprentices;
 
-    return $pdf->download('Permisos_Curso_' . $course->id . '.pdf');
-}
+        $pdf = Pdf::loadView('reports.export_permissions_by_course', compact('course', 'apprentices'))
+            ->setPaper('letter', 'portrait')
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isRemoteEnabled' => true,
+            ]);
+
+        return $pdf->download('Permisos_Curso_' . $course->id . '.pdf');
+    }
 }

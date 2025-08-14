@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -88,14 +89,14 @@ class ApprenticeController extends Controller
 }
     public function edit()
     {
+        $roles = Roles::all();
         $user = Auth::user();
-        
         
         if (method_exists($user, 'courses')) {
             $user->load('courses.career');
         }
         
-        return view('user.profile', compact('user'));
+        return view('user.profile', compact('user','roles'));
     }
 
     public function update(Request $request)
@@ -124,4 +125,20 @@ class ApprenticeController extends Controller
     }
 
 
+    
+    public function destroy($id)
+    {
+         $apprentice = User::findOrFail($id);
+
+        if ($apprentice->role_id != 3) {
+        return redirect()->back()->with('error', 'Solo se pueden inhabilitar aprendices.');
     }
+
+        $apprentice->update([
+        'status' => 'INACTIVO'
+    ]);
+
+        return redirect()->route('apprentice.index')->with('success', 'Aprendiz inhabilitado correctamente.');
+    }
+}
+

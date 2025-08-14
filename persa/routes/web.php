@@ -9,16 +9,15 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionTypeController;
 use App\Http\Controllers\ReportsController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 
-
 //prueba
-Route::get('/apprentice', [ApprenticeController::class, 'index'])->name('apprentice.index');
-
+// RUTA PÚBLICA
 Route::get('/', [AuthController::class, 'index'])->name('auth.index');
 
+// RUTAS DE AUTENTICACIÓN
 Route::prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'index'])->name('auth.login');
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
@@ -33,47 +32,54 @@ Route::prefix('auth')->group(function () {
     Route::put('/profile', [ApprenticeController::class, 'update'])->name('user.profile.update');
     
     Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
-
-
 });
 
+// RUTAS PROTEGIDAS POR AUTENTICACIÓN
 Route::middleware('auth')->group(function () {
 
     Route::get('/index', [IndexController::class, 'index'])->name('index');
-    Route::get('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
-    // Coordinador - Sedes
+    //Coordinador - Gestión de usuarios
+    Route::middleware('can:coordinador')->prefix('usuarios')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('user.index');
+        Route::get('/aprendices', [UserController::class, 'indexAprendices'])->name('user.aprendices');
+        Route::get('/instructores', [UserController::class, 'indexInstructores'])->name('user.instructores');
+
+        Route::get('/create', [UserController::class, 'create'])->name('user.create');
+        Route::post('/', [UserController::class, 'store'])->name('user.store');
+        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+        Route::put('/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::delete('/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+        Route::post('/send_email', [UserController::class, 'send_email'])->name('users.send_email');
+    });
+
+    //Coordinador - Sedes
     Route::middleware('can:coordinador')->prefix('location')->group(function () {
         Route::resource('/', LocationController::class)->parameters(['' => 'id'])->names('location');
     });
 
-    // Coordinador - Carreras
+    //Coordinador - Carreras
     Route::middleware('can:coordinador')->prefix('career')->group(function () {
         Route::resource('/', CareerController::class)->parameters(['' => 'id'])->names('career');
     });
 
-    // Coordinador - Tipos de Permiso
+    //Coordinador - Tipos de Permiso
     Route::middleware('can:coordinador')->prefix('permission_type')->group(function () {
         Route::resource('/', PermissionTypeController::class)->parameters(['' => 'id'])->names('permission_type');
     });
 
-    // Aprendiz - Permisos
-    Route::middleware('can:aprendiz')->prefix('permission')->group(function () {
-        Route::resource('/', PermissionController::class)->parameters(['' => 'id'])->names('permission');
-    });
-
-    // Coordinador - Cursos
+    //Coordinador - Cursos
     Route::middleware('can:coordinador')->prefix('course')->group(function () {
         Route::resource('/', CourseController::class)->parameters(['' => 'id'])->names('course');
     });
 
-    // Coordinador - Usuarios
-    Route::middleware('can:coordinador')->prefix('users')->group(function () {
-        Route::get('/index', [UsersController::class, 'index'])->name('users.index');
-        Route::post('/send_email', [UsersController::class, 'send_email'])->name('users.send_email');
+    //Aprendiz - Permisos
+    Route::middleware('can:aprendiz')->prefix('permission')->group(function () {
+        Route::resource('/', PermissionController::class)->parameters(['' => 'id'])->names('permission');
     });
 
-    // Coordinador / Instructor - Reportes
+    //Coordinador / Instructor - Reportes
     Route::middleware('can:coordinador-instructor')->prefix('reports')->group(function () {
         Route::get('/index', [ReportsController::class, 'index'])->name('reports.index');
         Route::post('/export_permissions_by_apprentice', [ReportsController::class, 'export_permissions_by_apprentice'])->name('reports.permission_apprentice');

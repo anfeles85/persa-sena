@@ -4,7 +4,7 @@
 @section('header', 'Mi Perfil')
 @section('content')
 
-<label class="fs-2">Mi Perfil de Aprendiz</label>
+<label class="fs-2">Mi Perfil</label>
 
 <!-- Mensajes de éxito y error en la parte superior -->
 @if(session('success'))
@@ -60,8 +60,7 @@
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label class="form-label"><strong>Rol:</strong></label>
-                                <input type="text" class="form-control" value="Aprendiz" readonly>
-                            </div>
+                                <input type="text" class="form-control" value="{{ $user->role->name ?? 'Sin rol' }}" readonly>                            </div>
                         </div>
                     </div>
 
@@ -89,9 +88,9 @@
                             <table class="table table-striped align-items-center text-center">
                                 <thead>
                                     <tr>
-                                        <th>Horario</th>
-                                        <th>Programa</th>
                                         <th>Codigo de ficha</th>
+                                        <th>Programa</th>
+                                        <th>Horario</th>
                                         <th>Estado</th>
                                     </tr>
                                 </thead>
@@ -99,9 +98,9 @@
                                     @if($user->courses && $user->courses->count() > 0)
                                         @foreach($user->courses as $course)
                                             <tr>
-                                                <td>{{ $course->shift ?? 'N/A' }}</td>
-                                                <td>{{ $course->career->name ?? 'N/A' }}</td>
                                                 <td>{{ $course->id ?? 'N/A' }}</td>
+                                                <td>{{ $course->career->name ?? 'N/A' }}</td>
+                                                <td>{{ $course->shift ?? 'N/A' }}</td>
                                                 <td>
                                                     <span class="badge bg-{{ $course->status === 'ACTIVO' ? 'success' : 'secondary' }}">
                                                         {{ $course->status }}
@@ -122,13 +121,12 @@
                     <!-- Botones de acción -->
                     <div class="row">
                         <div class="col-lg-12 mb-4 d-grid gap-2 d-md-block text-end">
-                            <button type="button" class="btn btn-primary" onclick="window.history.back()">
-                                <i class="fas fa-arrow-left"></i> Volver
-                            </button>
                             <button type="submit" class="btn btn-success">
                                 <i class="fas fa-save"></i> Actualizar Email
                             </button>
-                        </div>
+                            <a href="{{ route('auth.changePassword') }}" class="btn btn-primary"> Cambiar contraseña <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            <bu
                     </div>
                 </form>
             </div>

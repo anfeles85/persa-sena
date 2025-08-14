@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versión del servidor:         8.0.40 - MySQL Community Server - GPL
+-- Versión del servidor:         8.0.41 - MySQL Community Server - GPL
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             12.8.0.6908
+-- HeidiSQL Versión:             12.6.0.6765
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -31,21 +31,23 @@ CREATE TABLE IF NOT EXISTS `apprentice_course` (
   KEY `apprentice_course_course_id_foreign` (`course_id`),
   CONSTRAINT `apprentice_course_course_id_foreign` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `apprentice_course_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.apprentice_course: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla persa_db.apprentice_course: ~7 rows (aproximadamente)
 INSERT INTO `apprentice_course` (`id`, `user_id`, `course_id`, `created_at`, `updated_at`) VALUES
 	(2, 9, 2, NULL, NULL),
 	(3, 10, 3, NULL, NULL),
 	(4, 11, 4, NULL, NULL),
 	(5, 12, 1, NULL, NULL),
-	(6, 2, 1, NULL, NULL);
+	(6, 2, 1, NULL, NULL),
+	(7, 15, 6, NULL, NULL),
+	(8, 16, 6, NULL, NULL);
 
 -- Volcando estructura para tabla persa_db.career
 CREATE TABLE IF NOT EXISTS `career` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nombre',
-  `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Tipo',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nombre',
+  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Tipo',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -63,10 +65,10 @@ INSERT INTO `career` (`id`, `name`, `type`, `created_at`, `updated_at`) VALUES
 CREATE TABLE IF NOT EXISTS `course` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `number_group` bigint NOT NULL COMMENT 'Numero de ficha',
-  `shift` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Jornada',
-  `trimester` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Trimestre académico',
+  `shift` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Jornada',
+  `trimester` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Trimestre académico',
   `year` int NOT NULL COMMENT 'Año',
-  `status` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Estado',
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Estado',
   `career_id` bigint unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -74,9 +76,9 @@ CREATE TABLE IF NOT EXISTS `course` (
   UNIQUE KEY `number_group` (`number_group`),
   KEY `course_career_id_foreign` (`career_id`),
   CONSTRAINT `course_career_id_foreign` FOREIGN KEY (`career_id`) REFERENCES `career` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.course: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla persa_db.course: ~6 rows (aproximadamente)
 INSERT INTO `course` (`id`, `number_group`, `shift`, `trimester`, `year`, `status`, `career_id`, `created_at`, `updated_at`) VALUES
 	(1, 2921889, 'DIURNA', 'T1', 2023, 'ACTIVO', 1, NULL, NULL),
 	(2, 2921874, 'NOCTURNA', 'T2', 2023, 'ACTIVO', 2, NULL, '2025-08-05 19:07:31'),
@@ -88,11 +90,11 @@ INSERT INTO `course` (`id`, `number_group`, `shift`, `trimester`, `year`, `statu
 -- Volcando estructura para tabla persa_db.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
@@ -112,21 +114,22 @@ CREATE TABLE IF NOT EXISTS `instructor_course` (
   KEY `instructor_course_instructor_id_foreign` (`instructor_id`),
   CONSTRAINT `instructor_course_course_id_foreign` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `instructor_course_instructor_id_foreign` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.instructor_course: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla persa_db.instructor_course: ~6 rows (aproximadamente)
 INSERT INTO `instructor_course` (`id`, `instructor_id`, `course_id`, `created_at`, `updated_at`) VALUES
 	(1, 3, 1, NULL, NULL),
 	(2, 4, 2, NULL, NULL),
 	(3, 5, 3, NULL, NULL),
 	(4, 6, 4, NULL, NULL),
-	(5, 7, 1, NULL, NULL);
+	(5, 7, 1, NULL, NULL),
+	(6, 4, 6, NULL, NULL);
 
 -- Volcando estructura para tabla persa_db.location
 CREATE TABLE IF NOT EXISTS `location` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nombre del lugar',
-  `address` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Dirección',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nombre del lugar',
+  `address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Dirección',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -141,7 +144,7 @@ INSERT INTO `location` (`id`, `name`, `address`, `created_at`, `updated_at`) VAL
 -- Volcando estructura para tabla persa_db.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -163,8 +166,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 -- Volcando estructura para tabla persa_db.password_reset_tokens
 CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -178,11 +181,11 @@ CREATE TABLE IF NOT EXISTS `permission` (
   `start_time` time NOT NULL COMMENT 'Hora de inicio',
   `end_time` time NOT NULL COMMENT 'Hora de fin',
   `departure_time` time DEFAULT NULL COMMENT 'Hora de salida',
-  `reasons` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Motivo del permiso',
+  `reasons` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Motivo del permiso',
   `instructor_id` bigint unsigned NOT NULL,
   `apprentice_id` bigint unsigned NOT NULL,
   `guard_id` bigint unsigned NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Estado',
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Estado',
   `location_id` bigint unsigned NOT NULL,
   `permission_type_id` bigint unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -198,18 +201,21 @@ CREATE TABLE IF NOT EXISTS `permission` (
   CONSTRAINT `permission_instructor_id_foreign` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `permission_location_id_foreign` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `permission_permission_type_id_foreign` FOREIGN KEY (`permission_type_id`) REFERENCES `permission_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.permission: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla persa_db.permission: ~6 rows (aproximadamente)
 INSERT INTO `permission` (`id`, `permission_date`, `start_time`, `end_time`, `departure_time`, `reasons`, `instructor_id`, `apprentice_id`, `guard_id`, `status`, `location_id`, `permission_type_id`, `created_at`, `updated_at`) VALUES
 	(34, '2025-08-05', '08:00:00', '10:00:00', '08:15:00', 'CITA MEDICA', 3, 12, 13, 'PENDIENTE', 1, 1, NULL, NULL),
 	(39, '2025-08-07', '09:30:00', '10:30:00', '09:40:00', 'CALAMIDAD DOMESTICA', 5, 9, 13, 'DESAPROBADO', 3, 2, NULL, NULL),
-	(40, '2025-08-08', '07:45:00', '09:00:00', '08:00:00', 'OTRO', 6, 10, 13, 'PENDIENTE', 2, 4, NULL, NULL);
+	(40, '2025-08-08', '07:45:00', '09:00:00', '08:00:00', 'OTRO', 6, 10, 13, 'PENDIENTE', 2, 4, NULL, NULL),
+	(51, '2025-08-14', '11:14:00', '00:14:00', '16:14:00', 'Cita medica', 4, 15, 1, 'PENDIENTE', 3, 1, '2025-08-14 21:14:29', '2025-08-14 21:14:29'),
+	(52, '2025-08-14', '11:30:00', '11:30:00', '16:30:00', 'Cita medica', 4, 15, 1, 'PENDIENTE', 3, 1, '2025-08-14 21:30:42', '2025-08-14 21:30:42'),
+	(53, '2025-08-14', '15:30:00', '17:30:00', '16:37:00', 'Concierto', 4, 16, 1, 'PENDIENTE', 3, 4, '2025-08-14 21:37:31', '2025-08-14 21:37:31');
 
 -- Volcando estructura para tabla persa_db.permission_type
 CREATE TABLE IF NOT EXISTS `permission_type` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nombre',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nombre',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -225,11 +231,11 @@ INSERT INTO `permission_type` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- Volcando estructura para tabla persa_db.personal_access_tokens
 CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -244,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 -- Volcando estructura para tabla persa_db.roles
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nombre',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nombre',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -253,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 -- Volcando datos para la tabla persa_db.roles: ~4 rows (aproximadamente)
 INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 	(1, 'COORDINADOR', NULL, NULL),
-	(2, 'INSTRUTOR', NULL, NULL),
+	(2, 'INSTRUCTOR', NULL, NULL),
 	(3, 'APRENDIZ', NULL, NULL),
 	(4, 'GUARDA', NULL, NULL);
 
@@ -261,12 +267,12 @@ INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `document` bigint NOT NULL COMMENT 'Cedula',
-  `fullname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nombre completo',
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Correo electrónico',
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Contraseña',
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Estado',
+  `fullname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nombre completo',
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Correo electrónico',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Contraseña',
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Estado',
   `role_id` bigint unsigned NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -274,23 +280,25 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `document` (`document`),
   KEY `users_role_id_foreign` (`role_id`),
   CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.users: ~13 rows (aproximadamente)
+-- Volcando datos para la tabla persa_db.users: ~15 rows (aproximadamente)
 INSERT INTO `users` (`id`, `document`, `fullname`, `email`, `password`, `status`, `role_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 123, 'Miss Sallie Zieme PhD', 'software.clem@gmail.com', '$2y$12$ic131//9JxY/UZ3ot.anhOfn.WViaorftj.q9iUkRIEClhV2cFpXi', 'ACTIVO', 1, '8p7TnqZlXH', '2025-06-26 18:11:51', '2025-08-05 19:02:36'),
+	(1, 123, 'Miss Sallie Zieme PhD', 'software.clem@gmail.com', '$2y$12$ic131//9JxY/UZ3ot.anhOfn.WViaorftj.q9iUkRIEClhV2cFpXi', 'ACTIVO', 1, '8KyTRdP6kvyC53mkyIQltzJgUUy4opF80ujAy5KkkfrIdwu74nQlNT76AMSa', '2025-06-26 18:11:51', '2025-08-05 19:02:36'),
 	(2, 456, 'Miss Reta Runolfsdottir', 'magnus.schaden@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 1, 'dL2DvyMDgP', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
-	(3, 789, 'Miss Millie Davis', 'jordy70@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 2, 'w1cjRzH9SG', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
+	(3, 789, 'Miss Millie Davis', 'jordy70@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 2, 'NTnzfZRofZZvMhlZiLFj25cbVNIaR1xZjNHxlTgoxJGYCwanrHWuR5MOng3b', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(4, 134, 'Dr. Taylor Klein', 'murazik.ahmad@example.net', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 2, '5HrBam9TXJ', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(5, 345, 'Bethany Nader', 'xdietrich@example.org', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 2, 'kS9y5w8DjZ', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(6, 457, 'Cecelia Reinger', 'boris.miller@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 2, 'uT6fNT7SPq', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(7, 234, 'Raphael Heller', 'lebsack.elton@example.org', '$2y$12$Wh2bHaAu2VCjPgZgEwS0TO.bZB/GUi4BuyYpSJaq2RiJzpsK0cus2', 'ACTIVO', 2, 'RP75X9AeTg', '2025-06-26 18:11:51', '2025-08-03 00:08:35'),
 	(9, 1235, 'Mrs. Ardella Funk MD', 'qoconnell@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 3, 'eZNPnclQtX', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
-	(10, 954, 'Chester Miller', 'terry.patricia@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 3, 'cKG3vS3NDL', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
+	(10, 954, 'Chester Miller', 'terry.patricia@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 3, 'eCjkQvBQcMnRtJ54LehP3L5TWbV3d1ogD35d15KBk5FXSjpF2ACdosOFu2Cy', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(11, 4567, 'Laurie Bogan', 'max.fritsch@example.org', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'INACTIVO', 3, 'XaeoLTUV1J', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(12, 22345, 'Ms. Caroline Becker Sr.', 'estella.heathcote@example.net', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 3, 'vxVgKvXzZc', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(13, 2312, 'Dr. Allen Cruickshank III', 'adrain97@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 4, 'KD7MO6DBJ9', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
-	(14, 324, 'Mr. Jarod Anderson PhD', 'rau.rashad@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'INACTIVO', 4, 'zALvAeKTiP', '2025-06-26 18:11:51', '2025-06-26 18:11:51');
+	(14, 324, 'Mr. Jarod Anderson PhD', 'rau.rashad@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'INACTIVO', 4, 'zALvAeKTiP', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
+	(15, 1117012959, 'LINA VANESSA SALCEDO CUELLAR', 'nosemk9@gmail.com', '$2y$12$1BZIY25UhJ5ZvO0EyB.tdOx5OBEDtLd86xfwWb0ZGqhj4/Q7EElYa', 'ACTIVO', 3, NULL, '2025-08-14 19:23:38', '2025-08-14 19:23:38'),
+	(16, 1107843290, 'JUAN SEBASTIAN RODRIGUEZ CRUZ', 'sr1290853@gmail.com', '$2y$12$Bq8LBXIuAkj6d9IZKAz91u4KfG/970E2cBZC6BeLFDjMwdCsZqp4a', 'ACTIVO', 3, NULL, '2025-08-14 21:37:11', '2025-08-14 21:37:11');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
