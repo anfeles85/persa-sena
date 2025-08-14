@@ -15,7 +15,7 @@ class RolesSeeder extends Seeder
     {
         Roles::insert([
             ['name' => 'COORDINADOR'],
-            ['name' => 'INSTRUTOR'],
+            ['name' => 'INSTRUCTOR'],
             ['name' => 'APRENDIZ'],
             ['name' => 'GUARDA']
         ]);
