@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 
+//prueba
 // RUTA PÚBLICA
 Route::get('/', [AuthController::class, 'index'])->name('auth.index');
 
@@ -85,5 +86,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/export_permissions_by_date_range', [ReportsController::class, 'export_permissions_by_date_range'])->name('reports.permission_date');
         Route::post('/export_permissions_by_course', [ReportsController::class, 'export_permissions_by_course'])->name('reports.permissions_course');
     });
+
+    //prueba
+    Route::get('/apprentice', function () {
+        return view('apprentice.index');
+    })->name('apprentice.index');
+
 
 });

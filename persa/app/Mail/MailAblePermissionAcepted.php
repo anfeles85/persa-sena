@@ -39,12 +39,14 @@ class MailAblePermissionAcepted extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.permission_approved',
+            view: 'email.permission_approved',
             with: [
-            'apprentice' => $this->permission->apprentice_user,
-            'permission' => $this->permission,
-            'course' => $this->permission->apprentice_user->course()->first(),
-        ]
+                'permission' => $this->permission,
+                'apprentice' => $this->permission->apprentice,
+                'course' => $this->permission->apprentice->apprenticeCourse->course,
+
+                //me falta algo de aqui jijijiji
+            ],
         );
     }
 
