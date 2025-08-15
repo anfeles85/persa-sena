@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Permission;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CancelPermissions extends Command
@@ -25,6 +27,11 @@ class CancelPermissions extends Command
      */
     public function handle()
     {
-        //
+            $permissions = Permission::where('status', 'PENDIENTE')
+            ->whereNull('departure_time')
+            ->where('permission_date', '<', Carbon::today())
+            ->update(['status' => 'CANCELADO']);
+
+        $this->info("Se cancelaron {$permissions} permisos pendientes.");
     }
 }
