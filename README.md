@@ -107,7 +107,7 @@ con apoyo del **[CLEM - Centro Latinoamericano de Especies Menores](https://sena
 
 | | |
 |---|---|
-| [Juan Sebastian Rodriguez Cruz](https://github.com/Sebas18Rodriguez18) | [Lina Vanessa Salcedo Cuellar](https://github.com/Linavs18) |
-| [Juan Fernando Velásquez Sarmiento](https://github.com/H2kl0) | [Sebastian Rojas Gonzalez](https://github.com/tiannrg) |
-| [Manuel Alejandro Ocampo Saya](https://github.com/AlejandroOcampo20) | [Tatiana Carvajal Vargas](https://github.com/tatiana-carvajal) |
-| [Danna Sofia Marulanda Bahena](https://github.com/marulandadanna2) | [Brahian Stiven Quintero Florez](https://github.com/brahianqf07) |
+| [Juan Fernando Velásquez Sarmiento](https://github.com/H2kl0) | [Lina Vanessa Salcedo Cuellar](https://github.com/Linavs18) |
+| [Sebastian Rojas Gonzalez](https://github.com/tiannrg) | [Juan Sebastian Rodriguez Cruz](https://github.com/Sebas18Rodriguez18) |
+| [Brahian Stiven Quintero Florez](https://github.com/brahianqf07) | [Manuel Alejandro Ocampo Saya](https://github.com/AlejandroOcampo20) |
+| [Tatiana Carvajal Vargas](https://github.com/tatiana-carvajal) | [Danna Sofia Marulanda Bahena](https://github.com/marulandadanna2) |
