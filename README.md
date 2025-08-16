@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/anfeles85/persa-sena/blob/dev/persa/public/img/persa-logo-readme.png" alt="PERSA Logo" width="500px">
+  <img src="https://github.com/anfeles85/persa-sena/blob/G2/persa/public/img/persa-logo-readme.png" alt="PERSA Logo" width="500px">
 </p>
 
 # 🛠️ PERSA
