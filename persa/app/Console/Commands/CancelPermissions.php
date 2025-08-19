@@ -8,32 +8,23 @@ use Illuminate\Console\Command;
 
 class CancelPermissions extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'status:cancel-permissions';
+    protected $description = 'Cancela automáticamente todos los permisos pendientes cuya fecha ya pasó 
+                            y no registraron hora de salida';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-   protected $description = 'Cancela automáticamente todos los permisos pendientes cuya fecha ya pasó 
-                            y no registraron hora de salida.';
-
-
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
-            $permissions = Permission::where('status', 'PENDIENTE')
-            ->whereNull('departure_time')
-            ->where('permission_date', '<', Carbon::today())
+        $now = Carbon::now();     
+        $canceled = Permission::where('status', 'PENDIENTE')
+            ->where(function ($query) use ($now) {
+                    $query->Where(function ($query) use ($now) {
+                        $query->where('permission_date', '=', $now->toDateString())
+                            ->where('end_time', '<', $now->toTimeString());
+                    });
+            })
             ->update(['status' => 'CANCELADO']);
 
-        $this->info("Se cancelaron {$permissions} permisos pendientes.");
+        $this->info("Se cancelaron {$canceled} permisos pendientes expirados.");
+        return 0;
     }
 }
