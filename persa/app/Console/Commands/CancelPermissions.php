@@ -13,14 +13,16 @@ class CancelPermissions extends Command
      *
      * @var string
      */
-    protected $signature = 'app:cancel-permissions';
+    protected $signature = 'status:cancel-permissions';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+   protected $description = 'Cancela automáticamente todos los permisos pendientes cuya fecha ya pasó 
+                            y no registraron hora de salida.';
+
 
     /**
      * Execute the console command.
