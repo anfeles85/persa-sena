@@ -610,3 +610,155 @@
         flex: 0 0 100%;
     }
 }
+
+
+
+.login-container-forgot {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.login-card-forgot {
+    width: 100%;
+    max-width: 900px;
+    height: 500px;
+    display: flex;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+
+.login-left-forgot {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+
+.login-right-forgot {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+
+.form-login-forgot .form-control {
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 1rem;
+}
+
+
+@media (max-width: 768px) {
+    .login-card-forgot {
+        flex-direction: column;
+        height: auto; 
+    }
+
+    .login-left-forgot, 
+    .login-right-forgot {
+        width: 100%;
+        padding: 1.5rem;
+    }
+
+    .login-left-forgot {
+        order: 1;
+        text-align: center;
+    }
+
+    .login-right-forgot {
+        order: 2; 
+    }
+}
+
+@media (max-width: 480px) {
+    .form-login-forgot .form-control {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .form-login-forgot .btn-login {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+
+@media (max-width: 992px) { /* Tablets y pantallas medianas */
+    .login-card-forgot-link {
+        max-width: 100%;
+        margin: 10px;
+    }
+
+    .login-left-forgot-link {
+        padding: 30px 20px;
+    }
+
+    .login-left-forgot-link .system-title {
+        font-size: 22px;
+    }
+
+    .login-left-forgot-link .system-subtitle {
+        font-size: 13px;
+    }
+
+    .login-right-forgot-link {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 768px) { /* Móviles en horizontal y tablets chicas */
+    .login-card-forgot-link {
+        flex-direction: column;
+    }
+
+    .login-left-forgot-link,
+    .login-right-forgot-link {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .login-left-forgot-link {
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+
+    .login-right-forgot-link .logo-persa {
+        width: 80px;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) { /* Móviles pequeños */
+    .login-left-forgot-link .system-title {
+        font-size: 20px;
+    }
+
+    .login-left-forgot-link .system-subtitle {
+        font-size: 12px;
+    }
+
+    .login-right-forgot-link {
+        padding: 15px;
+    }
+
+    .login-right-forgot-link .login-tabs {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-login {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px;
+    }
+}

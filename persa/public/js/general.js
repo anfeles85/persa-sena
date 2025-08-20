@@ -62,3 +62,28 @@ function create() {
     confirmButtonText: 'Aceptar'
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const body = document.querySelector("body");
+    const success = body.dataset.success;
+    const error = body.dataset.error;
+
+    if (success) {
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: success,
+            showConfirmButton: false,
+            timer: 3000
+        });
+    }
+
+    if (error) {
+        Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: error,
+            showConfirmButton: true
+        });
+    }
+});

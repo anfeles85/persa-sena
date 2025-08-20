@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionTypeController;
@@ -28,6 +29,12 @@ Route::prefix('auth')->group(function () {
     Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
     Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
 
+    Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('auth.forget-password');
+    Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('auth.forget-password-link');
+    
+    Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+    Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+    
     Route::get('/profile', [ApprenticeController::class, 'edit'])->name('user.profile');
     Route::put('/profile', [ApprenticeController::class, 'update'])->name('user.profile.update');
     

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>Enlace Reestablecer contraseña</title>
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
@@ -16,11 +16,11 @@
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v=2">
 
 </head>
-<body>
-    <div class="login-container body-login">
-        <div class="login-card">
+<body >
+    <div class="login-container body-login login-container-forgot-link">
+        <div class="login-card login-card-forgot-link">
             <div class="row g-0 h-100">
-                <div class="col-lg-6 login-left">
+                <div class="col-lg-6 login-left login-left-forgot-link">
                     <div class="logo-container">
                         <div class="logo">
                             <img src="{{ asset('img/sena-logo.png') }}" alt="SENA Logo">
@@ -32,10 +32,10 @@
                         
                     </div>
                 </div>
-                <div class="col-lg-6 login-right">
+                <div class="col-lg-6 login-right login-right-forgot-link">
                     <img src="{{ asset('img/persa-logo.png') }}" alt="register" class="img-fluid logo-persa">
                     <div class="login-tabs">
-                        <span class="tab-button active">Iniciar sesión</span>
+                        <span class="tab-button active">Reestablecer</span>
                         <a href="{{ route('auth.register') }}" class="tab-button">Registrarse</a>
                     </div>
 
@@ -55,25 +55,27 @@
                         </div>
                     @endif
 
-                    <form class="login-form" action="{{ route('auth.login') }}" method="POST">
+                    <form class="login-form form-login-forgot-link" action="{{ route('reset.password.post') }}" method="POST">
                         @csrf
-
+                        <input type="hidden" name="token" value="{{ $token }}">
                         <div class="form-group">
-                            <input type="text" name="email" class="form-control" placeholder="Ingrese su correo eléctronico" value="{{ old('email') }}" required>
+                            <input type="text" name="email" class="form-control" placeholder="Ingrese su correo eléctronico" aria-label="Email" required>
                         </div>
-
                         <div class="form-group">
-                            <input type="password" name="password" class="form-control" placeholder="Ingrese su contraseña" required>
+                            <input type="password" name="password" class="form-control" placeholder="Ingrese nueva contraseña" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password_confirmation" class="form-control" placeholder="Ingrese su contraseña" required>
                         </div>
 
                         <button type="submit" class="btn-login">
                             <i class="fas fa-sign-in-alt me-2"></i>
-                            INGRESAR
+                            REESTABLECER CONTRASEÑA
                         </button>
                     </form>
 
                     <div class="forgot-password">
-                        <a href="{{ route('auth.forget-password') }}">¿Olvidaste tu contraseña?</a>
+                        <a href="{{ route('auth.login') }}">Regresar</a>
                     </div>
                 </div>
             </div>
@@ -106,6 +108,17 @@
                 confirmButtonText: 'OK'
             });
         </script>
+    @elseif (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: '¡ERROR!',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#ff0000',
+                confirmButtonText: 'OK'
+            });
+        </script>
     @endif
+
 </body>
 </html>
