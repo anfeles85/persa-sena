@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 
+//prueba
 // RUTA PÚBLICA
 Route::get('/', [AuthController::class, 'index'])->name('auth.index');
 
@@ -91,6 +92,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/export_permissions_by_apprentice', [ReportsController::class, 'export_permissions_by_apprentice'])->name('reports.permission_apprentice');
         Route::post('/export_permissions_by_date_range', [ReportsController::class, 'export_permissions_by_date_range'])->name('reports.permission_date');
         Route::post('/export_permissions_by_course', [ReportsController::class, 'export_permissions_by_course'])->name('reports.permissions_course');
+    });
+
+    //Prueba
+    Route::prefix('apprentice')->group(function () {
+        Route::get('/', [ApprenticeController::class, 'index'])->name('apprentice.index');
+        Route::patch('/{id}/toggle-status', [ApprenticeController::class, 'toggleStatus'])->name('apprentice.toggleStatus');
+        Route::get('/{id}/profile', [ApprenticeController::class, 'showProfile'])->name('apprentice.profile');
+        Route::put('/{id}/profile', [ApprenticeController::class, 'updateProfile'])->name('apprentice.profile.update');
     });
 
 });

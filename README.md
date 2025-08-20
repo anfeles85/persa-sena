@@ -15,10 +15,11 @@
   - Usuarios
   - Aprendices
   - Instructores
-  - Programas y cursos
-  - Inventario y productos
-  - Proveedores
-  - Movimientos de stock y compras
+  - Programas
+  - Permisos
+  - Sedes
+  - Carreras
+  - Fichas
 
 - 📊 **Reportes y exportación**:
   - Generación de reportes en **PDF**
