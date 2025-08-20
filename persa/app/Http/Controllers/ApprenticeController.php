@@ -37,20 +37,29 @@ class ApprenticeController extends Controller
 
     public function index(Request $request)
     {
-       
         $courses = Course::with('career')->where('status', 'ACTIVO')->get();
         
-        
         $apprentices = null;
-        
-        // Si se seleccionó una ficha, buscar los aprendices
         if ($request->has('course_id') && $request->course_id) {
-            $apprentices = User::where('role_id', 3) // role_id 3 = aprendices
-                              ->whereHas('courses', function($query) use ($request) {
-                                  $query->where('course.id', $request->course_id);
-                              })
-                              ->with('courses.career')
-                              ->get();
+            $apprentices = DB::table('users')
+                            ->join('apprentice_course', 'users.id', '=', 'apprentice_course.user_id')
+                            ->join('course', 'apprentice_course.course_id', '=', 'course.id')
+                            ->join('career', 'course.career_id', '=', 'career.id')
+                            ->where('users.role_id', 3)
+                            ->where('course.id', $request->course_id)
+                            ->where('course.status', 'ACTIVO')
+                            ->select(
+                                'users.id',
+                                'users.document',
+                                'users.fullname',
+                                'users.email',
+                                'users.status',
+                                'course.shift as course_shift',
+                                'course.trimester as course_trimester',
+                                'course.year as course_year',
+                                'career.name as career_name'
+                            )
+                            ->get();
         }
         
         return view('apprentice.index', compact('courses', 'apprentices'));
@@ -63,30 +72,31 @@ class ApprenticeController extends Controller
     }
 
     public function store(Request $request)
-{
-    $validator = Validator::make($request->all(), $this->rules);
-    $validator->setAttributeNames($this->traductionAttributes);
+    {
+        $validator = Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
 
-    if ($validator->fails()) {
-        return redirect()->route('auth.register')
-                         ->withInput()
-                         ->withErrors($validator);
+        if ($validator->fails()) {
+            return redirect()->route('auth.register')
+                             ->withInput()
+                             ->withErrors($validator);
+        }
+
+        $user = User::create([
+            'document' => $request->input('document'),
+            'fullname' => strtoupper($request->input('name') . ' ' . $request->input('lastname')),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+            'role_id' => 3,
+            'status' => 'ACTIVO'
+        ]);
+
+        $user->courses()->attach($request->input('course_id'));
+
+        session()->flash('success', 'Registro exitoso. Por favor inicia sesión.');
+        return redirect()->route('auth.login');
     }
 
-    $user = User::create([
-        'document' => $request->input('document'),
-        'fullname' => strtoupper($request->input('name') . ' ' . $request->input('lastname')),
-        'email' => $request->input('email'),
-        'password' => Hash::make($request->input('password')),
-        'role_id' => 3,
-        'status' => 'ACTIVO'
-    ]);
-
-    $user->courses()->attach($request->input('course_id'));
-
-    session()->flash('success', 'Registro exitoso. Por favor inicia sesión.');
-    return redirect()->route('auth.login');
-}
     public function edit()
     {
         $roles = Roles::all();
@@ -99,10 +109,77 @@ class ApprenticeController extends Controller
         return view('user.profile', compact('user','roles'));
     }
 
+
+    public function showProfile($id)
+    {
+
+        if (Auth::user()->role_id != 1) {
+            abort(403, 'No tienes permisos para acceder a esta página.');
+        }
+
+        $apprentice = User::with(['courses.career'])->findOrFail($id);
+        
+        if ($apprentice->role_id != 3) {
+            return redirect()->route('apprentice.index')->with('error', 'El usuario seleccionado no es un aprendiz.');
+        }
+
+        $courses = Course::with('career')->where('status', 'ACTIVO')->get();
+        
+        return view('apprentice.profile', compact('apprentice', 'courses'));
+    }
+
+    public function updateProfile(Request $request, $id)
+    {
+        if (Auth::user()->role_id != 1) {
+            abort(403, 'No tienes permisos para realizar esta acción.');
+        }
+
+        $apprentice = User::findOrFail($id);
+        
+        if ($apprentice->role_id != 3) {
+            return redirect()->route('apprentice.index')->with('error', 'El usuario seleccionado no es un aprendiz.');
+        }
+
+
+        $updateRules = [
+            'document' => 'required|string|max:20|unique:users,document,' . $id,
+            'fullname' => 'required|string|max:500',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'course_id' => 'required|exists:course,id',
+            'status' => 'required|in:ACTIVO,INACTIVO'
+        ];
+
+        $validator = Validator::make($request->all(), $updateRules);
+        $validator->setAttributeNames([
+            'document' => 'documento',
+            'fullname' => 'nombre completo',
+            'email' => 'correo electrónico',
+            'course_id' => 'ficha',
+            'status' => 'estado'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('apprentice.profile', $id)
+                             ->withInput()
+                             ->withErrors($validator);
+        }
+
+        $apprentice->update([
+            'document' => $request->input('document'),
+            'fullname' => strtoupper($request->input('fullname')),
+            'email' => $request->input('email'),
+            'status' => $request->input('status')
+        ]);
+
+        $apprentice->courses()->sync([$request->input('course_id')]);
+
+        session()->flash('success', 'Perfil del aprendiz actualizado correctamente.');
+        return redirect()->route('apprentice.profile', $id);
+    }
+
     public function update(Request $request)
     {
         $user = Auth::user();
-        
         
         $updateRules = [
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
@@ -124,21 +201,40 @@ class ApprenticeController extends Controller
         return redirect()->route('user.profile');
     }
 
+    public function toggleStatus($id)
+    {
+        $user = Auth::user();
+        
+        if (!in_array($user->role_id, [1, 2])) {
+            abort(403, 'No tienes permisos para realizar esta acción.');
+        }
 
+        $apprentice = User::findOrFail($id);
+
+        if ($apprentice->role_id != 3) {
+            return redirect()->back()->with('error', 'Solo se puede cambiar el estado de aprendices.');
+        }
+
+        $newStatus = $apprentice->status == 'ACTIVO' ? 'INACTIVO' : 'ACTIVO';
+        $apprentice->update(['status' => $newStatus]);
+
+        $message = $newStatus == 'ACTIVO' ? 'Aprendiz activado correctamente.' : 'Aprendiz inactivado correctamente.';
+        
+        return redirect()->back()->with('success', $message);
+    }
     
     public function destroy($id)
     {
-         $apprentice = User::findOrFail($id);
+        $apprentice = User::findOrFail($id);
 
         if ($apprentice->role_id != 3) {
-        return redirect()->back()->with('error', 'Solo se pueden inhabilitar aprendices.');
-    }
+            return redirect()->back()->with('error', 'Solo se pueden inhabilitar aprendices.');
+        }
 
         $apprentice->update([
-        'status' => 'INACTIVO'
-    ]);
+            'status' => 'INACTIVO'
+        ]);
 
         return redirect()->route('apprentice.index')->with('success', 'Aprendiz inhabilitado correctamente.');
     }
 }
-

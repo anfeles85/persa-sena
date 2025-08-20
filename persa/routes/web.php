@@ -87,10 +87,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/export_permissions_by_course', [ReportsController::class, 'export_permissions_by_course'])->name('reports.permissions_course');
     });
 
-    //prueba
-    Route::get('/apprentice', function () {
-        return view('apprentice.index');
-    })->name('apprentice.index');
-
+    //Prueba
+    Route::prefix('apprentice')->group(function () {
+        Route::get('/', [ApprenticeController::class, 'index'])->name('apprentice.index');
+        Route::patch('/{id}/toggle-status', [ApprenticeController::class, 'toggleStatus'])->name('apprentice.toggleStatus');
+        Route::get('/{id}/profile', [ApprenticeController::class, 'showProfile'])->name('apprentice.profile');
+        Route::put('/{id}/profile', [ApprenticeController::class, 'updateProfile'])->name('apprentice.profile.update');
+    });
 
 });
