@@ -14,17 +14,13 @@ class CancelPermissions extends Command
 
     public function handle()
     {
-        $now = Carbon::now();     
-        $canceled = Permission::where('status', 'PENDIENTE')
-            ->where(function ($query) use ($now) {
-                    $query->Where(function ($query) use ($now) {
-                        $query->where('permission_date', '=', $now->toDateString())
-                            ->where('end_time', '<', $now->toTimeString());
-                    });
-            })
+        $today = Carbon::today();
+
+        $records = Permission::where('status', 'PENDIENTE')
+            ->where('permission_date', '<', $today)
             ->update(['status' => 'CANCELADO']);
 
-        $this->info("Se cancelaron {$canceled} permisos pendientes expirados.");
-        return 0;
+        $this->info("Se actualizaron {$records} registros a CANCELADO.");
+        \Log::info("se pasaron {$records} registros a CANCELADO");
     }
 }

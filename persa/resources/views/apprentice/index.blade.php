@@ -5,10 +5,7 @@
     <div>
         <div class="row">
             <div class="col-lg-12 mb-4">
-                <div class="">
-                    <div class=" text-white">
-                        <h5 class="fs-3">Buscar Aprendices por Ficha</h5>
-                    </div>
+                        <label class="fs-2">Buscar aprendices por ficha</label>
                     <div class="card-body">
                         <form action="{{ route('apprentice.index') }}" method="GET" id="searchForm">
                             <div class="row align-items-end">
@@ -33,10 +30,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group mb-3">
-                                        <button type="submit" class="btn btn-primary me-2">
-                                            Buscar
-                                        </button>
+                                    <div class="form-group mb-2">
                                         <a href="{{ route('apprentice.index') }}" class="btn btn-dark text-white">
                                             Limpiar
                                         </a>
@@ -45,16 +39,14 @@
                             </div>
                         </form>
                     </div>
-                </div>
             </div>
         </div>
 
         @if(request('course_id'))
             <div class="row">
                 <div class="col-12">
-                    <div class="card shadow">
-                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">
+                        <div class="card-header  text-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-4">
                                 Aprendices Encontrados
                                 @if(isset($courses))
                                     @php
@@ -74,8 +66,8 @@
                         <div class="card-body">
                             @if(isset($apprentices) && $apprentices->count() > 0)
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-hover">
-                                        <thead class="table-dark">
+                                    <table id="table_data" class="table table-striped text-center">
+                                        <thead>
                                             <tr>
                                                 <th scope="col">Documento</th>
                                                 <th scope="col">Nombre Completo</th>
@@ -107,20 +99,10 @@
                                                         </small>
                                                     </td>
                                                     <td>
-                                                        @if($apprentice->status == 'ACTIVO')
-                                                            <span class="badge bg-success">
-                                                                <i class="fas fa-check-circle me-1"></i>
-                                                                Activo
-                                                            </span>
-                                                        @else
-                                                            <span class="badge bg-danger">
-                                                                <i class="fas fa-times-circle me-1"></i>
-                                                                Inactivo
-                                                            </span>
-                                                        @endif
+                                                        {{ $apprentice->status }}
                                                     </td>
                                                     <td>
-                                                        <div class="btn-group" role="group">
+                                                        <div class="d-flex gap-2 justify-content-center">
                                                             {{-- Botón para cambiar estado (Instructor y Administrador) --}}
                                                             @if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2)
                                                                 <form action="{{ route('apprentice.toggleStatus', $apprentice->id) }}" method="POST" class="d-inline" id="statusForm{{ $apprentice->id }}">
@@ -129,12 +111,12 @@
                                                                     @if($apprentice->status == 'ACTIVO')
                                                                         <button type="button" class="btn btn-sm btn-danger text-white" 
                                                                                 onclick="confirmStatusChange('{{ $apprentice->id }}', '{{ $apprentice->fullname }}', 'inactivar')">
-                                                                            <i class="fas fa-user-slash"></i> Inactivar
+                                                                            <i class="fas fa-user-slash"></i>
                                                                         </button>
                                                                     @else
                                                                         <button type="button" class="btn btn-sm btn-success"
                                                                                 onclick="confirmStatusChange('{{ $apprentice->id }}', '{{ $apprentice->fullname }}', 'activar')">
-                                                                            <i class="fas fa-user-check"></i> Activar
+                                                                            <i class="fas fa-user-check"></i>
                                                                         </button>
                                                                     @endif
                                                                 </form>
@@ -142,8 +124,8 @@
 
                                                             @if(auth()->user()->role_id == 1)
                                                                 <a href="{{ route('apprentice.profile', $apprentice->id) }}" 
-                                                                   class="btn btn-sm btn-primary ms-1 text-white">
-                                                                    <i class="fas fa-edit"></i> Editar
+                                                                   class="btn btn-primary btn-sm">
+                                                                    <i class="far fa-edit"></i>
                                                                 </a>
                                                             @endif
                                                         </div>
@@ -162,7 +144,7 @@
                                             No hay aprendices registrados en esta ficha o la ficha no tiene aprendices asignados.
                                         </p>
                                     </div>
-                                    <a href="{{ route('apprentice.index') }}" class="btn btn-primary">
+                                    <a href="{{ route('apprentice.index') }}" class="btn btn-dark">
                                         <i class="fas fa-arrow-left me-2"></i>
                                         Seleccionar otra ficha
                                     </a>
@@ -178,7 +160,7 @@
                     <div class="card shadow border-0">
                         <div class="card-body text-center py-5">
                             <div class="mb-4">
-                                <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                                <i class="fas fa-users fa-3x text-dark mb-3"></i>
                                 <h4 class="text-muted mb-3">Buscar Aprendices</h4>
                                 <p class="text-muted mb-4">
                                     Selecciona una ficha del menú desplegable para ver todos los aprendices registrados en esa ficha.

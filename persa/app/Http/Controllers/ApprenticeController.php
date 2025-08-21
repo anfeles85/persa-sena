@@ -37,7 +37,23 @@ class ApprenticeController extends Controller
 
     public function index(Request $request)
     {
-        $courses = Course::with('career')->where('status', 'ACTIVO')->get();
+        $user = Auth::user();
+        
+        // Si es instructor (role_id = 2), solo mostrar sus fichas asignadas
+        if ($user->role_id == 2) {
+            $courses = Course::with('career')
+                           ->where('status', 'ACTIVO')
+                           ->whereExists(function($query) use ($user) {
+                               $query->select('*')
+                                     ->from('instructor_course')
+                                     ->whereRaw('instructor_course.course_id = course.id')
+                                     ->where('instructor_course.instructor_id', $user->id);
+                           })
+                           ->get();
+        } 
+        else {
+            $courses = Course::with('career')->where('status', 'ACTIVO')->get();
+        }
         
         $apprentices = null;
         if ($request->has('course_id') && $request->course_id) {
