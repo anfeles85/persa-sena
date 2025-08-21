@@ -20,7 +20,7 @@
             border: 1px solid #ddd;
         }
         .header {
-            background-color: #004080;
+            background-color: #f6f6f6;
             text-align: center;
             padding: 20px;
         }
@@ -68,7 +68,7 @@
 <body>
 <div class="container">
     <div class="header">
-        <img src="{{ $message->embed(asset('img/persa-logo.png')) }}" alt="Logo Persa">
+        <img src="{{ $message->embed(asset('img/persa-logo-readme.png')) }}" alt="Logo Persa">
         <img src="{{ $message->embed(asset('img/sena-logo.png')) }}" alt="Logo SENA">
     </div>
 
