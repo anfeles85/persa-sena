@@ -147,5 +147,3 @@ con apoyo del **[CLEM - Centro Latinoamericano de Especies Menores](https://sena
   <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" height="25">
   <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" height="25">
 </p>
-
-```
