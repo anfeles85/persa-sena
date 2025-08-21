@@ -18,8 +18,7 @@
   - Programas
   - Permisos
   - Sedes
-  - Carreras
-  - Fichas
+  - Grupos
 
 - 📊 **Reportes y exportación**:
   - Generación de reportes en **PDF**
@@ -38,7 +37,7 @@
 
 - PHP 8.1 o superior
 - Composer
-- MySQL Server
+- MySQL 8.x
 - Node.js y npm (para compilar assets con Vite)
 
 ### Instalación
@@ -61,7 +60,7 @@
    ```
    Modifica los valores de conexión a base de datos:
    ```env
-   DB_DATABASE=persa
+   DB_DATABASE=persa_db
    DB_USERNAME=tu_usuario
    DB_PASSWORD=tu_contraseña
    ```
