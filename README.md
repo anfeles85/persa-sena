@@ -61,26 +61,14 @@ php artisan key:generate
 php artisan serve
 
 ```
----
 
-🛠️ Buenas prácticas implementadas
+## 📚 Créditos
 
-✅ Arquitectura MVC con Laravel
-✅ Migraciones y seeders para la base de datos
-✅ Rutas protegidas con middleware de autenticación
-✅ Vistas limpias y responsivas
-✅ Código modular y reutilizable
+Proyecto desarrollado como actividad del **[SENA - Servicio Nacional de Aprendizaje](https://www.sena.edu.co)**,  
+en el programa de **Análisis y Desarrollo de Software (ADSO)**,  
+con apoyo del **[CLEM - Centro Latinoamericano de Especies Menores](https://sena-clem.blogspot.com)**.
 
-
----
-
-📚 Créditos
-
-Proyecto desarrollado como actividad del SENA - Servicio Nacional de Aprendizaje,
-en el programa de Análisis y Desarrollo de Software (ADSO),
-con apoyo del CLEM - Centro Latinoamericano de Especies Menores.
-
-👩‍💻 Aprendices desarrolladores
+### 👩‍💻 Aprendices desarrolladores
 
 <table>
   <tr>
@@ -140,6 +128,7 @@ con apoyo del CLEM - Centro Latinoamericano de Especies Menores.
     </td>
   </tr>
 </table>
+
 ---
 
 💻 Tecnologías utilizadas
@@ -158,5 +147,5 @@ con apoyo del CLEM - Centro Latinoamericano de Especies Menores.
   <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" height="25">
   <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" height="25">
 </p>
+
 ```
----
