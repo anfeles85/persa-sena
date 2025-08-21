@@ -14,7 +14,7 @@
                 @if ($apprentice->permissions->isEmpty())
                     <p>No tiene permisos registrados.</p>
                 @else
-                    <table border="1" cellspacing="0" cellpadding="5" width="100%">
+                    <table id="reportTable">
                         <thead>
                             <tr>
                                 <th>Fecha</th>

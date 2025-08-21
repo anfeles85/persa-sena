@@ -6,7 +6,7 @@
     <section id="results">
         @if ($permissions->isNotEmpty())
             <h4>Aprendiz: {{ $apprentice->fullname }}</h4>
-            <table border="1" cellspacing="0" cellpadding="5" width="100%">
+            <table id="reportTable">
                 <thead>
                     <tr>
                         <th>Fecha de permiso</th>
