@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/index', [IndexController::class, 'index'])->name('index');
 
     //Coordinador - Gestión de usuarios
-    Route::middleware('can:coordinador')->prefix('usuarios')->group(function () {
+    Route::middleware('can:coordinador')->prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('user.index');
         Route::get('/aprendices', [UserController::class, 'indexAprendices'])->name('user.aprendices');
         Route::get('/instructores', [UserController::class, 'indexInstructores'])->name('user.instructores');
