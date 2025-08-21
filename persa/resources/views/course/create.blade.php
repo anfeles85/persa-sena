@@ -71,7 +71,7 @@
                 <div class="row">
                     <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-success w-50" >Guardar</button>
-                    <a href="{{ route('course.index') }}" class="btn btn-secondary w-50">Cancelar</a>
+                    <a href="{{ route('course.index') }}" class="btn btn-danger w-50">Cancelar</a>
                     </div>
                 </div>
             </form>

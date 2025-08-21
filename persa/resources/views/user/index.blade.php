@@ -7,8 +7,15 @@
 
 <div class="mb-4 d-flex gap-2">
     <a href="{{ route('user.index') }}" class="btn btn-outline-primary">Todos</a>
-    <a href="{{ route('user.aprendices') }}" class="btn btn-outline-success">Aprendices</a>
-    <a href="{{ route('user.instructores') }}" class="btn btn-outline-secondary">Instructores</a>
+    <a href="{{ route('user.apprentices') }}" class="btn btn-outline-success">Aprendices</a>
+    <a href="{{ route('user.instructors') }}" class="btn btn-outline-secondary">Instructores</a>
+    <a href="{{ route('user.guard') }}" class="btn btn-outline-warning">Guardas</a>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 mb-4 d-grid gap-2 d-md-block">
+        <a href="{{ route('user.create') }}" class="btn btn-success">Crear</a>
+    </div>
 </div>
 
 <table id="table_data" class="table table-striped text-center">
