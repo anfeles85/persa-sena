@@ -60,6 +60,7 @@ php artisan key:generate
 # 6. Ejecuta el servidor
 php artisan serve
 
+```
 ---
 
 🛠️ Buenas prácticas implementadas
