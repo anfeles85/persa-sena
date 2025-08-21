@@ -18,8 +18,7 @@
   - Programas
   - Permisos
   - Sedes
-  - Carreras
-  - Fichas
+  - Grupos
 
 - 📊 **Reportes y exportación**:
   - Generación de reportes en **PDF**
@@ -38,7 +37,7 @@
 
 - PHP 8.1 o superior
 - Composer
-- MySQL Server
+- MySQL 8.x
 - Node.js y npm (para compilar assets con Vite)
 
 ### Instalación
@@ -61,7 +60,7 @@
    ```
    Modifica los valores de conexión a base de datos:
    ```env
-   DB_DATABASE=persa
+   DB_DATABASE=persa_db
    DB_USERNAME=tu_usuario
    DB_PASSWORD=tu_contraseña
    ```
@@ -106,61 +105,9 @@ con apoyo del **[CLEM - Centro Latinoamericano de Especies Menores](https://sena
 
 ### 👩‍💻 Aprendices desarrolladores
 
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/H2kl0">
-        <img src="https://github.com/H2kl0.png" width="100px;" alt="H2kl0"/><br />
-        <sub><b>Juan Fernando Velásquez Sarmiento</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/Linavs18">
-        <img src="https://github.com/Linavs18.png" width="100px;" alt="Linavs18"/><br />
-        <sub><b>Lina Vanessa Salcedo Cuellar</b></sub>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/tiannrg">
-        <img src="https://github.com/tiannrg.png" width="100px;" alt="tiannrg"/><br />
-        <sub><b>Sebastian Rojas Gonzalez</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/Sebas18Rodriguez18">
-        <img src="https://github.com/Sebas18Rodriguez18.png" width="100px;" alt="Sebas18Rodriguez18"/><br />
-        <sub><b>Juan Sebastian Rodriguez Cruz</b></sub>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/brahianqf07">
-        <img src="https://github.com/brahianqf07.png" width="100px;" alt="brahianqf07"/><br />
-        <sub><b>Brahian Stiven Quintero Florez</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/AlejandroOcampo20">
-        <img src="https://github.com/AlejandroOcampo20.png" width="100px;" alt="AlejandroOcampo20"/><br />
-        <sub><b>Manuel Alejandro Ocampo Saya</b></sub>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/tatiana-carvajal">
-        <img src="https://github.com/tatiana-carvajal.png" width="100px;" alt="tatiana-carvajal"/><br />
-        <sub><b>Tatiana Carvajal Vargas</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/marulandadanna2">
-        <img src="https://github.com/marulandadanna2.png" width="100px;" alt="marulandadanna2"/><br />
-        <sub><b>Danna Sofia Marulanda Bahena</b></sub>
-      </a>
-    </td>
-  </tr>
-</table>
+| | |
+|---|---|
+| [Juan Fernando Velásquez Sarmiento](https://github.com/H2kl0) | [Lina Vanessa Salcedo Cuellar](https://github.com/Linavs18) |
+| [Sebastian Rojas Gonzalez](https://github.com/tiannrg) | [Juan Sebastian Rodriguez Cruz](https://github.com/Sebas18Rodriguez18) |
+| [Brahian Stiven Quintero Florez](https://github.com/brahianqf07) | [Manuel Alejandro Ocampo Saya](https://github.com/AlejandroOcampo20) |
+| [Tatiana Carvajal Vargas](https://github.com/tatiana-carvajal) | [Danna Sofia Marulanda Bahena](https://github.com/marulandadanna2) |
