@@ -81,8 +81,10 @@ Route::middleware('auth')->group(function () {
         Route::resource('/', CourseController::class)->parameters(['' => 'id'])->names('course');
     });
 
-    //Coordinador / Instructor  / Aprendiz- Permisos
-    Route::middleware('can:coordinador-instructor-aprendiz')->prefix('permission')->group(function () {
+    // Permisos
+    Route::patch('/permission/{id}/approve', [PermissionController::class, 'approve'])->name('permission.approve');
+    Route::patch('/permission/{id}/cancel', [PermissionController::class, 'cancel'])->name('permission.cancel');
+    Route::prefix('permission')->group(function () {
         Route::resource('/', PermissionController::class)->parameters(['' => 'id'])->names('permission');
     });
 

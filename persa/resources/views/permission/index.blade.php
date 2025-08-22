@@ -77,8 +77,8 @@
                     <td id="buttons_DE" style="border-top: none;">
                     <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
                         
-                        {{-- Botón de detalles visible para Coordinador/Instructor--}}
-                        @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                        {{-- Botón de detalles visible para Coordinador/Instructor/Guarda--}}
+                        @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4) 
                         <button class="btn btn-info btn-circle table-btn w-100" 
                         data-bs-toggle="modal" data-bs-target="#detailsModal{{ $permission->id }}" 
                          title="Ver detalles">
@@ -93,6 +93,32 @@
                                 <i class="far fa-edit"></i>
                             </a>
                         </div>
+                        @endif
+                        
+                        {{-- Botón de aprobar --}}
+                        @if(Auth::user()->role_id == 2 || Auth::user()->role_id == 4) {{-- guarda y instrcutor pueden aprobar --}}
+                        <div class="col-lg-6 mb-4">
+                            <form id="form-approve-{{ $permission['id'] }}" action="{{ route('permission.approve', $permission["id"]) }}" method="post">
+                             @csrf
+                            @method('PATCH')
+                                <button type="submit" class="btn btn-success btn-circle table-btn w-100" title="Aprobar">
+                                <i class="fas fa-check"></i>
+                                </button>
+                            </form>
+                        </div>
+                        @endif
+
+                        {{-- Boton de cancelado--}}
+                        @if(Auth::user()->role_id == 4 || Auth::user()->role_id == 2) {{-- guarda y instrcutor pueden cancelar --}}
+                         <div class="col-lg-6 mb-4">
+                            <form id="form-cancel-{{ $permission['id'] }}" action="{{ route('permission.cancel', $permission["id"]) }}" method="post">
+                                 @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn btn-warning btn-circle table-btn w-100" title="Cancelar">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                            </form>
+                         </div>
                         @endif
 
                         {{-- SOLO aprendiz puede eliminar--}}

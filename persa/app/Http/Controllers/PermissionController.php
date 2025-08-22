@@ -41,7 +41,8 @@ public function index(Request $request)
 {
     $roleId = Auth::user()->role_id;
 
-    $query = Permission::with([
+//permisos del instructor
+      $query = Permission::with([
             'apprentice_user.courses.career',
             'instructor_user',
             'guard_user',
@@ -158,6 +159,65 @@ public function index(Request $request)
 
         Permission::create($data);
         return redirect()->route('permission.index')->with('success', 'Permiso creado exitosamente');
+
+        
+
+//Permisos del guarda 
+$query = Permission::with([
+            'apprentice_user.courses.career',
+            'instructor_user',
+            'location',
+            'permissionType'
+        ])
+        ->orderBy('permission_date', 'desc')
+        ->orderBy('id', 'desc');
+
+         if ($roleId == 2) {
+        // guarda → permisos 
+        $courseIds = DB::table('permission')
+            ->where('instructor_id', Auth::id())
+            ->pluck('course_id');
+
+        $apprenticeIds = DB::table('apprentice_course')
+            ->whereIn('course_id', $courseIds)
+            ->pluck('user_id');
+
+        $query->whereIn('apprentice_id', $apprenticeIds);
+    }
+
+    // Filtrar por nombre o documento
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+        $query->whereHas('apprentice_user', function ($q) use ($search) {
+            $q->where('fullname', 'LIKE', "%{$search}%")
+              ->orWhere('document', 'LIKE', "%{$search}%");
+        });
+    }
+
+    // Filtrar por estado
+    if ($request->filled('status')) {
+        $query->where('status', $request->input('status'));
+    }
+
+    // Filtrar por ficha
+   if ($request->filled('course_id')) {
+    $courseId = $request->input('course_id');
+
+    $query->whereHas('apprentice_user.courses', function ($q) use ($courseId) {
+        $q->where('course.id', $courseId); 
+    });
+}
+
+    $permissions = $query->get();
+    $courses =Course::with('career:id,name')
+        ->select('id', 'number_group', 'career_id')
+        ->orderBy('number_group')
+        ->get();
+
+    return view('permission.index', compact('permissions', 'courses'));
+
+
+
     }
 
     /**
