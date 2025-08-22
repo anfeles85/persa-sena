@@ -9,12 +9,12 @@ class Permission extends Model
 {
     use HasFactory;
     /**
-     * se crean los atributos de la tabla 
-     * 
+     * Se crean los atributos de la tabla
      */
 
-     protected $table = 'permission';
-     protected $fillable =[
+    protected $table = 'permission';
+
+    protected $fillable = [
         'permission_date',
         'start_time',
         'end_time',
@@ -25,43 +25,51 @@ class Permission extends Model
         'status',
         'location_id',
         'permission_type_id',
-        'apprentice_id'
-     ];
+        'apprentice_id',
+        'career_id'
+    ];
 
     /**
-     * relación con la tabla user, instructor_id
+     * Relación con users: instructor_id → users.id
      */
     public function instructor_user(){
         return $this->belongsTo(User::class, 'instructor_id');
     }
 
-     /**
-     * relación con la tabla user, instructor_id
+    /**
+     * Relación con users: apprentice_id → users.id
      */
     public function apprentice_user(){
         return $this->belongsTo(User::class, 'apprentice_id');
     }
 
     /**
-     * relación con la tabla user, guard_id
+     *  Relación con users: guard_id → users.id
      */
     public function guard_user(){
-        return $this->belongsTo(InstructorCourse::class, 'guard_id');
+        return $this->belongsTo(User::class, 'guard_id');
     }
 
     /**
-     * relación con la tabla location
+     * Relación con location: location_id → location.id
      */
     public function location(){
         return $this->belongsTo(Location::class, 'location_id');
     }
-    
+
     /**
-     * relación con la tabla permission_type
+     * Relación con permission_type: permission_type_id → permission_type.id
      */
     public function permissionType(){
         return $this->belongsTo(PermissionType::class, 'permission_type_id');
     }
 
+    /**
+     * Relación con career: carrer_id → career.id
+     */
+    public function career()
+    {
+        return $this->belongsTo(Career::class, 'career_id');
+    }
 
 }

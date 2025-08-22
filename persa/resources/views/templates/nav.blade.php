@@ -21,7 +21,7 @@
         </li>
         @endcan
 
-        @can('aprendiz')
+        @can('coordinador-instructor-aprendiz')
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('permission.*') ? 'active' : '' }}" href="{{ route('permission.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
