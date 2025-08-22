@@ -81,8 +81,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/', CourseController::class)->parameters(['' => 'id'])->names('course');
     });
 
-    //Aprendiz - Permisos
-    Route::middleware('can:aprendiz')->prefix('permission')->group(function () {
+    //Coordinador / Instructor  / Aprendiz- Permisos
+    Route::middleware('can:coordinador-instructor-aprendiz')->prefix('permission')->group(function () {
         Route::resource('/', PermissionController::class)->parameters(['' => 'id'])->names('permission');
     });
 
