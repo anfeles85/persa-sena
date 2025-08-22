@@ -6,10 +6,10 @@ use App\Mail\MailAblePermission;
 use App\Mail\MailAblePermissionAcepted;
 use App\Mail\MailAblePermissionCancel;
 use App\Mail\MailAblePermissionDeclined;
+use App\Models\Course;
 use App\Models\Location;
 use App\Models\Permission;
 use App\Models\PermissionType;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -37,17 +37,70 @@ class PermissionController extends Controller
         'permission_type_id' => 'tipo de permiso',
     ];
 
-    
-    public function index()
-    {
-        $permissions = Permission::where('apprentice_id', Auth::id())
-        ->with('location') 
-        ->get();
+public function index(Request $request)
+{
+    $roleId = Auth::user()->role_id;
 
-        return view('permission.index', compact('permissions'));
+    $query = Permission::with([
+            'apprentice_user.courses.career',
+            'instructor_user',
+            'guard_user',
+            'location',
+            'permissionType'
+        ])
+        ->orderBy('permission_date', 'desc')
+        ->orderBy('id', 'desc');
+
+    if ($roleId == 3) {
+        // Aprendiz
+        $query->where('apprentice_id', Auth::id());
+    } elseif ($roleId == 2) {
+        // Instructor → permisos solo de sus fichas
+        $courseIds = DB::table('instructor_course')
+            ->where('instructor_id', Auth::id())
+            ->pluck('course_id');
+
+        $apprenticeIds = DB::table('apprentice_course')
+            ->whereIn('course_id', $courseIds)
+            ->pluck('user_id');
+
+        $query->whereIn('apprentice_id', $apprenticeIds);
     }
 
-    /**
+    // Filtrar por nombre o documento
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+        $query->whereHas('apprentice_user', function ($q) use ($search) {
+            $q->where('fullname', 'LIKE', "%{$search}%")
+              ->orWhere('document', 'LIKE', "%{$search}%");
+        });
+    }
+
+    // Filtrar por estado
+    if ($request->filled('status')) {
+        $query->where('status', $request->input('status'));
+    }
+
+    // Filtrar por ficha
+   if ($request->filled('course_id')) {
+    $courseId = $request->input('course_id');
+
+    $query->whereHas('apprentice_user.courses', function ($q) use ($courseId) {
+        $q->where('course.id', $courseId); 
+    });
+}
+
+    $permissions = $query->get();
+    $courses =Course::with('career:id,name')
+        ->select('id', 'number_group', 'career_id')
+        ->orderBy('number_group')
+        ->get();
+
+    return view('permission.index', compact('permissions', 'courses'));
+}
+
+
+    /** 
      * Show the form for creating a new resource.
      */
     public function create()
@@ -92,11 +145,16 @@ class PermissionController extends Controller
             ->where('course_id', $courseId)
             ->value('instructor_id');
 
+        $careerId = DB::table('course')
+            ->where('id', $courseId)
+            ->value('career_id');
+        
+
         $data['instructor_id']  = $instructorId;
         $data['guard_id']       = 1;
         $data['status']         = 'PENDIENTE';
-        $data['departure_time'] = now()->format('H:i');
         $data['apprentice_id']  = $apprenticeId;
+        $data['career_id'] = $careerId;
 
         Permission::create($data);
         return redirect()->route('permission.index')->with('success', 'Permiso creado exitosamente');
@@ -117,17 +175,17 @@ class PermissionController extends Controller
     {
         
         $permission = Permission::find($id);
-        if ($permission) // si existe
-        {
-            $locations = Location::all();
-            $permissionTypes = PermissionType::all();
-            return view('permission.edit', compact('permission', 'locations', 'permissionTypes'));
+        // Validar: si es aprendiz y el permiso no está pendiente
+        if(Auth::user()->role_id == 3 && $permission->status !== 'PENDIENTE') {
+            return redirect()->route('permission.index')
+            ->with('warning', 'Solo puedes editar permisos que estén en estado PENDIENTE.');
         }
-        else
-        {
-            session()->flash('warning', 'No se encuentra el técnico solicitado');
-            return redirect()->route('permission.index');
-        }
+
+
+        $locations = Location::all();
+        $permissionTypes = PermissionType::all();
+
+        return view('permission.edit', compact('permission', 'locations', 'permissionTypes'));
     }
 
     /**
@@ -135,6 +193,13 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $permission = Permission::findOrFail($id);
+
+        // Validar: si es aprendiz y el permiso no está pendiente
+        if (Auth::user()->role_id == 3 && $permission->status !== 'PENDIENTE') {
+        return redirect()->route('permission.index')
+            ->with('warning', 'No puedes modificar un permiso que ya fue aprobado, rechazado o cancelado.');
+        }
         
         $validator = Validator::make($request->all(), $this->rules);
         $validator->setAttributeNames($this->traductionAttributes);
@@ -161,7 +226,7 @@ class PermissionController extends Controller
         $data['instructor_id']  = $instructorId;
         $data['guard_id']       = 1;
         $data['status']         = 'PENDIENTE';
-        $data['departure_time'] = now()->format('H:i');
+
         $data['apprentice_id']  = $apprenticeId;
         
         $permission = Permission::find($id);
@@ -182,11 +247,22 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        Permission::destroy($id); 
-        return redirect()->route('permission.index')->with('success', 'Permiso eliminado correctamente');
+   public function destroy(string $id)
+{
+    $permission = Permission::findOrFail($id);
+
+    // Permite solo eliminar permisos que estén en estado PENDIENTE
+    if (Auth::user()->role_id == 3 && $permission->status !== 'PENDIENTE') {
+        return redirect()->route('permission.index')
+            ->with('warning', 'Solo puedes eliminar permisos que estén en estado PENDIENTE.');
     }
+
+    $permission->delete();
+
+    return redirect()->route('permission.index')
+        ->with('success', 'Permiso eliminado correctamente');
+}
+
     
     
     // Metodos para enviar correos

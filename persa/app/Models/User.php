@@ -63,7 +63,7 @@ class User extends Authenticatable
     // Alias opcional más genérico
     public function courses()
     {
-        return $this->apprenticeCourses();
+        return $this->belongsToMany(Course::class, 'apprentice_course', 'user_id', 'course_id');
     }
 
     // Relación con cursos del instructor
