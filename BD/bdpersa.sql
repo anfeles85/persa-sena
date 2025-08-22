@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versión del servidor:         8.0.41 - MySQL Community Server - GPL
+-- Versión del servidor:         8.0.40 - MySQL Community Server - GPL
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             12.6.0.6765
+-- HeidiSQL Versión:             12.8.0.6908
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `apprentice_course` (
   CONSTRAINT `apprentice_course_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.apprentice_course: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla persa_db.apprentice_course: ~6 rows (aproximadamente)
 INSERT INTO `apprentice_course` (`id`, `user_id`, `course_id`, `created_at`, `updated_at`) VALUES
 	(2, 9, 2, NULL, NULL),
 	(3, 10, 3, NULL, NULL),
@@ -181,11 +181,12 @@ CREATE TABLE IF NOT EXISTS `permission` (
   `start_time` time NOT NULL COMMENT 'Hora de inicio',
   `end_time` time NOT NULL COMMENT 'Hora de fin',
   `departure_time` time DEFAULT NULL COMMENT 'Hora de salida',
-  `reasons` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Motivo del permiso',
+  `reasons` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Motivo del permiso',
   `instructor_id` bigint unsigned NOT NULL,
   `apprentice_id` bigint unsigned NOT NULL,
   `guard_id` bigint unsigned NOT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Estado',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Estado',
+  `carrer_id` bigint unsigned NOT NULL,
   `location_id` bigint unsigned NOT NULL,
   `permission_type_id` bigint unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -194,23 +195,24 @@ CREATE TABLE IF NOT EXISTS `permission` (
   KEY `permission_instructor_id_foreign` (`instructor_id`),
   KEY `permission_apprentice_id_foreign` (`apprentice_id`),
   KEY `permission_guard_id_foreign` (`guard_id`),
+  KEY `permission_carrer_id_foreign` (`carrer_id`),
   KEY `permission_location_id_foreign` (`location_id`),
   KEY `permission_permission_type_id_foreign` (`permission_type_id`),
   CONSTRAINT `permission_apprentice_id_foreign` FOREIGN KEY (`apprentice_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `permission_carrer_id_foreign` FOREIGN KEY (`carrer_id`) REFERENCES `career` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `permission_guard_id_foreign` FOREIGN KEY (`guard_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `permission_instructor_id_foreign` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `permission_location_id_foreign` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `permission_permission_type_id_foreign` FOREIGN KEY (`permission_type_id`) REFERENCES `permission_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.permission: ~6 rows (aproximadamente)
-INSERT INTO `permission` (`id`, `permission_date`, `start_time`, `end_time`, `departure_time`, `reasons`, `instructor_id`, `apprentice_id`, `guard_id`, `status`, `location_id`, `permission_type_id`, `created_at`, `updated_at`) VALUES
-	(34, '2025-08-05', '08:00:00', '10:00:00', '08:15:00', 'CITA MEDICA', 3, 12, 13, 'PENDIENTE', 1, 1, NULL, NULL),
-	(39, '2025-08-07', '09:30:00', '10:30:00', '09:40:00', 'CALAMIDAD DOMESTICA', 5, 9, 13, 'DESAPROBADO', 3, 2, NULL, NULL),
-	(40, '2025-08-08', '07:45:00', '09:00:00', '08:00:00', 'OTRO', 6, 10, 13, 'PENDIENTE', 2, 4, NULL, NULL),
-	(51, '2025-08-14', '11:14:00', '00:14:00', '16:14:00', 'Cita medica', 4, 15, 1, 'PENDIENTE', 3, 1, '2025-08-14 21:14:29', '2025-08-14 21:14:29'),
-	(52, '2025-08-14', '11:30:00', '11:30:00', '16:30:00', 'Cita medica', 4, 15, 1, 'PENDIENTE', 3, 1, '2025-08-14 21:30:42', '2025-08-14 21:30:42'),
-	(53, '2025-08-14', '15:30:00', '17:30:00', '16:37:00', 'Concierto', 4, 16, 1, 'PENDIENTE', 3, 4, '2025-08-14 21:37:31', '2025-08-14 21:37:31');
+-- Volcando datos para la tabla persa_db.permission: ~5 rows (aproximadamente)
+INSERT INTO `permission` (`id`, `permission_date`, `start_time`, `end_time`, `departure_time`, `reasons`, `instructor_id`, `apprentice_id`, `guard_id`, `status`, `carrer_id`, `location_id`, `permission_type_id`, `created_at`, `updated_at`) VALUES
+	(1, '2025-08-21', '08:00:00', '10:00:00', '08:15:00', 'CITA MEDICA', 3, 9, 13, 'PENDIENTE', 2, 1, 1, '2025-08-21 16:48:05', '2025-08-21 16:48:05'),
+	(2, '2025-08-22', '09:00:00', '11:00:00', '09:10:00', 'CALAMIDAD DOMESTICA', 4, 10, 13, 'APROBADO', 3, 2, 2, '2025-08-21 16:48:05', '2025-08-21 16:48:05'),
+	(3, '2025-08-23', '14:00:00', '16:00:00', '14:05:00', 'ENTREVISTA ETAPA PRODUCTIVA', 5, 12, 13, 'PENDIENTE', 1, 3, 3, '2025-08-21 16:48:05', '2025-08-21 16:48:05'),
+	(4, '2025-08-24', '07:30:00', '09:00:00', '07:45:00', 'OTRO', 6, 15, 13, 'PENDIENTE', 5, 1, 4, '2025-08-21 16:48:05', '2025-08-21 16:48:05'),
+	(5, '2025-08-25', '10:00:00', '12:00:00', '10:10:00', 'CITA MEDICA', 4, 16, 13, 'PENDIENTE', 2, 2, 1, '2025-08-21 16:48:05', '2025-08-21 16:48:05');
 
 -- Volcando estructura para tabla persa_db.permission_type
 CREATE TABLE IF NOT EXISTS `permission_type` (
@@ -256,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.roles: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla persa_db.roles: ~0 rows (aproximadamente)
 INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 	(1, 'COORDINADOR', NULL, NULL),
 	(2, 'INSTRUCTOR', NULL, NULL),
