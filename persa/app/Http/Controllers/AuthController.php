@@ -14,14 +14,16 @@ class AuthController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|string|max:255|min:8',
-        'password_confirmation' => 'required|same:password'
+        'password_confirmation' => 'required|same:password',
+        'g-recaptcha-response' => 'required|captcha'
     ];
 
     private $traductionAttributes = [
         'name' => 'nombre',
         'email' => 'correo electrónico',
         'password' => 'contraseña',
-        'password_confirmation' => 'confirmar contraseña'
+        'password_confirmation' => 'confirmar contraseña',
+        'g-recaptcha-response' => 'captcha'
     ];
 
     public function index()
@@ -73,14 +75,14 @@ class AuthController extends Controller
         //
     }
 
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
+    public function login(Request $request){
+        $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($request->only('email','password'))) {
             $request->session()->regenerate();
 
             if (strtoupper(Auth::user()->status) !== 'ACTIVO') {
@@ -96,6 +98,7 @@ class AuthController extends Controller
             'email' => 'Credenciales incorrectas'
         ])->onlyInput('email');
     }
+
 
     public function logout(Request $request)
     {
