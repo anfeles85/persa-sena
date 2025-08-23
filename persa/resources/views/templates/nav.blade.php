@@ -10,6 +10,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
 
+
         @can('coordinador')
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}" href="{{ route('user.index') }}">
@@ -21,7 +22,7 @@
         </li>
         @endcan
 
-        @can('coordinador-instructor-aprendiz')
+      
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('permission.*') ? 'active' : '' }}" href="{{ route('permission.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">

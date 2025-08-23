@@ -72,4 +72,5 @@ class Permission extends Model
         return $this->belongsTo(Career::class, 'career_id');
     }
 
+   
 }
