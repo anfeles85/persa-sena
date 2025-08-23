@@ -29,7 +29,7 @@
 
         {{-- Filtro por estado --}}
         <select name="status" class="form-control w-auto">
-            <option value="">Estado</option>
+            <option value="">-- Estado --</option>
             <option value="PENDIENTE" {{ request('status')=='PENDIENTE' ? 'selected' : '' }}>Pendiente</option>
             <option value="APROBADO"  {{ request('status')=='APROBADO' ? 'selected' : '' }}>Aprobado</option>
             <option value="RECHAZADO" {{ request('status')=='RECHAZADO' ? 'selected' : '' }}>Rechazado</option>
@@ -39,7 +39,7 @@
         {{-- Filtro por ficha --}}
         @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
             <select name="course_id" class="form-control w-auto">
-                <option value="">Ficha</option>
+                <option value="">-- Ficha --</option>
                 @foreach($courses as $course)
                     <option value="{{ $course->id }}" {{ request('course_id')==$course->id ? 'selected' : '' }}>
                         {{ $course->number_group }} - {{ $course->career->name }}
@@ -82,8 +82,8 @@
                             <td id="buttons_DE" style="border-top: none;">
                                 <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
 
-                                    {{-- Botón de detalles visible para Coordinador/Instructor --}}
-                                    @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                                    {{-- Botón de detalles visible para Coordinador/Instructor/Guarda --}}
+                                    @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
                                         <button class="btn btn-info btn-circle table-btn w-100" 
                                                 data-bs-toggle="modal" 
                                                 data-bs-target="#detailsModal{{ $permission->id }}" 
@@ -101,22 +101,45 @@
                                         </a>
                                     @endif
 
+                                    {{-- Aprobar (guarda e instructor) --}}
+                                    @if(Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
+                                        <form id="form-approve-{{ $permission['id'] }}" 
+                                              action="{{ route('permission.approve', $permission['id']) }}" 
+                                              method="post">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-success btn-circle table-btn w-100" title="Aprobar">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </form>
+                                    @endif
+
+                                    {{-- Cancelar (guarda e instructor) --}}
+                                    @if(Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
+                                        <form id="form-cancel-{{ $permission['id'] }}" 
+                                              action="{{ route('permission.cancel', $permission['id']) }}" 
+                                              method="post">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-warning btn-circle table-btn w-100" title="Cancelar">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        </form>
+                                    @endif
+
                                     {{-- SOLO aprendiz puede eliminar --}}
                                     @if(Auth::user()->role_id == 3)
-                                        <div class="col-lg-6 mb-4">
-                                            <form id="form-delete-{{ $permission['id'] }}" 
-                                                  action="{{ route('permission.destroy', $permission['id']) }}" 
-                                                  method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" 
-                                                        class="btn btn-danger btn-circle table-btn w-100" 
-                                                        title="Eliminar" 
-                                                        onclick="remove(event, {{ $permission['id'] }})">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
+                                        <form id="form-delete-{{ $permission['id'] }}" 
+                                              action="{{ route('permission.destroy', $permission['id']) }}" 
+                                              method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger btn-circle table-btn w-100" 
+                                                    title="Eliminar" 
+                                                    onclick="remove(event, {{ $permission['id'] }})">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                                     @endif
 
                                 </div>
@@ -129,8 +152,9 @@
                                 <div class="modal-content shadow-lg border-0">
                                     <div class="modal-header" style="background-color: #00304D;">
                                         <h5 class="modal-title text-white">
-                                            <i class="fas fa-info-circle me-2"></i>Detalles del permiso
+                                            <i class="fas fa-info-circle me-2"></i>Detalles del permiso #{{ $permission->id }}
                                         </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body text-black">
                                         <p class="mb-2"><strong>Número de documento: </strong>{{ $permission->apprentice_user->document }}</p>
