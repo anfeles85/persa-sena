@@ -49,9 +49,6 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role_id === 1 || $user->role_id === 3;
         });
 
-        Gate::define('coordinador-instructor-aprendiz', function(User $user){
-            return $user->role_id === 1 || $user->role_id === 2 || $user->role_id === 3;
-        });
 
         
 

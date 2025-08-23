@@ -15,12 +15,12 @@
                                             Seleccionar Ficha
                                         </label>
                                         <select class="form-control form-select" name="course_id" id="course_select" onchange="this.form.submit()">
-                                            <option value="">-- Seleccione una ficha --</option>
+                                            <option value="">Seleccione una ficha</option>
                                             @if(isset($courses) && $courses->count() > 0)
                                                 @foreach($courses as $course)
                                                     <option value="{{ $course->id }}" 
                                                         {{ request('course_id') == $course->id ? 'selected' : '' }}>
-                                                        {{ $course->career->name }} - {{ $course->shift }} - {{ $course->year }}
+                                                        {{ $course->number_group }} - {{ $course->career->name }}
                                                     </option>
                                                 @endforeach
                                             @else
