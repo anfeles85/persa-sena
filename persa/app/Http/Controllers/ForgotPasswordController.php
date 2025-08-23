@@ -30,7 +30,7 @@ class ForgotPasswordController extends Controller
         ]);
 
         $token = Str::random(64);
-
+        DB::table('password_reset_tokens')->where(['email'=> $request->email])->delete();
         DB::table('password_reset_tokens')->insert([
             'email' => $request->email, 
             'token' => $token, 
@@ -41,7 +41,7 @@ class ForgotPasswordController extends Controller
             $message->to($request->email);
             $message->subject('Reset Password');
         });
-
+        
         return redirect()->route('auth.index')->with('success', 'Hemos enviado un correo con un enlace para recuperar tu contraseña');
     }
 
@@ -77,6 +77,7 @@ class ForgotPasswordController extends Controller
                     ->update(['password' => Hash::make($request->password)]);
 
         DB::table('password_reset_tokens')->where(['email'=> $request->email])->delete();
+
         return redirect()->route('auth.index')->with('success', 'Tu contraseña se ha actualizado');
     }
 }

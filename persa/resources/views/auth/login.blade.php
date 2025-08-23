@@ -65,13 +65,20 @@
                         <div class="form-group">
                             <input type="password" name="password" class="form-control" placeholder="Ingrese su contraseña" required>
                         </div>
-
+                        
                         <button type="submit" class="btn-login">
                             <i class="fas fa-sign-in-alt me-2"></i>
                             INGRESAR
                         </button>
-                    </form>
 
+                        <div class="form-group text-center" style="display: flex; justify-content: center;
+                                                            align-items: center; margin: 5px 0; 
+                                                            padding: 5px; background: rgba(255,255,255,0.1); 
+                                                            border-radius: 12px;">
+                            {!! NoCaptcha::display(['data-theme' => 'light']) !!}
+                        </div>
+                    </form>
+                    
                     <div class="forgot-password">
                         <a href="{{ route('auth.forget-password') }}">¿Olvidaste tu contraseña?</a>
                     </div>
@@ -79,33 +86,34 @@
             </div>
         </div>
     </div>
-
+    
     <script>
         document.querySelectorAll('.tab-button').forEach(button => {
             button.addEventListener('click', function() {
                 document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
                 this.classList.add('active');
-
+                
                 if (this.textContent.includes('Registrarse')) {
                     window.location.href = "{{ route('auth.register') }}";
                 }
             });
         });
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-   
-    @if(session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: '¡OK!',
-                text: '{{ session('success') }}',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK'
-            });
         </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: '¡OK!',
+        text: '{{ session('success') }}',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+    });
+    </script>
     @endif
+    {!! NoCaptcha::renderJs() !!}
 </body>
 </html>

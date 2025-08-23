@@ -18,10 +18,11 @@ class UserController extends Controller
         'fullname' => 'required|string|min:3|max:255',
         'email' => 'required|email|max:255',
         'document' => 'required|numeric',
-        'password' => 'nullable|string|min:6|max:255',
+        'password' => 'nullable|string|min:6|max:255|confirmed',
         'status' => 'required|string|in:ACTIVO,INACTIVO',
         'role_id' => 'required|numeric|exists:roles,id'
     ];
+
 
     private $traductionAttributes = [
         'fullname' => 'nombre completo',
@@ -44,7 +45,7 @@ class UserController extends Controller
         return view('user.index', compact('users', 'viewMode'));
     }
 
-    public function indexAprendices()
+    public function indexApprentice()
     {
         $users = User::with(['role', 'apprenticeCourses.career'])
             ->whereHas('role', fn($q) => $q->where('name', 'APRENDIZ'))
@@ -54,7 +55,7 @@ class UserController extends Controller
         return view('user.index', compact('users', 'viewMode'));
     }
 
-    public function indexInstructores()
+    public function indexInstructors()
     {
         $users = User::with(['role', 'instructorCourses.career'])
             ->whereHas('role', fn($q) => $q->where('name', 'INSTRUCTOR'))
@@ -63,6 +64,16 @@ class UserController extends Controller
         $viewMode = 'instructores';
         return view('user.index', compact('users', 'viewMode'));
     }
+
+    public function indexGuard(){
+        $users = User::with(['role'])
+            ->whereHas('role', fn($q) => $q->where('name', 'GUARDA'))
+            ->get();
+
+        $viewMode = 'guardas';
+        return view('user.index', compact('users', 'viewMode'));
+    }
+
 
     public function create()
     {
