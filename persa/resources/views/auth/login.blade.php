@@ -65,15 +65,17 @@
                         <div class="form-group">
                             <input type="password" name="password" class="form-control" placeholder="Ingrese su contraseña" required>
                         </div>
-
+                        
                         <button type="submit" class="btn-login">
                             <i class="fas fa-sign-in-alt me-2"></i>
                             INGRESAR
                         </button>
 
-                        <div class="recaptcha-wrapper">
-                            {!! NoCaptcha::renderJs() !!}
-                            {!! NoCaptcha::display(['data-theme' => 'dark']) !!}
+                        <div class="form-group text-center" style="display: flex; justify-content: center;
+                                                            align-items: center; margin: 5px 0; 
+                                                            padding: 5px; background: rgba(255,255,255,0.1); 
+                                                            border-radius: 12px;">
+                            {!! NoCaptcha::display(['data-theme' => 'light']) !!}
                         </div>
                     </form>
                     
@@ -112,5 +114,6 @@
     });
     </script>
     @endif
+    {!! NoCaptcha::renderJs() !!}
 </body>
 </html>
