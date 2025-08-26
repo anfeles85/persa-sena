@@ -63,7 +63,9 @@ class ForgotPasswordController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required|same:password'
         ]);
-
+        
+        DB::table('password_reset_tokens')->where(['email'=> $request->email])->delete();
+        
         $updatePassword = DB::table('password_reset_tokens')->where([
                                                         'email' => $request->email, 
                                                         'token' => $request->token
@@ -76,7 +78,6 @@ class ForgotPasswordController extends Controller
         $user = User::where('email', $request->email)
                     ->update(['password' => Hash::make($request->password)]);
 
-        DB::table('password_reset_tokens')->where(['email'=> $request->email])->delete();
 
         return redirect()->route('auth.index')->with('success', 'Tu contraseña se ha actualizado');
     }

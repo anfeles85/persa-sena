@@ -68,7 +68,7 @@ npm install && npm run build
 cp .env.example .env
 
 # 4. Importa la base de datos
-BD/bdpersa.sql
+BD/persa_db.sql
 
 # 5. Genera la clave de aplicación
 php artisan key:generate

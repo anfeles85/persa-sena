@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group mb-2">
-                                <a href="{{ route('apprentice.index') }}" class="btn btn-dark text-white w-50">
+                                <a href="{{ route('apprentice.index') }}" class="btn btn-secondary text-white ">
                                     Limpiar
                                 </a>
                             </div>
@@ -64,9 +64,9 @@
                     </div>
                     <div class="card-body">
                         @if(isset($apprentices) && $apprentices->count() > 0)
-                            <div class="table-responsive">
+                            <div class="col-lg-12 mb-4">
                                 <table id="table_data" class="table table-striped text-center align-middle">
-                                    <thead class="d-none d-md-table-header-group">
+                                    <thead class="align-middle text-center">
                                         <tr>
                                             <th>Documento</th>
                                             <th>Nombre Completo</th>
@@ -74,6 +74,7 @@
                                             <th>Programa</th>
                                             <th>Jornada/Año</th>
                                             <th>Estado</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
