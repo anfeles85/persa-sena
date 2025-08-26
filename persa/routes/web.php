@@ -15,7 +15,7 @@ use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 
 //prueba
-Route::get('/help', function () {return view('help');})->name('help.help');
+Route::get('/help', function () {return view('help.help');})->name('help.help');
 // RUTA PÚBLICA
 Route::get('/', [AuthController::class, 'index'])->name('auth.index');
 
