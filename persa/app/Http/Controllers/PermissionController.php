@@ -329,6 +329,8 @@ $query = Permission::with([
     public function approve(Request $request, Permission $permission)
     {
         $permission->status = 'APROBADO';
+        $permission->end_time = now()->toTimeString();  
+        $permission->guard_id = Auth::id();    
         $permission->save();
 
         Mail::to($permission->apprentice->email)->send(new MailAblePermissionAcepted($permission));
