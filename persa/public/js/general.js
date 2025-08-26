@@ -1,24 +1,27 @@
-function initDataTable() {
-  // Verifica si ya está inicializada y la destruye (sin borrar datos)
-  if ($.fn.DataTable.isDataTable('#table_data')) {
-    $('#table_data').DataTable().destroy();
-  }
+$(document).ready(function () {
+    const dataTableOptions = {
+        pageLength: 10,
+        lengthChange: false,
+        language: {
+            paginate: {
+                previous: "Anterior",
+                next: "Siguiente"
+            },
+            search: "Buscar:",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            infoEmpty: "",
+            emptyTable: "No existen registros"
+        }
+    };
 
-  // Ahora sí vuelve a crearla
-  $('#table_data').DataTable({
-    "pageLength": 10,
-    "lengthChange": false,
-    "language": {
-      "paginate": {
-        "previous": "Anterior",
-        "next": "Sgte"
-      },
-      "search": "Buscar:",
-      "info": "Mostrando START a END de TOTAL registros",
-      "infoEmpty": "No existen registros",
+    // checa si la tabla ya está inicializada y la destruye
+    if ($.fn.DataTable.isDataTable('#table_data')) {
+        $('#table_data').DataTable().destroy();
     }
-  });
-}
+
+    //  inicializa la tabla con las opciones
+    $('#table_data').DataTable(dataTableOptions);
+});
 
 function remove(event, id) {
   event.preventDefault(); // solo se previene el evento, no se pasa el id aquí
@@ -87,3 +90,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
