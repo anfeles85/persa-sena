@@ -73,9 +73,11 @@
             @error('status') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
         
-        <div class="d-flex gap-2 flex-column flex-md-row mt-4">
-            <button type="submit" class="btn btn-success w-100 w-md-50">Guardar</button>
+        <div class="row">
+            <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success w-50">Guardar</button>
             <a href="{{ route('user.index') }}" class="btn btn-danger w-50">Cancelar</a>
+            </div>
         </div>
     </form>
 </div>
