@@ -40,7 +40,7 @@ class Permission extends Model
      * Relación con users: apprentice_id → users.id
      */
     public function apprentice_user(){
-        return $this->belongsTo(User::class, 'apprentice_id');
+        return $this->belongsTo(User::class, 'apprentice_id')->where('role_id', 3);
     }
 
     /**
