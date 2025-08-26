@@ -127,8 +127,8 @@
                                             $currentCourseId = $apprentice->courses->first()->id ?? null;
                                         @endphp
                                         <option value="{{ $course->id }}" 
-                                                {{ old('course_id', $currentCourseId) == $course->id ? 'selected' : '' }}>
-                                            {{ $course->career->name }} - {{ $course->shift }} - {{ $course->year }}
+                                            {{ old('course_id', $currentCourseId) == $course->id ? 'selected' : '' }}>
+                                            {{ $course->number_group }} - {{ $course->career->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -189,7 +189,7 @@
                             <div class="mb-3">
                                 <strong>Ficha Actual:</strong>
                                 <div class="text-muted">
-                                    {{ $course->career->name ?? 'N/A' }}<br>
+                                    {{ $course->number_group }} - {{ $course->career->name ?? 'N/A' }}<br>
                                     <small>{{ $course->shift ?? 'N/A' }} - {{ $course->year ?? 'N/A' }}</small>
                                 </div>
                             </div>

@@ -56,7 +56,7 @@
                 <div class="row">
                     <div class="d-flex gap-2 flex-column flex-md-row">
                         <button type="submit" class="btn btn-success w-100 w-md-50">Guardar</button>
-                        <a href="{{ route('permission.index') }}" class="btn btn-secondary w-100 w-md-50">Cancelar</a>
+                        <a href="{{ route('permission.index') }}" class="btn btn-danger w-100 w-md-50">Cancelar</a>
                     </div>
                 </div>
             </form>

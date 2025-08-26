@@ -10,28 +10,23 @@
                 @csrf
                 @method('PUT')
                 
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                <div class="row form-group col-lg-12">
+                    <div class="col-lg-6 mb-4">
                         <label for="permission_date">Fecha de permiso</label>
                         <input type="date" class="form-control" id="permission_date" name="permission_date" required value="{{ $permission['permission_date'] }}"readonly>
                     </div>
-                </div>
-
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    <div class="col-lg-6 mb-4">
                         <label for="start_time">Hora de inicio</label>
                         <input type="time" class="form-control" id="start_time" name="start_time" required value="{{ $permission['start_time'] }}">
                     </div>
                 </div>
 
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                <div class="row form-group col-lg-12">
+                    <div class="col-lg-6 mb-4">
                         <label for="end_time">Hora de fin</label>
                         <input type="time" class="form-control" id="end_time" name="end_time" required value="{{ $permission['end_time'] }}">
                     </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-12 mb-4">
+                    <div class="col-lg-6 mb-4">
                             <label for="reasons">Razón de salida</label>
                             <input type="text" class="form-control" name="reasons" id="reasons" required 
                             value="{{ $permission['reasons'] }}">
@@ -71,7 +66,7 @@
                 <div class="row">
                     <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-success w-50">Guardar</button>
-                    <a href="{{ route('permission.index') }}" class="btn btn-secondary w-50">Cancelar</a>
+                    <a href="{{ route('permission.index') }}" class="btn btn-danger w-50">Cancelar</a>
                     </div>
                 </div>
                 

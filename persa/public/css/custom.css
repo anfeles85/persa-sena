@@ -762,3 +762,31 @@
         padding: 12px;
     }
 }
+
+.recaptcha-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.g-recaptcha {
+    transform: scale(0.9);
+    transform-origin: center;
+    -webkit-transform: scale(0.9);
+    -webkit-transform-origin: center;
+}
+
+@media screen and (max-width: 400px) {
+    .g-recaptcha {
+        transform: scale(0.8);
+        -webkit-transform: scale(0.8);
+    }
+}
+
+@media (max-width: 768px) {
+  .logo-sena {
+    display: none !important;
+  }
+}
