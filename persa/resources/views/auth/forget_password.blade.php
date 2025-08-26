@@ -20,16 +20,18 @@
     <div class="login-container body-login login-container-forgot">
         <div class="login-card login-card-forgot">
             <div class="row g-0 h-100">
-                <div class="col-lg-6 login-left login-left-forgot">
-                    <div class="logo-container">
-                        <div class="logo">
-                            <img src="{{ asset('img/sena-logo.png') }}" alt="SENA Logo">
-                        </div>
-                        <div class="text-logo">
-                            <h2 class="system-title">P.E.R.S.A</h2>
-                            <p class="system-subtitle">Bienvenido al sistema de permisos de salidas de aprendices del SENA.</p>
-                        </div>
-                        
+                <div class="col-lg-6 login-left d-flex flex-column justify-content-center align-items-center text-center p-4">
+                    <div class="logo mb-3">
+                        <img src="{{ asset('img/sena-logo.png') }}" 
+                             alt="SENA Logo" 
+                             class="img-fluid" 
+                             style="max-width: 160px; height: auto;">
+                    </div>
+                    <div class="text-logo">
+                        <h2 class="system-title mb-2">P.E.R.S.A</h2>
+                        <p class="system-subtitle mb-0">
+                            Bienvenido al sistema de permisos de salidas de aprendices del SENA.
+                        </p>
                     </div>
                 </div>
                 <div class="col-lg-6 login-right login-right-forgot">
