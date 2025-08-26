@@ -16,39 +16,49 @@
     </div>
 @endif
 
-<form method="GET" action="{{ route('permission.index') }}" class="d-flex gap-2 mb-3">
+{{-- Filtros responsivos --}}
+<form method="GET" action="{{ route('permission.index') }}" class="row g-2 mb-3">
+
     {{-- Buscar aprendiz --}}
     @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
-        <input type="text"
-               name="search"
-               value="{{ request('search') }}"
-               class="form-control w-auto"
-               placeholder="Documento o nombre...">
+        <div class="col-12 col-md-auto">
+            <input type="text"
+                   name="search"
+                   value="{{ request('search') }}"
+                   class="form-control"
+                   placeholder="Documento o nombre...">
+        </div>
     @endif
 
     {{-- Filtro por estado --}}
-    <select name="status" class="form-control w-auto">
-        <option value="">Estado</option>
-        <option value="PENDIENTE" {{ request('status')=='PENDIENTE' ? 'selected' : '' }}>Pendiente</option>
-        <option value="APROBADO"  {{ request('status')=='APROBADO' ? 'selected' : '' }}>Aprobado</option>
-        <option value="RECHAZADO" {{ request('status')=='RECHAZADO' ? 'selected' : '' }}>Rechazado</option>
-        <option value="CANCELADO" {{ request('status')=='CANCELADO' ? 'selected' : '' }}>Cancelado</option>
-    </select>
+    <div class="col-12 col-md-auto">
+        <select name="status" class="form-control">
+            <option value="">Estado</option>
+            <option value="PENDIENTE" {{ request('status')=='PENDIENTE' ? 'selected' : '' }}>Pendiente</option>
+            <option value="APROBADO"  {{ request('status')=='APROBADO' ? 'selected' : '' }}>Aprobado</option>
+            <option value="RECHAZADO" {{ request('status')=='RECHAZADO' ? 'selected' : '' }}>Rechazado</option>
+            <option value="CANCELADO" {{ request('status')=='CANCELADO' ? 'selected' : '' }}>Cancelado</option>
+        </select>
+    </div>
 
     {{-- Filtro por ficha --}}
     @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
-        <select name="course_id" class="form-control w-auto">
-            <option value="">Ficha</option>
-            @foreach($courses as $course)
-                <option value="{{ $course->id }}" {{ request('course_id')==$course->id ? 'selected' : '' }}>
-                    {{ $course->number_group }} - {{ $course->career->name }}
-                </option>
-            @endforeach
-        </select>
+        <div class="col-12 col-md-auto">
+            <select name="course_id" class="form-control">
+                <option value="">Ficha</option>
+                @foreach($courses as $course)
+                    <option value="{{ $course->id }}" {{ request('course_id')==$course->id ? 'selected' : '' }}>
+                        {{ $course->number_group }} - {{ $course->career->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
     @endif
 
-    <button type="submit" class="btn btn-primary">Filtrar</button>
-    <a href="{{ route('permission.index') }}" class="btn btn-secondary">Limpiar</a>
+    <div class="col-12 col-md-auto d-flex gap-2">
+        <button type="submit" class="btn btn-primary flex-fill">Filtrar</button>
+        <a href="{{ route('permission.index') }}" class="btn btn-secondary flex-fill">Limpiar</a>
+    </div>
 </form>
 
 <div class="row">
@@ -104,10 +114,10 @@
                                 @if(Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
                                     <form id="form-approve-{{ $permission['id'] }}"
                                           action="{{ route('permission.approve', $permission['id']) }}"
-                                          method="post">
+                                          method="post" class="w-100 w-md-auto">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100" title="Aprobar">
+                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100">
                                             <i class="fas fa-check"></i>
                                         </button>
                                     </form>
@@ -117,7 +127,7 @@
                                 @if(Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
                                     <form id="form-cancel-{{ $permission['id'] }}"
                                           action="{{ route('permission.cancel', $permission['id']) }}"
-                                          method="post">
+                                          method="post" class="w-100 w-md-auto">
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" class="btn btn-warning btn-circle table-btn w-100" title="Cancelar">
@@ -130,7 +140,7 @@
                                 @if(Auth::user()->role_id == 3)
                                     <form id="form-delete-{{ $permission['id'] }}"
                                           action="{{ route('permission.destroy', $permission['id']) }}"
-                                          method="post">
+                                          method="post" class="w-100 w-md-auto">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="btn btn-danger btn-circle table-btn w-100"

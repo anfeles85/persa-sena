@@ -37,24 +37,29 @@
                     <td data-label="Año">{{ $course['year'] }}</td>
                     <td data-label="Estado">{{ $course['status'] }}</td>
                     <td id="buttons_DE" style="border-top: none;">
-                    <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
-                        <div class="col-lg-6 mb-4">
-                            <a href="{{ route('course.edit', $course["id"]) }}" class="btn btn-primary btn-circle table-btn w-100" title="Editar">
+                        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 w-100">
+                            {{-- Botón Editar --}}
+                            <a href="{{ route('course.edit', $course->id) }}" 
+                                class="btn btn-primary btn-circle table-btn w-100 w-md-auto" 
+                                title="Editar">
                                 <i class="far fa-edit"></i>
                             </a>
-                        </div>
-                        <div class="col-lg-6 mb-4">
-                            <form id="form-delete-{{ $course['id'] }}" action="{{ route('course.destroy', $course["id"]) }}" method="post">
+
+                            {{-- Botón Eliminar --}}
+                            <form id="form-delete-{{ $course->id }}" 
+                                    action="{{ route('course.destroy', $course->id) }}" 
+                                    method="POST" class="w-100 w-md-auto">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-danger btn-circle table-btn w-100" title="Eliminar" 
-                                    onclick="remove(event, {{ $course['id'] }})">
+                                <button type="button" 
+                                        class="btn btn-danger btn-circle table-btn w-100 w-md-auto" 
+                                        title="Eliminar"
+                                        onclick="remove(event, {{ $course->id }})">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
                         </div>
-                    </div>
-                </td>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
