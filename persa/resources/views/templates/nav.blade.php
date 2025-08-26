@@ -118,6 +118,23 @@
           <span class="nav-link-text ms-1">Cerrar sesión</span>
         </a>
       </li>
+
+       <!-- Separador para Ayuda -->
+      <hr class="horizontal dark mt-4 mb-2">
+      
+      <!-- Sección de Ayuda separada -->
+      <li class="nav-item mt-3">
+        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Soporte</h6>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('help.help') }}">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-circle-question text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Ayuda</span>
+        </a>
+      </li>
     </ul>
   </div>
 </aside>
