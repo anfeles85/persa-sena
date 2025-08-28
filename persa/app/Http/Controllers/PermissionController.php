@@ -322,15 +322,27 @@ class PermissionController extends Controller
     public function approve(Request $request, Permission $permission)
     {
         $permission->status = 'APROBADO';
+        $permission->save();
+
+        if ($permission->apprentice && $permission->apprentice->role_id == 3) {
+        Mail::to($permission->apprentice->email)
+            ->send(new MailAblePermissionAcepted($permission));
+        }
+
+        return redirect()->back()->with('success', 'El permiso ha sido aprobado y se ha notificado al aprendiz.');
+    }
+
+    public function registerDeparture(Request $request, Permission $permission)
+    {
         $permission->departure_time = now()->format('H:i:s');
         $permission->save();
 
         if ($permission->apprentice && $permission->apprentice->role_id == 3) {
         Mail::to($permission->apprentice->email)
             ->send(new MailAblePermissionAcepted($permission));
-    }
+        }
 
-        return redirect()->back()->with('success', 'El permiso ha sido aprobado y se ha notificado al aprendiz.');
+        return redirect()->back()->with('success', 'La hora de salida ha sido registrada correctamente.');
     }
 
     public function reject(Request $request, Permission $permission)

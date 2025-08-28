@@ -91,6 +91,18 @@
                         <td id="buttons_DE" style="border-top: none;">
                             <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
 
+                                 @if( Auth::user()->role_id == 4 && $permission['status'] == 'APROBADO')
+                                    <form id="form-approve-{{ $permission['id'] }}"
+                                          action="{{ route('permission.registerDeparture', $permission['id']) }}"
+                                          method="post" class="w-100 w-md-auto">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                    </form>
+                                @endif
+
                                 {{-- Botón de detalles visible para Coordinador/Instructor/Guarda --}}
                                 @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
                                     <button class="btn btn-info btn-circle table-btn w-100"
@@ -111,7 +123,8 @@
                                 @endif
 
                                 {{-- Aprobar (instructor / guarda) --}}
-                                @if(Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
+                                
+                                @if(Auth::user()->role_id == 2 )
                                     <form id="form-approve-{{ $permission['id'] }}"
                                           action="{{ route('permission.approve', $permission['id']) }}"
                                           method="post" class="w-100 w-md-auto">
