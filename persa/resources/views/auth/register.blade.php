@@ -161,6 +161,12 @@
             </div>
         </div>
     </div>
+    <a class="help" href="{{ route('help.help') }}" target="_blank">
+        <button class="Btn">
+            <i class="fa-solid fa-question btn-help"></i>
+            <span class="tooltip">¿Necesitas ayuda?</span>
+        </button>
+    </a>
 </div>
 
 <!-- Script para mostrar/ocultar contraseñas -->
