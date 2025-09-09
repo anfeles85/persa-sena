@@ -4,27 +4,12 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="{{ route('apprentice.index') }}">Aprendices</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">
-                            Perfil de {{ $apprentice->fullname }}
-                        </li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-
-        <div class="row">
             <div class="col-md-8">
                 <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">
+                    <div class="card-header  text-white">
+                        <h4 class="mb-0">
                             Editar Perfil del Aprendiz
-                        </h5>
+                        </h4>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('apprentice.profile.update', $apprentice->id) }}" method="POST">
@@ -140,11 +125,11 @@
                             </div>
 
                             <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">
-                                    Guardar Cambios
+                                <button type="submit" class="btn btn-success w-50">
+                                    Guardar
                                 </button>
-                                <a href="{{ route('apprentice.index') }}" class="btn btn-success text-white">
-                                    Volver
+                                <a href="{{ route('apprentice.index') }}" class="btn btn-danger w-50">
+                                    Cancelar
                                 </a>
                             </div>
                         </form>
@@ -154,10 +139,10 @@
 
             <div class="col-md-4">
                 <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
-                        <h6 class="mb-0">
+                    <div class="card-header  text-white">
+                        <h5 class="mb-0">
                             Información Actual
-                        </h6>
+                        </h5>
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
