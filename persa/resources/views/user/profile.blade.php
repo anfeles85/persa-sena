@@ -82,6 +82,8 @@
                     </div>
 
                     <!-- Información de cursos -->
+                    @if (!in_array($user->role->id, ['1', '4']))
+                    
                     <div class="form-group mb-4">
                         <label class="form-label"><strong>Ficha(s) Asignada(s):</strong></label>
                         <div class="table-responsive">
@@ -113,20 +115,19 @@
                                             <td colspan="4" class="text-muted">No tienes fichas asignadas.</td>
                                         </tr>
                                     @endif
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
                     <!-- Botones de acción -->
-                    <div class="row">
-                        <div class="col-lg-12 mb-4 d-grid gap-2 d-md-block text-end">
+                        <div class="col-lg-12 mb-4 d-grid gap-5 d-md-block text-end mt-4">
                             <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i> Actualizar Email
-                            </button>
-                            <a href="{{ route('auth.changePassword') }}" class="btn btn-primary"> Cambiar contraseña <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                            <bu
+                            <i class="fas fa-save"></i> Actualizar Email
+                        </button>
+                        <a href="{{ route('auth.changePassword') }}" class="btn btn-primary">Cambiar contraseña <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </form>
             </div>
