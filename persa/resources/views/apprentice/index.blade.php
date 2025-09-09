@@ -28,10 +28,19 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group mb-2">
-                                <a href="{{ route('apprentice.index') }}" class="btn btn-secondary text-white ">
+                            <div class="form-group mb-3 d-flex gap-2">
+                                <a href="{{ route('apprentice.index') }}" class="btn btn-secondary text-white flex-fill">
                                     Limpiar
                                 </a>
+                                {{-- Solo muestra los botones si hay una ficha seleccionada --}}
+                                @if(request('course_id'))
+                                <button type="button" id="exportExcelBtn" class="btn btn-success flex-fill">
+                                    <i class="fas fa-file-excel"></i> Excel
+                                </button>
+                                <button type="button" id="exportPdfBtn" class="btn btn-danger flex-fill">
+                                    <i class="fas fa-file-pdf"></i> PDF
+                                </button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -94,25 +103,22 @@
                                                 <td data-label="Estado" class="d-block d-md-table-cell">{{ $apprentice->status }}</td>
                                                 <td id="buttons_DE" style="border-top: none;">
                                                 <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 w-100">
-
-                                                    {{-- Activar/Inactivar (Admin / Instructor) --}}
                                                     @if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2)
-                                                        <form action="{{ route('apprentice.toggleStatus', $apprentice->id) }}" 
-                                                            method="POST" 
+                                                        <form action="{{ route('apprentice.toggleStatus', $apprentice->id) }}"
+                                                            method="POST"
                                                             id="statusForm{{ $apprentice->id }}" class="w-100 w-md-auto">
                                                             @csrf
                                                             @method('PATCH')
-
                                                             @if($apprentice->status == 'ACTIVO')
-                                                                <button type="button" 
-                                                                        class="btn btn-danger btn-circle table-btn w-100 w-md-auto" 
+                                                                <button type="button"
+                                                                        class="btn btn-danger btn-circle table-btn w-100 w-md-auto"
                                                                         title="Inactivar"
                                                                         onclick="confirmStatusChange('{{ $apprentice->id }}', '{{ $apprentice->fullname }}', 'inactivar')">
                                                                     <i class="fas fa-user-slash"></i>
                                                                 </button>
                                                             @else
-                                                                <button type="button" 
-                                                                        class="btn btn-success btn-circle table-btn w-100 w-md-auto" 
+                                                                <button type="button"
+                                                                        class="btn btn-success btn-circle table-btn w-100 w-md-auto"
                                                                         title="Activar"
                                                                         onclick="confirmStatusChange('{{ $apprentice->id }}', '{{ $apprentice->fullname }}', 'activar')">
                                                                     <i class="fas fa-user-check"></i>
@@ -120,20 +126,15 @@
                                                             @endif
                                                         </form>
                                                     @endif
-
-                                                    {{-- Editar (solo Admin) --}}
                                                     @if(auth()->user()->role_id == 1)
-                                                        <a href="{{ route('apprentice.profile', $apprentice->id) }}" 
-                                                        class="btn btn-primary btn-circle table-btn w-100 w-md-auto" 
+                                                        <a href="{{ route('apprentice.profile', $apprentice->id) }}"
+                                                        class="btn btn-primary btn-circle table-btn w-100 w-md-auto"
                                                         title="Editar">
                                                             <i class="far fa-edit"></i>
                                                         </a>
                                                     @endif
-
                                                 </div>
                                             </td>
-
-
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -194,14 +195,71 @@
         </div>
     </div>
 </div>
+@endsection
 
-{{-- Scripts --}}
-<script>
+@section('scripts')
+
+    <script src="{{ asset('js/general.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        if ($('#table_data').length) {
+            
+            if ($.fn.DataTable.isDataTable('#table_data')) {
+                $('#table_data').DataTable().destroy();
+            }
+
+            const table = $('#table_data').DataTable({
+                pageLength: 10,
+                lengthChange: false,
+                language: {
+                    paginate: { previous: "Anterior", next: "Siguiente" },
+                    search: "Buscar:",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    infoEmpty: "No hay registros para mostrar",
+                    emptyTable: "No existen registros"
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        className: 'd-none',
+                        title: `Reporte de Aprendices`,
+                        exportOptions:
+                         { columns: ':not(:last-child)' }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'd-none',
+                        title: `Reporte de Aprendices`,
+                        orientation: 'landscape',
+                        exportOptions: { columns: ':not(:last-child)' }
+                    }
+                ]
+            });
+
+            $('#exportExcelBtn').on('click', function(e) {
+                e.preventDefault();
+                table.button('.buttons-excel').trigger();
+            });
+
+            $('#exportPdfBtn').on('click', function(e) {
+                e.preventDefault();
+                table.button('.buttons-pdf').trigger();
+            });
+        }
+    });
     let currentFormId = null;
 
     function confirmStatusChange(apprenticeId, apprenticeName, action) {
         currentFormId = 'statusForm' + apprenticeId;
-
         const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
         const confirmButton = document.getElementById('confirmButton');
         const confirmIcon = document.getElementById('confirmIcon');
@@ -209,21 +267,18 @@
         const modalIcon = document.getElementById('modalIcon');
 
         if (action === 'activar') {
-            document.getElementById('confirmMessage').innerHTML =
-                `¿Estás seguro de <strong class="text-success">activar</strong> al aprendiz <strong>${apprenticeName}</strong>?`;
+            document.getElementById('confirmMessage').innerHTML = `¿Estás seguro de <strong class="text-success">activar</strong> al aprendiz <strong>${apprenticeName}</strong>?`;
             confirmButton.className = 'btn btn-success';
             confirmIcon.className = 'fas fa-user-check me-2';
             confirmText.textContent = 'Activar';
             modalIcon.className = 'fas fa-user-check text-success me-2';
         } else {
-            document.getElementById('confirmMessage').innerHTML =
-                `¿Estás seguro de <strong class="text-danger">inactivar</strong> al aprendiz <strong>${apprenticeName}</strong>?`;
+            document.getElementById('confirmMessage').innerHTML = `¿Estás seguro de <strong class="text-danger">inactivar</strong> al aprendiz <strong>${apprenticeName}</strong>?`;
             confirmButton.className = 'btn btn-danger';
             confirmIcon.className = 'fas fa-user-slash me-2';
             confirmText.textContent = 'Inactivar';
             modalIcon.className = 'fas fa-user-slash text-danger me-2';
         }
-
         modal.show();
     }
 
@@ -242,5 +297,7 @@
             }, 5000);
         });
     });
+
+    
 </script>
 @endsection
