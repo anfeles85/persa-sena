@@ -154,8 +154,7 @@ class PermissionController extends Controller
         $data['guard_id']       = 1;
         $data['status']         = 'PENDIENTE';
         $data['apprentice_id']  = $apprenticeId;
-        $data['career_id'] = $careerId;
-
+        
         Permission::create($data);
         return redirect()->route('permission.index')->with('success', 'Permiso creado exitosamente');
 
