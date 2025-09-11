@@ -248,7 +248,7 @@
             ]
         });
 
-        /
+        
         $('#exportExcelBtn').on('click', function(e) {
             e.preventDefault(); 
             table.button('.buttons-excel').trigger();
