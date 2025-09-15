@@ -9,7 +9,7 @@
             <hr>
 
             @foreach ($apprentices as $apprentice)
-                <h5>Aprendiz: {{ $apprentice->fullname }} (ID: {{ $apprentice->id }})</h5>
+                <h5>Aprendiz: {{ $apprentice->fullname }} (Documento: {{ $apprentice->document}})</h5>
 
                 @if ($apprentice->permissions->isEmpty())
                     <p>No tiene permisos registrados.</p>
@@ -26,7 +26,7 @@
                         <tbody>
                             @foreach ($apprentice->permissions as $permission)
                                 <tr>
-                                    <td>{{ $permission->permission_date }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($permission->permission_date)->format('d/m/Y') }}</td>
                                     <td>{{ $permission->permissionType->name ?? 'N/A' }}</td>
                                     <td>{{ $permission->location->name ?? 'N/A' }}</td>
                                     <td>{{ $permission->reasons }}</td>

@@ -13,12 +13,36 @@ class ReportsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $courses = Course::all();
-        $users = User::where('role_id', 3)->get();
+    public function index(){
+        $user = auth()->user();
+
+        if ($user->role_id == 2) {
+            // cursos activos asignados al instructor
+            $courses = Course::with('career')
+                ->where('status', 'ACTIVO')
+                ->whereExists(function ($query) use ($user) {
+                    $query->select('*')
+                        ->from('instructor_course')
+                        ->whereRaw('instructor_course.course_id = course.id')
+                        ->where('instructor_course.instructor_id', $user->id);
+                })
+                ->get();
+
+            // aprendices solo de esos cursos
+            $users = User::where('role_id', 3)
+                ->whereHas('courses', function ($query) use ($courses) {
+                    $query->whereIn('course.id', $courses->pluck('id')); // 👈 singular
+                })
+                ->get();
+        } else {
+            $courses = Course::with('career')->where('status', 'ACTIVO')->get();
+            $users = User::where('role_id', 3)->get();
+        }
+
         return view('reports.index', compact('courses', 'users'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.

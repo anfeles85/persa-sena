@@ -53,6 +53,9 @@
                         </div>
                         <div class="col-12 col-md-7">
                             <select name="apprentice_id" id="apprentice_id" class="form-control" required>
+                                <option value="">
+                                    Seleccione un aprendiz:
+                                </option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->fullname }}</option>
                                 @endforeach
@@ -86,6 +89,9 @@
                         </div>
                         <div class="col-12 col-md-7">
                             <select name="course_id" id="course_id" class="form-control" required>
+                                <option value="">
+                                    Seleccione una ficha:
+                                </option>
                                 @foreach ($courses as $course)
                                     <option value="{{ $course->id }}" {{ old('course_id') == $course->id ? 'selected' : '' }}>
                                         {{ $course->number_group }} - {{ $course->career->name }}

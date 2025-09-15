@@ -5,7 +5,7 @@
 @section('content')
     <section id="results">
         @if ($permissions->isNotEmpty())
-            <h4>Aprendiz: {{ $apprentice->fullname }}</h4>
+            <h4>Aprendiz: {{ $apprentice->fullname }} (Documento: {{ $apprentice->document }})</h4>
             <table id="reportTable">
                 <thead>
                     <tr>
@@ -21,13 +21,13 @@
                 <tbody>
                     @foreach ($permissions as $permission)
                         <tr>
-                            <td>{{ $permission->permission_date }}</td>
-                            <td>{{ $permission->start_time }}</td>
-                            <td>{{ $permission->end_time }}</td>
+                            <td>{{ \Carbon\Carbon::parse($permission->permission_date)->format('d/m/Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($permission->start_time)->format('H:i') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($permission->end_time)->format('H:i') }}</td>
                             <td>{{ $permission->reasons }}</td>
                             <td>{{ $permission->location->name ?? 'N/A' }}</td>
                             <td>{{ $permission->permissionType->name ?? 'N/A' }}</td>
-                            <td>{{ $permission->status }}</td>
+                            <td>{{ ucfirst(strtolower($permission->status)) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
