@@ -790,3 +790,94 @@
     display: none !important;
   }
 }
+
+/* 
+=====================================================================
+ESTILO DEL BOTON DE AYUDA...                                       ||        
+=====================================================================
+*/
+
+
+.help {
+  position: fixed;
+  bottom: 20px;
+  right: 60px;
+  z-index: 1000;
+}
+
+.Btn {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background-color: #16a34a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition-duration: .3s;
+  box-shadow: 2px 2px 10px #405849;
+}
+
+.btn-help {
+  color: #fff !important; /* Ícono blanco por defecto */
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  background-color: rgb(12, 12, 12);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: .2s;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.tooltip::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: rgb(12, 12, 12);
+  transform: translateX(-50%) rotate(45deg);
+  bottom: -5px;
+  left: 50%;
+}
+
+.Btn:hover .tooltip {
+  opacity: 1;
+  transition-duration: .4s;
+}
+
+.Btn:hover {
+  background-color: #fff; /* Fondo blanco en hover */
+  transition-duration: .3s;
+}
+
+.Btn:hover .btn-help {
+  color: #16a34a !important; /* Ícono verde en hover */
+  animation: slide-in-top 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}

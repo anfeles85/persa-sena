@@ -26,7 +26,6 @@ class Permission extends Model
         'location_id',
         'permission_type_id',
         'apprentice_id',
-        'career_id'
     ];
 
     /**
@@ -40,7 +39,7 @@ class Permission extends Model
      * Relación con users: apprentice_id → users.id
      */
     public function apprentice_user(){
-        return $this->belongsTo(User::class, 'apprentice_id');
+        return $this->belongsTo(User::class, 'apprentice_id')->where('role_id', 3);
     }
 
     /**
@@ -63,14 +62,4 @@ class Permission extends Model
     public function permissionType(){
         return $this->belongsTo(PermissionType::class, 'permission_type_id');
     }
-
-    /**
-     * Relación con career: carrer_id → career.id
-     */
-    public function career()
-    {
-        return $this->belongsTo(Career::class, 'career_id');
-    }
-
-   
 }
