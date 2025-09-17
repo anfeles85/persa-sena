@@ -17,17 +17,17 @@ class LocationSeeder extends Seeder
             [
                 'name' => 'SAGRADO',
                 'address' => 'Cra 25 # 24-47',
-                'guard?' => 'SI'
+                'guard' => 'SI'
             ],
             [
                 'name' => 'SALESIANO',
                 'address' => 'Cra 26 # 34-40 B',
-                'guard?' => 'NO'
+                'guard' => 'NO'
             ],
             [
                 'name' => 'BICENTENARIO',
                 'address' => 'Cl 28 # 19-38',
-                'guard?' => 'NO'
+                'guard' => 'NO'
                 ]
         ]);
     }

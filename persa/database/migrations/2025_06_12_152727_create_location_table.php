@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50)->comment('Nombre del lugar');
             $table->string('address', 50)->comment('Dirección');
+            $table->string('guard',50)->comment('Si alli existe un guardia');
             $table->timestamps();
         });
     }
