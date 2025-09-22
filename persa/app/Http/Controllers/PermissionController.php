@@ -323,9 +323,9 @@ class PermissionController extends Controller
         $permission->status = 'APROBADO';
         $permission->save();
 
-        if ($permission->apprentice && $permission->apprentice->role_id == 3) {
-        Mail::to($permission->apprentice->email)
-            ->send(new MailAblePermissionAcepted($permission));
+        if ($permission->apprentice_user && $permission->apprentice_user->role_id == 3) {
+            Mail::to($permission->apprentice_user->email)
+                ->send(new MailAblePermissionAcepted($permission));
         }
 
         return redirect()->back()->with('success', 'El permiso ha sido aprobado y se ha notificado al aprendiz.');
@@ -336,9 +336,9 @@ class PermissionController extends Controller
         $permission->departure_time = now()->format('H:i:s');
         $permission->save();
 
-        if ($permission->apprentice && $permission->apprentice->role_id == 3) {
-        Mail::to($permission->apprentice->email)
-            ->send(new MailAblePermissionAcepted($permission));
+        if ($permission->apprentice_user && $permission->apprentice_user->role_id == 3) {
+            Mail::to($permission->apprentice_user->email)
+                ->send(new MailAblePermissionAcepted($permission));
         }
 
         return redirect()->back()->with('success', 'La hora de salida ha sido registrada correctamente.');
@@ -349,7 +349,9 @@ class PermissionController extends Controller
         $permission->status = 'RECHAZADO';
         $permission->save();
 
-        Mail::to($permission->apprentice->email)->send(new MailAblePermissionDeclined($permission, $request));
+        if ($permission->apprentice_user && $permission->apprentice_user->email) {
+            Mail::to($permission->apprentice_user->email)->send(new MailAblePermissionDeclined($permission, $request));
+        }
 
         return redirect()->back()->with('success', 'El permiso ha sido rechazado y se ha notificado al aprendiz.');
     }
@@ -359,15 +361,27 @@ class PermissionController extends Controller
         $permission->status = 'CANCELADO';
         $permission->save();
 
-        Mail::to($permission->apprentice->email)->send(new MailAblePermissionCancel($permission));
+        if ($permission->apprentice_user && $permission->apprentice_user->email) {
+            Mail::to($permission->apprentice_user->email)->send(new MailAblePermissionCancel($permission));
+        }
 
         return redirect()->back()->with('success', 'El permiso ha sido cancelado');
     }
 
+    public function terminate(Request $request, Permission $permission)
+    {
+        $permission->status = 'TERMINADO';
+        $permission->save();
+
+        return redirect()->back()->with('success', 'El permiso ha sido terminado correctamente');
+    }
+
     public function notify(Request $request, Permission $permission)
     {
-        $permission->load(['apprentice', 'permissionType', 'location']);
-        Mail::to($permission->apprentice->email)->send(new MailAblePermission($permission));
+        $permission->load(['apprentice_user', 'permissionType', 'location']);
+        if ($permission->apprentice_user && $permission->apprentice_user->email) {
+            Mail::to($permission->apprentice_user->email)->send(new MailAblePermission($permission));
+        }
 
         return redirect()->back()->with('success', 'Se ha registrado la salida del aprendiz');
     }
