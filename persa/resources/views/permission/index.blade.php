@@ -96,13 +96,13 @@
                         <td id="buttons_DE" style="border-top: none;">
                             <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
 
-                                 @if( Auth::user()->role_id == 4 && $permission['status'] == 'APROBADO')
+                                 @if( Auth::user()->role_id == 4 && $permission['status'] == 'APROBADO' && is_null($permission['departure_time']))
                                     <form id="form-terminate-{{ $permission['id'] }}"
-                                          action="{{ route('permission.terminate', $permission['id']) }}"
+                                            action="{{ route('permission.registerDeparture', $permission['id']) }}"
                                           method="post" class="w-100 w-md-auto">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100" title="Terminar permiso">
+                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100" title="Registrar salida">
                                             <i class="fas fa-check"></i>
                                         </button>
                                     </form>
