@@ -307,8 +307,6 @@ class PermissionController extends Controller
     public function destroy(string $id)
     {
         $permission = Permission::findOrFail($id);
-
-        // Permite solo eliminar permisos que estén en estado PENDIENTE
         if (Auth::user()->role_id == 3 && $permission->status !== 'PENDIENTE') {
             return redirect()->route('permission.index')
                 ->with('warning', 'Solo puedes eliminar permisos que estén en estado PENDIENTE.');
@@ -320,40 +318,26 @@ class PermissionController extends Controller
             ->with('success', 'Permiso eliminado correctamente');
     }
 
-    // Metodos para enviar correos
-  // ...
     public function approve(Request $request, Permission $permission){
     $permission->load('location');
 
-        // Verificar si la sede tiene un guarda (Sagrado = 'SI'; Salesiano/Bicentenario = 'NO')
-    if ($permission->location->guard == 'SI') { // Corrección: se utiliza 'guard' en lugar de {'guard?'}
-        // Sede Sagrado (con guarda): Solo se aprueba. La salida la registra el guarda.
+    if ($permission->location->guard == 'SI') { 
         $permission->status = 'APROBADO';
     } else {
-        // Sede sin guarda (Salesiano/Bicentenario): Se aprueba y se registra la hora de salida inmediatamente.
         $permission->status = 'APROBADO';
         $permission->departure_time = now()->format('H:i:s');
     }
 
     $permission->save();
-
-    // Código de envío de correo comentado (se mantiene inalterado en el bloque original)
-    // ...
-
-    // Mensaje de éxito personalizado (Corrección: se utiliza 'guard' en lugar de {'guard'})
     if ($permission->location->guard == 'SI') {
         return redirect()->back()->with('success', 'Permiso aprobado. Pendiente de registro de salida por parte del guarda.');
     } else {
         return redirect()->back()->with('success', 'El permiso ha sido aprobado y la salida registrada.');
     }
 }
-// ...
 
-   // ...
     public function registerDeparture(Request $request, Permission $permission){
         $permission->load('location');
-        // Regla de Negocio: La salida solo se registra si la sede requiere guarda ('SI')
-        // y el permiso ya ha sido APROBADO por el instructor.
         if ($permission->location->guard == 'SI' && $permission->status == 'APROBADO') {
             $permission->departure_time = now()->format('H:i:s');
             $permission->save();
@@ -363,7 +347,6 @@ class PermissionController extends Controller
         return redirect()->back()->with('success', 'La hora de salida ha sido registrada correctamente.');}
         return redirect()->back()->with('warning', 'No es posible registrar la salida. El permiso no está APROBADO o no pertenece a una sede que requiere control de guardia.');
 }
-// ...
 
     public function reject(Request $request, Permission $permission)
     {
