@@ -336,16 +336,28 @@ class PermissionController extends Controller
     }
 }
 
-    public function registerDeparture(Request $request, Permission $permission){
-        $permission->load('location');
-        if ($permission->location->guard == 'SI' && $permission->status == 'APROBADO') {
-            $permission->departure_time = now()->format('H:i:s');
-            $permission->save();
-        if ($permission->apprentice_user && $permission->apprentice_user->role_id == 3) { 
-            Mail::to($permission->apprentice_user->email)->send(new MailAblePermissionAcepted($permission));
+public function registerDeparture(Request $request, Permission $permission)
+{
+    $permission->load([
+        'location',
+        'permissionType', 
+        'apprentice_user.courses.career', 
+    ]);
+
+    if ($permission->location->guard == 'SI' && $permission->status == 'APROBADO') {
+
+        $permission->departure_time = now()->format('H:i:s');
+        $permission->save();
+
+        if ($permission->apprentice_user && $permission->apprentice_user->role_id == 3) {
+            Mail::to($permission->apprentice_user->email)
+                ->send(new MailAblePermissionAcepted($permission));
         }
-        return redirect()->back()->with('success', 'La hora de salida ha sido registrada correctamente.');}
-        return redirect()->back()->with('warning', 'No es posible registrar la salida. El permiso no está APROBADO o no pertenece a una sede que requiere control de guardia.');
+
+        return redirect()->back()->with('success', 'La hora de salida ha sido registrada correctamente.');
+    }
+
+    return redirect()->back()->with('warning', 'No es posible registrar la salida. El permiso no está APROBADO o no pertenece a una sede que requiere control de guardia.');
 }
 
     public function reject(Request $request, Permission $permission)
