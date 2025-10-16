@@ -16,15 +16,18 @@ class LocationSeeder extends Seeder
         Location::insert([
             [
                 'name' => 'SAGRADO',
-                'address' => 'Cra 25 # 24-47'
+                'address' => 'Cra 25 # 24-47',
+                'guard' => 'SI'
             ],
             [
                 'name' => 'SALESIANO',
-                'address' => 'Cra 26 # 34-40 B'
+                'address' => 'Cra 26 # 34-40 B',
+                'guard' => 'NO'
             ],
             [
                 'name' => 'BICENTENARIO',
-                'address' => 'Cl 28 # 19-38'
+                'address' => 'Cl 28 # 19-38',
+                'guard' => 'NO'
                 ]
         ]);
     }

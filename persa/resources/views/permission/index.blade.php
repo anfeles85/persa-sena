@@ -34,6 +34,7 @@
             <option value="APROBADO"  {{ request('status')=='APROBADO' ? 'selected' : '' }}>Aprobado</option>
             <option value="RECHAZADO" {{ request('status')=='RECHAZADO' ? 'selected' : '' }}>Rechazado</option>
             <option value="CANCELADO" {{ request('status')=='CANCELADO' ? 'selected' : '' }}>Cancelado</option>
+            <option value="TERMINADO" {{ request('status')=='TERMINADO' ? 'selected' : '' }}>Terminado</option>
         </select>
     </div>
 
@@ -95,13 +96,13 @@
                         <td id="buttons_DE" style="border-top: none;">
                             <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
 
-                                 @if( Auth::user()->role_id == 4 && $permission['status'] == 'APROBADO')
-                                    <form id="form-approve-{{ $permission['id'] }}"
-                                          action="{{ route('permission.registerDeparture', $permission['id']) }}"
+                                 @if( Auth::user()->role_id == 4 && $permission['status'] == 'APROBADO' && is_null($permission['departure_time']))
+                                    <form id="form-terminate-{{ $permission['id'] }}"
+                                            action="{{ route('permission.registerDeparture', $permission['id']) }}"
                                           method="post" class="w-100 w-md-auto">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100">
+                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100" title="Registrar salida">
                                             <i class="fas fa-check"></i>
                                         </button>
                                     </form>
@@ -182,13 +183,19 @@
                                     </h5>
                                 </div>
                                 <div class="modal-body text-black">
-                                    <p class="mb-2"><strong>Número de documento: </strong>{{ $permission->apprentice_user->document }}</p>
-                                    <p class="mb-2"><strong>Aprendiz: </strong>{{ $permission->apprentice_user->fullname }}</p>
-                                    <p class="mb-2"><strong>Correo: </strong>{{ $permission->apprentice_user->email }}</p>
-                                    <p class="mb-2"><strong>Tipo permiso: </strong>{{ $permission->permissionType->name }}</p>
-                                    <p class="mb-2"><strong>Programa: </strong>{{ $permission->apprentice_user->courses->first()->career->name ?? 'No asignado' }}</p>
-                                    <p class="mb-2"><strong>Tipo de programa: </strong>{{ $permission->apprentice_user->courses->first()->career->type ?? 'No asignado' }}</p>
-                                    <p class="mb-0"><strong>Ficha: </strong>{{ $permission->apprentice_user->courses->first()->number_group ?? 'No asignado' }}</p>
+                                    @if($permission->apprentice_user)
+                                        <p class="mb-2"><strong>Número de documento: </strong>{{ $permission->apprentice_user->document }}</p>
+                                        <p class="mb-2"><strong>Aprendiz: </strong>{{ $permission->apprentice_user->fullname }}</p>
+                                        <p class="mb-2"><strong>Correo: </strong>{{ $permission->apprentice_user->email }}</p>
+                                    @endif
+                                    
+                                    @if($permission->permissionType)
+                                        <p class="mb-2"><strong>Tipo permiso: </strong>{{ $permission->permissionType->name }}</p>
+                                    @endif
+                                    
+                                    <p class="mb-2"><strong>Programa: </strong>{{ $permission->apprentice_user?->courses?->first()?->career?->name ?? 'No asignado' }}</p>
+                                    <p class="mb-2"><strong>Tipo de programa: </strong>{{ $permission->apprentice_user?->courses?->first()?->career?->type ?? 'No asignado' }}</p>
+                                    <p class="mb-0"><strong>Ficha: </strong>{{ $permission->apprentice_user?->courses?->first()?->number_group ?? 'No asignado' }}</p>
                                 </div>
                             </div>
                         </div>

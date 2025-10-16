@@ -86,7 +86,8 @@ Route::middleware('auth')->group(function () {
     // Permisos
     Route::patch('/permission/{permission}/approve', [PermissionController::class, 'approve'])->name('permission.approve');
     Route::patch('/permissions/{permission}/register-departure', [PermissionController::class, 'registerDeparture'])->name('permission.registerDeparture');
-    Route::patch('/permission/{id}/cancel', [PermissionController::class, 'cancel'])->name('permission.cancel');
+    Route::patch('/permission/{permission}/cancel', [PermissionController::class, 'cancel'])->name('permission.cancel');
+    Route::patch('/permission/{permission}/terminate', [PermissionController::class, 'terminate'])->name('permission.terminate');
     Route::prefix('permission')->group(function () {
         Route::resource('/', PermissionController::class)->parameters(['' => 'id'])->names('permission');
     });
