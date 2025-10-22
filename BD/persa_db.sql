@@ -255,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.roles: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla persa_db.roles: ~0 rows (aproximadamente)
 INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 	(1, 'COORDINADOR', NULL, NULL),
 	(2, 'INSTRUCTOR', NULL, NULL),
