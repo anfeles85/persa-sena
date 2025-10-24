@@ -39,7 +39,6 @@ class ApprenticeController extends Controller
     {
         $user = Auth::user();
         
-        // Si es instructor (role_id = 2), solo mostrar sus fichas asignadas
         if ($user->role_id == 2) {
             $courses = Course::with('career')
                            ->where('status', 'ACTIVO')
@@ -118,7 +117,9 @@ class ApprenticeController extends Controller
         $roles = Roles::all();
         $user = Auth::user();
         
-        if (method_exists($user, 'courses')) {
+        if ($user->role_id == 2) {
+            $user->load('instructorCourses.career');
+        } elseif (method_exists($user, 'courses')) {
             $user->load('courses.career');
         }
         
