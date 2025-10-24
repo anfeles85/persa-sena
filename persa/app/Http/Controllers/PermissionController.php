@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\MailAblePermission;
+use App\Mail\MailAblePermissionNotifi;
 use App\Mail\MailAblePermissionAcepted;
 use App\Mail\MailAblePermissionCancel;
 use App\Mail\MailAblePermissionDeclined;
+use App\Mail\MailAblePermissionDeparture;
 use App\Models\Course;
 use App\Models\Location;
 use App\Models\Permission;
@@ -66,12 +67,12 @@ class PermissionController extends Controller
                 ->pluck('user_id');
 
             $query->whereIn('apprentice_id', $apprenticeIds);
+        } elseif ($roleId == 4) {
+            // Guarda ve todos los permisos de sedes con guardia (todos los estados)
+            $query->whereHas('location', function ($q) {
+                $q->where('guard', 'SI');
+            });
         }
-         elseif ($roleId == 4) {
-        $query->whereHas('location', function ($q) {
-            $q->where('guard', 'SI');
-        });
-    }
 
         // Filtrar por nombre o documento
         if ($request->filled('search')) {
@@ -162,62 +163,6 @@ class PermissionController extends Controller
         
         Permission::create($data);
         return redirect()->route('permission.index')->with('success', 'Permiso creado exitosamente');
-
-
-
-        //Permisos del guarda 
-        $query = Permission::with([
-            'apprentice_user.courses.career',
-            'instructor_user',
-            'location',
-            'permissionType'
-        ])
-            ->orderBy('permission_date', 'desc')
-            ->orderBy('id', 'desc');
-
-        if ($roleId == 2) {
-            // guarda → permisos 
-            $courseIds = DB::table('permission')
-                ->where('instructor_id', Auth::id())
-                ->pluck('course_id');
-
-            $apprenticeIds = DB::table('apprentice_course')
-                ->whereIn('course_id', $courseIds)
-                ->pluck('user_id');
-
-            $query->whereIn('apprentice_id', $apprenticeIds);
-        }
-
-        // Filtrar por nombre o documento
-        if ($request->filled('search')) {
-            $search = $request->input('search');
-            $query->whereHas('apprentice_user', function ($q) use ($search) {
-                $q->where('fullname', 'LIKE', "%{$search}%")
-                    ->orWhere('document', 'LIKE', "%{$search}%");
-            });
-        }
-
-        // Filtrar por estado
-        if ($request->filled('status')) {
-            $query->where('status', $request->input('status'));
-        }
-
-        // Filtrar por ficha
-        if ($request->filled('course_id')) {
-            $courseId = $request->input('course_id');
-
-            $query->whereHas('apprentice_user.courses', function ($q) use ($courseId) {
-                $q->where('course.id', $courseId);
-            });
-        }
-
-        $permissions = $query->get();
-        $courses = Course::with('career:id,name')
-            ->select('id', 'number_group', 'career_id')
-            ->orderBy('number_group')
-            ->get();
-
-        return view('permission.index', compact('permissions', 'courses'));
     }
 
     /**
@@ -319,19 +264,26 @@ class PermissionController extends Controller
     }
 
     public function approve(Request $request, Permission $permission){
-    $permission->load('location');
+    $permission->load(['location', 'apprentice_user']);
 
     if ($permission->location->guard == 'SI') { 
         $permission->status = 'APROBADO';
-    } else {
-        $permission->status = 'APROBADO';
-        $permission->departure_time = now()->format('H:i:s');
-    }
-
-    $permission->save();
-    if ($permission->location->guard == 'SI') {
+        $permission->save();
+        // No enviar email aún, se enviará cuando el guarda registre la salida
+        
         return redirect()->back()->with('success', 'Permiso aprobado. Pendiente de registro de salida por parte del guarda.');
     } else {
+        $permission->status = 'TERMINADO';
+        $permission->departure_time = now()->format('H:i:s');
+        $permission->save();
+
+        
+        // Enviar email de aprobación al aprendiz (sedes sin guardia)
+        if ($permission->apprentice_user && $permission->apprentice_user->email) {
+            Mail::to($permission->apprentice_user->email)
+                ->send(new MailAblePermissionAcepted($permission));
+        }
+        
         return redirect()->back()->with('success', 'El permiso ha sido aprobado y la salida registrada.');
     }
 }
@@ -347,14 +299,16 @@ public function registerDeparture(Request $request, Permission $permission)
     if ($permission->location->guard == 'SI' && $permission->status == 'APROBADO') {
 
         $permission->departure_time = now()->format('H:i:s');
+        $permission->status = 'TERMINADO';
         $permission->save();
 
+        // Enviar email de salida registrada al aprendiz
         if ($permission->apprentice_user && $permission->apprentice_user->role_id == 3) {
             Mail::to($permission->apprentice_user->email)
-                ->send(new MailAblePermissionAcepted($permission));
+                ->send(new MailAblePermissionDeparture($permission));
         }
 
-        return redirect()->back()->with('success', 'La hora de salida ha sido registrada correctamente.');
+        return redirect()->back()->with('success', 'La hora de salida ha sido registrada.');
     }
 
     return redirect()->back()->with('warning', 'No es posible registrar la salida. El permiso no está APROBADO o no pertenece a una sede que requiere control de guardia.');
@@ -396,7 +350,7 @@ public function registerDeparture(Request $request, Permission $permission)
     {
         $permission->load(['apprentice_user', 'permissionType', 'location']);
         if ($permission->apprentice_user && $permission->apprentice_user->email) {
-            Mail::to($permission->apprentice_user->email)->send(new MailAblePermission($permission));
+            Mail::to($permission->apprentice_user->email)->send(new MailAblePermissionNotifi($permission));
         }
 
         return redirect()->back()->with('success', 'Se ha registrado la salida del aprendiz');
