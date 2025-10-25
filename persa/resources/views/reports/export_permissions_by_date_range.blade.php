@@ -1,13 +1,15 @@
 @extends('templates.base_reports')
 
-@section('header', 'Reporte permisos por rango de fechas')
+@section('header', 'Reporte de Permisos por Rango de Fechas')
+
+@section('subtitle')
+    <strong>Desde:</strong> {{ \Carbon\Carbon::parse($date1)->format('d/m/Y') }} | 
+    <strong>Hasta:</strong> {{ \Carbon\Carbon::parse($date2)->format('d/m/Y') }}
+@endsection
 
 @section('content')
     <section id="results">
         @if ($permissions->count() > 0)
-            <p><strong>Fecha de legalización desde: </strong>{{ \Carbon\Carbon::parse($date1)->format('d/m/Y') }}</p>
-            <p><strong>Fecha de legalización hasta: </strong>{{ \Carbon\Carbon::parse($date2)->format('d/m/Y') }}</p>
-            <br>
             <table id="reportTable">
                 <thead>
                     <tr>
@@ -25,34 +27,27 @@
                     @foreach ($permissions as $permission)
                         <tr>
                             <td>{{ $permission->id }}</td>
-                            <td>{{ \Carbon\Carbon::parse($permission->permission_date)->format('d/m/Y') }}</td>
-                            <td>{{ $permission->reasons }}</td>
-                            <td>{{ $permission->apprentice_user->fullname }}</td>
-                            <td>{{ $permission->apprentice_user->document_number }}</td>
+                            <td>{{ $permission->permission_date ? \Carbon\Carbon::parse($permission->permission_date)->format('d/m/Y') : 'N/A' }}</td>
+                            <td style="text-align: left;">{{ $permission->reasons ?? 'Sin motivo' }}</td>
+                            <td>{{ $permission->apprentice_user->fullname ?? 'N/A' }}</td>
+                            <td>{{ $permission->apprentice_user->document ?? 'N/A' }}</td>
                             <td>
-                                @if ($permission->apprentice_user->apprenticeCourses->isNotEmpty())
-                                    @foreach ($permission->apprentice_user->apprenticeCourses as $ac)
-                                        @if ($ac->course && $ac->course->career)
-                                            {{ $ac->course->career->name }} - 
-                                            {{ $ac->course->trimester }} - 
-                                            {{ $ac->course->shift }}
-                                        @else
-                                            Curso no asignado
-                                        @endif
-                                        <br>
-                                    @endforeach
+                                @if ($permission->apprentice_user && $permission->apprentice_user->courses->isNotEmpty())
+                                    {{ $permission->apprentice_user->courses->first()->career->name ?? 'N/A' }}
                                 @else
-                                    No tiene curso asignado
+                                    Sin ficha
                                 @endif
                             </td>
-                            <td>{{ ucfirst(strtolower($permission->status)) }}</td>
+                            <td><strong>{{ $permission->status ?? 'N/A' }}</strong></td>
                             <td>{{ $permission->location->name ?? 'N/A' }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         @else
-            <p><strong>No existen resultados en el reporte</strong></p>
+            <div class="no-data-message">
+                <p><strong>No hay permisos en el rango especificado.</strong></p>
+            </div>
         @endif
     </section>
 @endsection

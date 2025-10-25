@@ -121,170 +121,193 @@
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 
     <script>
-    $(document).ready(function() {
-        if ($.fn.DataTable.isDataTable('#table_data')) {
-            $('#table_data').DataTable().destroy();
-        }
+$(document).ready(function() {
+    if ($.fn.DataTable.isDataTable('#table_data')) {
+        $('#table_data').DataTable().destroy();
+    }
 
-        const table = $('#table_data').DataTable({
-            pageLength: 10,
-            lengthChange: false,
-            language: {
-                paginate: { previous: "Anterior", next: "Siguiente" },
-                search: "Buscar:",
-                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                infoEmpty: "No hay registros para mostrar",
-                emptyTable: "No existen registros"
+    const primary = 'rgb(39, 174, 96)';
+    const secondary = 'rgb(30, 132, 73)';
+    const lightGreen = 'rgb(200, 230, 201)';
+    const grayText = '#666';
+    const tableBorder = '#e0e0e0';
+
+    const table = $('#table_data').DataTable({
+        pageLength: 10,
+        lengthChange: false,
+        language: {
+            paginate: { previous: "Anterior", next: "Siguiente" },
+            search: "Buscar:",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            infoEmpty: "No hay registros para mostrar",
+            emptyTable: "No existen registros"
+        },
+        dom: 'frtipB',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                className: 'd-none',
+                exportOptions: { columns: ':not(:last-child)' }
             },
-            
-            dom: 'frtipB',
-            
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    className: 'd-none',
-                    title: 'Reporte de {{ ucfirst($viewMode) }}',
-                    exportOptions: {
-                        columns: ':not(:last-child)'
+            {
+                extend: 'pdfHtml5',
+                className: 'd-none',
+                orientation: 'landscape',
+                pageSize: 'LETTER',
+                exportOptions: { columns: ':not(:last-child)' },
+                customize: function (doc) {
+
+                    if (doc.content[0] && (doc.content[0].text || doc.content[0].style === 'title')) {
+                        doc.content.splice(0, 1);
                     }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    className: 'd-none',
-                    title: 'Reporte de {{ ucfirst($viewMode) }}',
-                    orientation: 'landscape',
-                    exportOptions: {
-                        columns: ':not(:last-child)'
+
+                    if (doc.content[0]) {
+                        doc.content[0].margin = [0, 20, 0, 0];
                     }
-                }
-            ]
-        });
 
-        $('#exportExcelBtn').on('click', function(e) {
-            e.preventDefault();
-            table.button('.buttons-excel').trigger();
-        });
+                    var primary = '#27AE60';
+                    var secondary = '#1E8449';
+                    var lightGreen = '#C8E6C9';
+                    var grayText = '#666666';
+                    var tableBorder = '#E0E0E0';
 
-        $('#exportPdfBtn').on('click', function(e) {
-            e.preventDefault();
-            table.button('.buttons-pdf').trigger();
-        });
-    });
-    </script>
+                    doc.pageMargins = [35, 100, 35, 45];
+                    doc.defaultStyle = {
+                        fontSize: 9,
+                        color: '#333333',
+                        font: 'Roboto'
+                    };
+                    doc.styles.tableHeader = {
+                        fillColor: primary,
+                        color: '#FFFFFF',
+                        bold: true,
+                        fontSize: 10,
+                        alignment: 'center'
+                    };
 
-
-    <script>
-    $(document).ready(function() {
-        if ($.fn.DataTable.isDataTable('#table_data')) {
-            $('#table_data').DataTable().destroy();
-        }
-
-        const table = $('#table_data').DataTable({
-            pageLength: 10,
-            lengthChange: false,
-            language: {
-                paginate: { previous: "Anterior", next: "Siguiente" },
-                search: "Buscar:",
-                info: "Mostrando START a END de TOTAL registros",
-                infoEmpty: "No hay registros para mostrar",
-                emptyTable: "No existen registros"
-            },
-            dom: 'frtipB',
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    className: 'd-none',
-                    exportOptions: { columns: ':not(:last-child)' }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    className: 'd-none',
-                    exportOptions: { columns: ':not(:last-child)' },
-                    customize: function (doc) {
-                        doc.pageOrientation = 'portrait';
-                        doc.pageMargins = [7, 0, 0, 7];
-                        doc.defaultStyle.fontSize = 10;
-                        doc.defaultStyle.font = 'Roboto';
-
-                        doc.content.splice(0, 0, 
-                            {
-                                image: 'data:image/png;base64,{{ base64_encode(file_get_contents(public_path("img/persa-logo.png"))) }}',
-                                width: 320,
-                                alignment: 'center',
-                                margin: [10, 10, 10, 10]
-                            }
-                        );
-
-                        doc.content.splice(2, 0, {
-                            text: 'Generado el: {{ date("Y-m-d (H:i:s)") }}',
-                            fontSize: 11,
-                            margin: [0, 0, 0, 20],
-                            alignment: 'left'
-                        });
-
-                        doc.styles.tableHeader = {
-                            fillColor: '#39a900',
-                            color: 'white',
-                            bold: true,
-                            fontSize: 11,
-                            alignment: 'center',
-                            margin: [0, 5, 0, 5]
+                    doc.header = function() {
+                        return {
+                            margin: [35, 10, 35, 0],
+                            stack: [
+                                {
+                                    table: {
+                                            widths: ['25%', '75%'],
+                                            body: [[
+                                                {
+                                                    image: 'data:image/png;base64,{{ base64_encode(file_get_contents(public_path("img/persa-logo.png"))) }}',
+                                                    width: 130,
+                                                    alignment: 'center',
+                                                    border: [true, true, true, true],
+                                                    margin: [5, 8, 5, 8]
+                                                },
+                                                {
+                                                    text: 'REPORTE GENERAL DE USUARIOS',
+                                                    bold: true,
+                                                    fontSize: 18,
+                                                    color: primary,
+                                                    alignment: 'center',
+                                                    margin: [0, 12, 0, 8],
+                                                    border: [true, true, true, true]
+                                                }
+                                            ]]
+                                        },
+                                    layout: {
+                                        hLineWidth: () => 2,
+                                        vLineWidth: () => 2,
+                                        hLineColor: () => primary,
+                                        vLineColor: () => primary
+                                    }
+                                },
+                                {
+                                    canvas: [{
+                                        type: 'line',
+                                        x1: 0, y1: 0, x2: 710, y2: 0,
+                                        lineWidth: 2,
+                                        lineColor: primary
+                                    }],
+                                    margin: [0, 8, 0, 0]
+                                },
+                                {
+                                    text: [
+                                        { text: 'Generado el: ', bold: true, color: '#333', fontSize: 10 },
+                                        { text: '{{ date("d/m/Y H:i:s") }}', color: grayText, fontSize: 10 }
+                                    ],
+                                    italics: true,
+                                    alignment: 'right',
+                                    margin: [0, 3, 10, 0]
+                                }
+                            ]
                         };
+                    };
 
-                        var rowCount = doc.content[doc.content.length - 1].table.body.length;
-                        for (var i = 1; i < rowCount; i++) {
-                            if (i % 2 === 0) {
-                                doc.content[doc.content.length - 1].table.body[i].forEach(function(cell) {
-                                    cell.fillColor = '#f2f2f2';
-                                });
-                            }
-                            doc.content[doc.content.length - 1].table.body[i].forEach(function(cell) {
+                    doc.footer = function(currentPage, pageCount) {
+                        return {
+                            margin: [35, 5, 35, 10],
+                            stack: [
+                                {
+                                    canvas: [{
+                                        type: 'line',
+                                        x1: 0, y1: 0, x2: 710, y2: 0,
+                                        lineWidth: 1,
+                                        lineColor: '#e0e0e0'
+                                    }],
+                                    margin: [0, 0, 0, 8]
+                                },
+                                {
+                                    text: 'Página ' + currentPage + ' de ' + pageCount + ' – Generado por PERSA 1.0',
+                                    alignment: 'center',
+                                    fontSize: 9,
+                                    italics: true,
+                                    color: grayText
+                                }
+                            ]
+                        };
+                    };
+
+                    const tableNode = doc.content[doc.content.length - 1];
+                    if (tableNode && tableNode.table) {
+                        tableNode.table.widths = new Array(tableNode.table.body[0].length).fill('*');
+                        tableNode.alignment = 'center';
+                        tableNode.margin = [0, 10, 0, 0];
+
+                        const rowCount = tableNode.table.body.length;
+                        for (let i = 1; i < rowCount; i++) {
+                            tableNode.table.body[i].forEach(cell => {
+                                cell.fillColor = (i % 2 === 0) ? lightGreen : '#fff';
                                 cell.alignment = 'center';
+                                cell.fontSize = 9;
+                                cell.margin = [5, 5, 5, 5];
                             });
                         }
 
-                        doc.content[doc.content.length - 1].layout = {
-                            hLineWidth: function (i, node) { return 0.2; }, 
-                            vLineWidth: function (i, node) { return 0.2; }, 
-                            hLineColor: function (i, node) { return '#000000'; }, 
-                            vLineColor: function (i, node) { return '#000000'; }, 
-                        };
-
-                        doc.footer = function(currentPage, pageCount) {
-                            return {
-                                columns: [
-                                    {
-                                        text: 'Generado por Persa 1.0',
-                                        alignment: 'center',
-                                        fontSize: 8,
-                                        italics: true,
-                                        margin: [0, 0, 0, 10]
-                                    },
-                                    {
-                                        text: currentPage.toString() + ' de ' + pageCount,
-                                        alignment: 'right',
-                                        fontSize: 8,
-                                        margin: [0, 0, 40, 0]
-                                    }
-                                ]
-                            };
+                        tableNode.layout = {
+                            hLineWidth: (i, node) => (i === 0 || i === node.table.body.length) ? 1 : 0.5,
+                            vLineWidth: () => 0.5,
+                            hLineColor: () => tableBorder,
+                            vLineColor: () => tableBorder,
+                            paddingLeft: () => 5,
+                            paddingRight: () => 5,
+                            paddingTop: () => 4,
+                            paddingBottom: () => 4
                         };
                     }
                 }
-            ]
-        });
-
-        $('#exportExcelBtn').on('click', function(e) {
-            e.preventDefault();
-            table.button('.buttons-excel').trigger();
-        });
-
-        $('#exportPdfBtn').on('click', function(e) {
-            e.preventDefault();
-            table.button('.buttons-pdf').trigger();
-        });
+            }
+        ]
     });
+
+    $('#exportExcelBtn').on('click', function(e) {
+        e.preventDefault();
+        table.button('.buttons-excel').trigger();
+    });
+
+    $('#exportPdfBtn').on('click', function(e) {
+        e.preventDefault();
+        table.button('.buttons-pdf').trigger();
+    });
+});
 </script>
+
 
 
 @endsection
