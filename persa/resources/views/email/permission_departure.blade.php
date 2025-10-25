@@ -2,84 +2,238 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salida Registrada</title>
     <style>
         body {
-            background-color: #f4f4f4;
-            font-family: Arial, Helvetica, sans-serif;
-            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
+        }
+        .email-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
         }
         .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: #fff;
-            border-radius: 8px;
+            background-color: #ffffff;
+            border-radius: 20px;
             overflow: hidden;
-            border: 1px solid #ddd;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         }
         .header {
-            background-color: #f6f6f6;
+            background: linear-gradient(135deg, #0066cc 0%, #004999 100%);
+            padding: 40px 20px;
             text-align: center;
-            padding: 20px;
         }
-        .header img {
-            height: 60px;
-            margin: 0 10px;
-        }
-        .content {
-            padding: 20px;
-        }
-        .content h1 {
-            font-size: 22px;
-            color: #004080;
-        }
-        .section-title {
-            font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            color: #004080;
-        }
-        .info-table {
-            width: 100%;
-            border-collapse: collapse;
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
             margin-bottom: 20px;
         }
-        .info-table td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            font-size: 14px;
+        .logo-container img {
+            height: 80px;
+            background: transparent;
+            padding: 0;
+            border: none;
+            box-shadow: none;
         }
-        .info-table td.label {
-            background-color: #f0f0f0;
+        .header-title {
+            color: white;
+            font-size: 28px;
             font-weight: bold;
-            width: 40%;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .status-badge {
+            background: #ffffff;
+            color: #0066cc;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        .greeting strong {
+            color: #0066cc;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-left: 5px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .highlight-time {
+            font-size: 36px;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+        .highlight-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .info-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .info-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .info-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background: #0066cc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .info-content {
+            flex: 1;
+        }
+        .info-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+        .info-value {
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
         }
         .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
             text-align: center;
+            color: #6c757d;
             font-size: 12px;
-            color: #777;
-            padding: 15px;
-            background-color: #f4f4f4;
-        }
-        .highlight {
-            background-color: #e8f5e9;
-            padding: 15px;
-            border-left: 4px solid #4caf50;
-            margin: 20px 0;
+            border-top: 3px solid #0066cc;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <img src="{{ $message->embed(asset('img/persa-logo-readme.png')) }}" alt="Logo Persa">
-        <img src="{{ $message->embed(asset('img/sena-logo.png')) }}" alt="Logo SENA">
-    </div>
+    <div class="email-wrapper">
+        <div class="container">
+            <!-- Header con logos -->
+            <div class="header">
+                <div class="logo-container">
+                    <img src="{{ $message->embed(asset('img/persa-logo-readme.png')) }}" alt="Logo Persa">
+                </div>
+                <h1 class="header-title">¡SALIDA REGISTRADA!</h1>
+                <div class="status-badge">✓ PERMISO COMPLETADO</div>
+            </div>
 
-    <div class="content">
-        <h1>Salida Registrada - Permiso Aprobado</h1>
+            <!-- Contenido -->
+            <div class="content">
+                <div class="greeting">
+                    Hola <strong>{{ $apprentice->fullname }}</strong>,<br>
+                    Tu salida ha sido registrada exitosamente por el personal de guardia.
+                </div>
+
+                <!-- Hora de salida destacada -->
+                <div class="highlight-box">
+                    <div class="highlight-label">Hora de Salida Registrada</div>
+                    <div class="highlight-time">{{ $permission->departure_time }}</div>
+                </div>
+
+                <!-- Información del permiso -->
+                <div class="info-card">
+                    <div class="info-row">
+                        <div class="info-icon">👤</div>
+                        <div class="info-content">
+                            <div class="info-label">Instructor Aprobador</div>
+                            <div class="info-value">{{ $permission->instructor_user?->fullname ?? 'No asignado' }}</div>
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-icon">📋</div>
+                        <div class="info-content">
+                            <div class="info-label">Ficha</div>
+                            <div class="info-value">#{{ $course->number_group }}</div>
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-icon">📅</div>
+                        <div class="info-content">
+                            <div class="info-label">Fecha del Permiso</div>
+                            <div class="info-value">{{ $permission->permission_date }}</div>
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-icon">🕐</div>
+                        <div class="info-content">
+                            <div class="info-label">Horario Autorizado</div>
+                            <div class="info-value">{{ $permission->start_time }} - {{ $permission->end_time }}</div>
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-icon">📍</div>
+                        <div class="info-content">
+                            <div class="info-label">Lugar</div>
+                            <div class="info-value">{{ $permission->location?->name }}</div>
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-icon">📝</div>
+                        <div class="info-content">
+                            <div class="info-label">Motivo</div>
+                            <div class="info-value">{{ $permission->reasons }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <strong>PERSA - Sistema de Permisos SENA</strong><br>
+                Este es un correo automático. Por favor, no responder.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
         
         <div class="highlight">
             <p><strong>{{ $permission->apprentice_user->fullname }}</strong>, el guarda de seguridad ha registrado tu salida.</p>

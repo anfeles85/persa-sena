@@ -118,8 +118,8 @@
                                     </button>
                                 @endif
 
-                                {{-- SOLO admin/aprendiz pueden editar --}}
-                                @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
+                                {{-- Editar: Admin siempre puede, Aprendiz solo si está PENDIENTE --}}
+                                @if(Auth::user()->role_id == 1 || (Auth::user()->role_id == 3 && $permission['status'] == 'PENDIENTE'))
                                     <a href="{{ route('permission.edit', $permission['id']) }}"
                                        class="btn btn-primary btn-circle table-btn w-100"
                                        title="Editar">
@@ -141,30 +141,28 @@
                                     </form>
                                 @endif
 
-                                {{-- Cancelar (instructor / guarda) - SOLO si está PENDIENTE --}}
-                                @if((Auth::user()->role_id == 2 || Auth::user()->role_id == 4) && $permission['status'] == 'PENDIENTE')
+                                {{-- Rechazar (SOLO instructor) - SOLO si está PENDIENTE --}}
+                                @if(Auth::user()->role_id == 2 && $permission['status'] == 'PENDIENTE')
+                                    <form id="form-reject-{{ $permission['id'] }}"
+                                          action="{{ route('permission.reject', $permission['id']) }}"
+                                          method="post" class="w-100 w-md-auto">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn btn-danger btn-circle table-btn w-100" title="Rechazar">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                @endif
+
+                                {{-- Aprendiz puede cancelar su permiso PENDIENTE --}}
+                                @if(Auth::user()->role_id == 3 && $permission['status'] == 'PENDIENTE')
                                     <form id="form-cancel-{{ $permission['id'] }}"
                                           action="{{ route('permission.cancel', $permission['id']) }}"
                                           method="post" class="w-100 w-md-auto">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-warning btn-circle table-btn w-100" title="Cancelar">
+                                        <button type="submit" class="btn btn-danger btn-circle table-btn w-100" title="Cancelar solicitud">
                                             <i class="fas fa-ban"></i>
-                                        </button>
-                                    </form>
-                                @endif
-
-                                {{-- SOLO aprendiz puede eliminar --}}
-                                @if(Auth::user()->role_id == 3)
-                                    <form id="form-delete-{{ $permission['id'] }}"
-                                          action="{{ route('permission.destroy', $permission['id']) }}"
-                                          method="post" class="w-100 w-md-auto">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-circle table-btn w-100"
-                                                title="Eliminar"
-                                                onclick="remove(event, {{ $permission['id'] }})">
-                                            <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
                                 @endif

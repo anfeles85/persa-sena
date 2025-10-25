@@ -132,6 +132,21 @@ class PermissionController extends Controller
                 ->withErrors($validator);
         }
 
+        $apprenticeId = auth()->id();
+
+        // TODO: Validar que el aprendiz no tenga un permiso activo (PENDIENTE, APROBADO o TERMINADO) para la misma fecha
+        // $existingPermission = Permission::where('apprentice_id', $apprenticeId)
+        //     ->where('permission_date', $request->permission_date)
+        //     ->whereIn('status', ['PENDIENTE', 'APROBADO', 'TERMINADO'])
+        //     ->first();
+
+        // if ($existingPermission) {
+        //     return redirect()
+        //         ->route('permission.create')
+        //         ->withInput()
+        //         ->withErrors(['permission_date' => 'Ya tienes un permiso activo para esta fecha. Debes cancelarlo primero si deseas crear uno nuevo.']);
+        // }
+
         $data = $request->only([
             'permission_date',
             'start_time',
@@ -140,8 +155,6 @@ class PermissionController extends Controller
             'location_id',
             'permission_type_id',
         ]);
-
-        $apprenticeId = auth()->id();
 
         $courseId = DB::table('apprentice_course')
             ->where('user_id', $apprenticeId)
@@ -209,6 +222,29 @@ class PermissionController extends Controller
         $validator = Validator::make($request->all(), $this->rules);
         $validator->setAttributeNames($this->traductionAttributes);
 
+        if ($validator->fails()) {
+            return redirect()
+                ->route('permission.edit', $id)
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        $apprenticeId = auth()->id();
+
+        // TODO: Validar que no tenga otro permiso activo para la misma fecha (excepto el que está editando)
+        // $existingPermission = Permission::where('apprentice_id', $apprenticeId)
+        //     ->where('permission_date', $request->permission_date)
+        //     ->where('id', '!=', $id) // Excluir el permiso actual
+        //     ->whereIn('status', ['PENDIENTE', 'APROBADO', 'TERMINADO'])
+        //     ->first();
+
+        // if ($existingPermission) {
+        //     return redirect()
+        //         ->route('permission.edit', $id)
+        //         ->withInput()
+        //         ->withErrors(['permission_date' => 'Ya tienes otro permiso activo para esta fecha. Debes cancelarlo primero.']);
+        // }
+
         $data = $request->only([
             'permission_date',
             'start_time',
@@ -217,8 +253,6 @@ class PermissionController extends Controller
             'location_id',
             'permission_type_id',
         ]);
-
-        $apprenticeId = auth()->id();
 
         $courseId = DB::table('apprentice_course')
             ->where('user_id', $apprenticeId)
@@ -231,17 +265,9 @@ class PermissionController extends Controller
         $data['instructor_id']  = $instructorId;
         $data['guard_id']       = 1;
         $data['status']         = 'PENDIENTE';
-
         $data['apprentice_id']  = $apprenticeId;
 
-        $permission = Permission::find($id);
-        if ($permission) {
-            $permission->update($request->all());
-            session()->flash('message', 'Permiso actualizado exitosamente');
-        } else {
-            session()->flash('warning', 'No se encuentra el permiso solicitado');
-            return redirect()->route('permission.index');
-        }
+        $permission->update($data);
 
         return redirect()->route('permission.index')->with('success', 'El permiso se editó correctamente.');
     }
@@ -328,6 +354,11 @@ public function registerDeparture(Request $request, Permission $permission)
 
     public function cancel(Request $request, Permission $permission)
     {
+        // Validar que solo el aprendiz pueda cancelar su propio permiso
+        if (Auth::user()->role_id != 3 || $permission->apprentice_id != Auth::id()) {
+            return redirect()->back()->with('warning', 'Solo el aprendiz puede cancelar su propia solicitud.');
+        }
+
         $permission->status = 'CANCELADO';
         $permission->save();
 
@@ -335,7 +366,7 @@ public function registerDeparture(Request $request, Permission $permission)
             Mail::to($permission->apprentice_user->email)->send(new MailAblePermissionCancel($permission));
         }
 
-        return redirect()->back()->with('success', 'El permiso ha sido cancelado');
+        return redirect()->back()->with('success', 'Has cancelado tu solicitud de permiso.');
     }
 
     public function terminate(Request $request, Permission $permission)
