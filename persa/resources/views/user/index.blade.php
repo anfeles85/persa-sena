@@ -126,7 +126,6 @@ $(document).ready(function() {
         $('#table_data').DataTable().destroy();
     }
 
-    // Colores institucionales
     const primary = 'rgb(39, 174, 96)';
     const secondary = 'rgb(30, 132, 73)';
     const lightGreen = 'rgb(200, 230, 201)';
@@ -158,24 +157,20 @@ $(document).ready(function() {
                 exportOptions: { columns: ':not(:last-child)' },
                 customize: function (doc) {
 
-                    // Quitar título automático
                     if (doc.content[0] && (doc.content[0].text || doc.content[0].style === 'title')) {
                         doc.content.splice(0, 1);
                     }
 
-                    // Margen entre header y tabla
                     if (doc.content[0]) {
                         doc.content[0].margin = [0, 20, 0, 0];
                     }
 
-                    // Colores PDF
                     var primary = '#27AE60';
                     var secondary = '#1E8449';
                     var lightGreen = '#C8E6C9';
                     var grayText = '#666666';
                     var tableBorder = '#E0E0E0';
 
-                    // --- BASE ---
                     doc.pageMargins = [35, 100, 35, 45];
                     doc.defaultStyle = {
                         fontSize: 9,
@@ -190,7 +185,6 @@ $(document).ready(function() {
                         alignment: 'center'
                     };
 
-                    // --- HEADER ---
                     doc.header = function() {
                         return {
                             margin: [35, 10, 35, 0],
@@ -246,7 +240,6 @@ $(document).ready(function() {
                         };
                     };
 
-                    // --- FOOTER ---
                     doc.footer = function(currentPage, pageCount) {
                         return {
                             margin: [35, 5, 35, 10],
@@ -271,7 +264,6 @@ $(document).ready(function() {
                         };
                     };
 
-                    // --- TABLA ---
                     const tableNode = doc.content[doc.content.length - 1];
                     if (tableNode && tableNode.table) {
                         tableNode.table.widths = new Array(tableNode.table.body[0].length).fill('*');
@@ -304,7 +296,6 @@ $(document).ready(function() {
         ]
     });
 
-    // --- BOTONES ---
     $('#exportExcelBtn').on('click', function(e) {
         e.preventDefault();
         table.button('.buttons-excel').trigger();
