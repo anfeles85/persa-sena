@@ -40,11 +40,11 @@ class MailAblePermissionCancel extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.permission_canceled',
+            view: 'email.permission_canceled',
             with: [
             'apprentice' => $this->permission->apprentice_user,
             'permission' => $this->permission,
-            'course' => $this->permission->apprentice_user->course()->first(),
+            'course' => $this->permission->apprentice_user->courses->first(),
         ]
         );
     }

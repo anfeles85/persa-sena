@@ -69,7 +69,6 @@
 <div class="container">
     <div class="header">
         <img src="{{ $message->embed(asset('img/persa-logo-readme.png')) }}" alt="Logo Persa">
-        <img src="{{ $message->embed(asset('img/sena-logo.png')) }}" alt="Logo SENA">
     </div>
 
     <div class="content">

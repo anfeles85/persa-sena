@@ -44,11 +44,11 @@ class MailAblePermissionNotifi extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.permission_requested',
+            view: 'email.permission_requested',
             with: [
                 'permission' => $this->permission,
                 'apprentice' => $this->permission->apprentice_user,
-                'course' => $this->permission->apprentice_user->course()->first(),
+                'course' => $this->permission->apprentice_user->courses->first(),
             ]
         );
     }
