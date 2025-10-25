@@ -127,22 +127,22 @@
                                     </a>
                                 @endif
 
-                                {{-- Aprobar (instructor / guarda) --}}
+                                {{-- Aprobar (SOLO instructor) - SOLO si está PENDIENTE --}}
                                 
-                                @if(Auth::user()->role_id == 2 )
+                                @if(Auth::user()->role_id == 2 && $permission['status'] == 'PENDIENTE')
                                     <form id="form-approve-{{ $permission['id'] }}"
                                           action="{{ route('permission.approve', $permission['id']) }}"
                                           method="post" class="w-100 w-md-auto">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100">
+                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100" title="Aprobar">
                                             <i class="fas fa-check"></i>
                                         </button>
                                     </form>
                                 @endif
 
-                                {{-- Cancelar (instructor / guarda) --}}
-                                @if(Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
+                                {{-- Cancelar (instructor / guarda) - SOLO si está PENDIENTE --}}
+                                @if((Auth::user()->role_id == 2 || Auth::user()->role_id == 4) && $permission['status'] == 'PENDIENTE')
                                     <form id="form-cancel-{{ $permission['id'] }}"
                                           action="{{ route('permission.cancel', $permission['id']) }}"
                                           method="post" class="w-100 w-md-auto">
