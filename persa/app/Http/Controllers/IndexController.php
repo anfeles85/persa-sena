@@ -13,6 +13,11 @@ class IndexController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
+        // Solo el coordinador (role_id = 1) ve el dashboard
+        // Los demás roles van directo a permisos
+        if (auth()->user()->role_id != 1) {
+            return redirect()->route('permission.index');
+        }
 
         $careers = Career::all();
         $permissions = Permission::all();
