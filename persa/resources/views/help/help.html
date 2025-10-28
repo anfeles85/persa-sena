@@ -2,204 +2,782 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manual de ayuda</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="shortcut icon" href="../public/img/sena-logo.png" type="image/x-icon">
-  <link rel="stylesheet" href="../public/css/custom.css">
-  <style>
-    body {
-      background-color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Ayuda - PERSA</title>
+    <link rel="icon" type="image/png" href="../../public/img/sena-logo.png">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    
+    <style>
+.help-page {
+    background-color: #f8f9fa;
+}
 
-    /* Navbar */
-    .custom-navbar {
-      background-color: #00324D;
-    }
+.help-hero {
+    padding: 80px 0 60px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
 
-    .logo-sena {
-      max-height: 70px;
-    }
+.help-logo {
+    max-width: 200px;
+}
 
-    /* Introducción */
-    .intro-section {
-      max-width: 900px;
-      margin: 40px auto 20px auto;
-      text-align: center;
-    }
+.help-illustration {
+    max-width: 80%;
+}
 
-    .intro-section h2 {
-      font-weight: bold;
-      color: #00324D;
-    }
+.help-search {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
 
-    .intro-section p {
-      font-size: 1.1rem;
-      color: #333;
-    }
+.help-search .input-group {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+}
 
-    /* Contenedor gris */
-    .card-section {
-      background-color: #f0f0f0;
-      padding: 60px 30px;
-      border-radius: 15px;
-      margin: 40px auto;
-      max-width: 1500px;
-    }
+.help-card {
+    border: none;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
 
-    /* Tarjetas */
-    .card {
-      transition: transform 0.2s;
-      border-radius: 15px;
-      font-size: 1.1rem;
-      padding: 10px;
-    }
+.help-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+}
 
-    .card:hover {
-      transform: translateY(-8px);
-    }
+.help-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    color: white;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-    .icon {
-      font-size: 3rem;
-      color: #004b87;
-      margin-bottom: 15px;
-    }
+.help-content {
+    text-align: left;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
 
-    .btn-link {
-      color: #004b87;
-      text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.help-content ol, .help-content ul {
+    margin-bottom: 1rem;
+}
 
-    .btn-link:hover {
-      text-decoration: underline;
-    }
+.help-content li {
+    margin-bottom: 0.5rem;
+}
+.role-card {
+    border-width: 2px;
+}
 
-    /* Footer */
-    footer {
-      margin-top: auto;
-      background: #f8f9fa;
-      padding: 20px 0;
+.role-card .badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+}
+
+.accordion-item {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem !important;
+    overflow: hidden;
+}
+
+.accordion-button {
+    font-weight: 600;
+    color: #344767;
+    background-color: #f8f9fa;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #e7f3ff;
+    color: #0066cc;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(0, 102, 204, 0.5);
+}
+
+.accordion-body {
+    padding: 1.5rem;
+    background-color: #ffffff;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+}
+
+.bg-gradient-success {
+    background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important;
+}
+
+.bg-gradient-danger {
+    background: linear-gradient(87deg, #f5365c 0, #f56036 100%) !important;
+}
+
+.bg-gradient-info {
+    background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;
+}
+
+.bg-gradient-secondary {
+    background: linear-gradient(87deg, #8392ab 0, #838bab 100%) !important;
+}
+
+@media (max-width: 991px) {
+    .help-hero {
+        padding: 60px 0 40px;
     }
-  </style>
+    
+    .help-logo {
+        max-width: 150px;
+    }
+    
+    .help-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .help-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .help-hero .lead {
+        font-size: 1rem;
+    }
+    
+    .help-card {
+        margin-bottom: 1rem;
+    }
+}
+
+* {
+    transition: color 0.15s ease-in-out, 
+                background-color 0.15s ease-in-out, 
+                border-color 0.15s ease-in-out, 
+                box-shadow 0.15s ease-in-out;
+}
+    </style>
 </head>
 
-<body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg custom-navbar w-100" id="navbarBlur" data-scroll="false">
-    <div class="container-fluid py-1 px-3">
-      <a href="https://www.sena.edu.co" class="navbar-brand font-weight-bolder text-white" target="_blank">
-        <img src="../public/img/sena-logo.png" alt="logo-sena" width="70" height="70">
-      </a>
-      <ul class="navbar-nav ms-auto justify-content-end align-items-center">
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Introducción -->
-  <section class="intro-section">
-    <h2>Manual de ayuda</h2>
-    <p>
-      Bienvenido al manual de ayuda de la plataforma. Aquí encontrarás información útil 
-      sobre cómo iniciar sesión, recuperar tu contraseña, editar tu perfil y conocer 
-      los diferentes roles dentro del sistema. Usa las tarjetas para desplegar las guías detalladas.
-    </p>
-  </section>
-
-  <!-- Contenedor gris con tarjetas -->
-  <div class="container card-section">
-    <div class="row g-5">
-      <!-- Iniciar sesión -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg text-center p-4 h-100">
-          <i class="bi bi-box-arrow-in-right icon"></i>
-          <h4>Cómo iniciar sesión</h4>
-          <p class="mt-3">Aprende los pasos para ingresar a tu cuenta de manera sencilla.</p>
-          <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#">Ver más</button>
-          <div id="info1" class="collapse text-start mt-3">
-          </div>
+<body class="help-page">
+    <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-0 top-0 px-0 mx-4 shadow-none border-radius-xl z-index-sticky" id="navbarBlur">
+        <div class="container-fluid py-1 px-3">
+            <a href="https://www.sena.edu.co" class="navbar-brand d-flex align-items-center" target="_blank">
+                <img src="../public/img/sena-logo.png" alt="Logo SENA" class="navbar-brand-img" style="max-height: 60px;">
+                <span class="ms-3 font-weight-bold text-dark d-none d-md-inline">SENA - CLEM</span>
+            </a>
         </div>
-      </div>
+    </nav>
 
-      <!-- Recuperar contraseña -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg text-center p-4 h-100">
-          <i class="bi bi-arrow-clockwise icon"></i>
-          <h4>Cómo recuperar contraseña</h4>
-          <p class="mt-3">Sigue los pasos para restablecer tu contraseña olvidada.</p>
-          <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#">Ver más</button>
-          <div id="info2" class="collapse text-start mt-3">
-          </div>
+    <section class="help-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <img src="../public/img/persa-logo.png" alt="Logo PERSA" class="help-logo mb-3">
+                    <h1 class="display-4 font-weight-bold text-dark mb-3">
+                        Manual de Ayuda
+                    </h1>
+                    <p class="lead text-muted mb-4">
+                        Bienvenido al centro de ayuda de PERSA. Aquí encontrarás guías detalladas 
+                        para aprovechar al máximo todas las funcionalidades del sistema de permisos.
+                    </p>
+                    <div class="d-flex gap-2 justify-content-center justify-content-lg-start">
+                        <a href="#guias" class="btn btn-primary btn-lg">
+                            <i class="fas fa-book me-2"></i>Ver Guías
+                        </a>
+                        <a href="#roles" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-users me-2"></i>Conocer Roles
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block text-center">
+                    <img src="../public/img/sena-logo.png" alt="Ilustración SENA" class="img-fluid help-illustration">
+                </div>
+            </div>
         </div>
-      </div>
-
-      <!-- Editar perfil -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg text-center p-4 h-100">
-          <i class="bi bi-person-circle icon"></i>
-          <h4>Cómo editar mi perfil</h4>
-          <p class="mt-3">Personaliza tu información dentro de la plataforma.</p>
-          <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#">Ver más</button>
-          <div id="info3" class="collapse text-start mt-3">
-          </div>
+    </section>
+  
+    <section class="help-search py-4 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="input-group input-group-dynamic">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" id="searchHelp" placeholder="Buscar en la ayuda..." aria-label="Buscar">
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
 
-      <!-- Rol Aprendiz -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg text-center p-4 h-100">
-          <i class="bi bi-mortarboard icon"></i>
-          <h4>Rol Aprendiz</h4>
-          <p class="mt-3">Funciones y privilegios de los aprendices en la plataforma.</p>
-          <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#">Ver más</button>
-          <div id="info4" class="collapse text-start mt-3">
-          </div>
+    <section id="guias" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="font-weight-bold text-primary">Guías de Uso</h2>
+                <p class="text-muted">Aprende paso a paso cómo usar el sistema</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="help-icon bg-gradient-primary">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </div>
+                            <h5 class="card-title mt-3">Iniciar Sesión</h5>
+                            <p class="card-text text-muted">Accede a tu cuenta con tus credenciales</p>
+                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseLogin">
+                                Ver más <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseLogin">
+                                <div class="help-content text-start">
+                                    <ol class="ps-3">
+                                        <li>Ingresa a la página principal de PERSA</li>
+                                        <li>Introduce tu <strong>correo electrónico</strong> institucional</li>
+                                        <li>Escribe tu <strong>contraseña</strong></li>
+                                        <li>Completa el <strong>captcha</strong> de verificación</li>
+                                        <li>Haz clic en <strong>"Iniciar sesión"</strong></li>
+                                    </ol>
+                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Tip:</strong> Asegúrate de usar tu correo institucional del SENA
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="help-icon bg-gradient-warning">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <h5 class="card-title mt-3">Recuperar Contraseña</h5>
+                            <p class="card-text text-muted">Restablece tu contraseña olvidada</p>
+                            <button class="btn btn-outline-warning btn-sm" data-bs-toggle="collapse" data-bs-target="#collapsePassword">
+                                Ver más <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapsePassword">
+                                <div class="help-content text-start">
+                                    <ol class="ps-3">
+                                        <li>En la página de inicio, haz clic en <strong>"¿Olvidaste tu contraseña?"</strong></li>
+                                        <li>Ingresa tu correo electrónico registrado</li>
+                                        <li>Revisa tu bandeja de entrada (y spam)</li>
+                                        <li>Haz clic en el enlace de recuperación</li>
+                                        <li>Crea una nueva contraseña segura</li>
+                                        <li>Confirma la nueva contraseña</li>
+                                    </ol>
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                        <strong>Importante:</strong> El enlace expira en 60 minutos
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="help-icon bg-gradient-success">
+                                <i class="fas fa-user-edit"></i>
+                            </div>
+                            <h5 class="card-title mt-3">Editar Perfil</h5>
+                            <p class="card-text text-muted">Actualiza tu información personal</p>
+                            <button class="btn btn-outline-success btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseProfile">
+                                Ver más <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseProfile">
+                                <div class="help-content text-start">
+                                    <ol class="ps-3">
+                                        <li>En el menú lateral izquierdo, ve a la sección <strong>"Perfil"</strong> (está entre las últimas opciones)</li>
+                                        <li>Visualiza tu información personal actual</li>
+                                        <li>Haz clic en el botón <strong>"Editar"</strong></li>
+                                        <li>Modifica los campos permitidos:
+                                            <ul class="mt-2">
+                                                <li>Nombre completo</li>
+                                                <li>Correo electrónico</li>
+                                                <li>Contraseña (opcional)</li>
+                                            </ul>
+                                        </li>
+                                        <li>Haz clic en <strong>"Guardar cambios"</strong></li>
+                                    </ol>
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <i class="fas fa-check-circle me-2"></i>
+                                        <strong>Nota:</strong> El documento de identidad y rol no son editables
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="help-icon bg-gradient-info">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h5 class="card-title mt-3">Solicitar Permiso</h5>
+                            <p class="card-text text-muted">Crea una nueva solicitud de permiso</p>
+                            <button class="btn btn-outline-info btn-sm" data-bs-toggle="collapse" data-bs-target="#collapsePermission">
+                                Ver más <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapsePermission">
+                                <div class="help-content text-start">
+                                    <ol class="ps-3">
+                                        <li>Ve al menú <strong>"Permisos"</strong></li>
+                                        <li>Haz clic en el botón <strong>"Crear"</strong></li>
+                                        <li>Completa el formulario:
+                                            <ul class="mt-2">
+                                                <li><strong>Fecha:</strong> Solo se permite el día actual</li>
+                                                <li>Hora de inicio y fin</li>
+                                                <li>Tipo de permiso</li>
+                                                <li>Ubicación/Sede</li>
+                                                <li>Motivo detallado</li>
+                                            </ul>
+                                        </li>
+                                        <li>Haz clic en <strong>"Guardar"</strong></li>
+                                        <li>Espera la aprobación de tu instructor</li>
+                                    </ol>
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                        <strong>Importante:</strong>
+                                        <ul class="mb-0 mt-2">
+                                            <li>Solo puedes crear <strong>1 permiso por día</strong></li>
+                                            <li>El permiso debe ser para <strong>el mismo día</strong></li>
+                                            <li>Si no se aprueba antes de que termine el día, será <strong>cancelado automáticamente</strong></li>
+                                            <li>No se pueden editar/eliminar permisos <strong>aprobados, rechazados o cancelados</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="help-icon bg-gradient-danger">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h5 class="card-title mt-3">Ver Reportes</h5>
+                            <p class="card-text text-muted">Genera y descarga reportes en PDF/Excel</p>
+                            <button class="btn btn-outline-danger btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseReports">
+                                Ver más <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseReports">
+                                <div class="help-content text-start">
+                                    <ol class="ps-3">
+                                        <li>Ve al menú <strong>"Reportes"</strong></li>
+                                        <li>Selecciona el tipo de reporte:
+                                            <ul class="mt-2">
+                                                <li>Por curso/ficha</li>
+                                                <li>Por aprendiz</li>
+                                                <li>Por rango de fechas</li>
+                                            </ul>
+                                        </li>
+                                        <li>Completa los filtros requeridos</li>
+                                        <li>Haz clic en <strong>"Generar reporte"</strong></li>
+                                        <li>Descarga en formato <strong>PDF</strong> o <strong>Excel</strong></li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="help-icon bg-gradient-secondary">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <h5 class="card-title mt-3">Notificaciones</h5>
+                            <p class="card-text text-muted">Gestiona tus notificaciones por correo</p>
+                            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseNotifications">
+                                Ver más <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseNotifications">
+                                <div class="help-content text-start">
+                                    <p><strong>Recibirás notificaciones por correo cuando:</strong></p>
+                                    <ul class="ps-3">
+                                        <li>Tu permiso sea <span class="badge bg-success">aprobado</span></li>
+                                        <li>Tu permiso sea <span class="badge bg-danger">rechazado</span></li>
+                                        <li>Tu permiso sea <span class="badge bg-warning">cancelado</span></li>
+                                        <li>Se registre tu <span class="badge bg-info">salida</span></li>
+                                    </ul>
+                                    <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                                        <i class="fas fa-envelope me-2"></i>
+                                        <strong>Revisa:</strong> Tu bandeja de entrada y la carpeta de spam
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
 
-      <!-- Rol Bienestar -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg text-center p-4 h-100">
-          <i class="bi bi-flower3 icon"></i>
-          <h4>Rol Bienestar</h4>
-          <p class="mt-3">Acompañamiento y apoyo a los aprendices en su proceso.</p>
-          <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#">Ver más</button>
-          <div id="info5" class="collapse text-start mt-3">
-          </div>
+    <section id="roles" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="font-weight-bold text-primary">Roles del Sistema</h2>
+                <p class="text-muted">Conoce las funciones y permisos de cada rol</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card role-card h-100 shadow-sm border-primary">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="help-icon bg-gradient-primary me-3">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <div>
+                                    <h5 class="card-title mb-0">Administrador</h5>
+                                    <span class="badge bg-primary">Control Total</span>
+                                </div>
+                            </div>
+                            <p class="card-text text-muted mb-3">Gestión completa del sistema</p>
+                            <button class="btn btn-sm btn-outline-primary w-100" data-bs-toggle="collapse" data-bs-target="#collapseAdmin">
+                                Ver funciones <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseAdmin">
+                                <div class="help-content">
+                                    <h6 class="font-weight-bold">Puede:</h6>
+                                    <ul class="list-unstyled ps-0">
+                                        <li><i class="fas fa-check text-success me-2"></i>Crear, editar y eliminar usuarios</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Gestionar todos los permisos</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Administrar cursos y programas</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver y generar todos los reportes</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Configurar tipos de permisos</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Gestionar ubicaciones/sedes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card role-card h-100 shadow-sm border-success">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="help-icon bg-gradient-success me-3">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div>
+                                    <h5 class="card-title mb-0">Coordinador</h5>
+                                    <span class="badge bg-success">Gestión</span>
+                                </div>
+                            </div>
+                            <p class="card-text text-muted mb-3">Supervisión y reportes</p>
+                            <button class="btn btn-sm btn-outline-success w-100" data-bs-toggle="collapse" data-bs-target="#collapseCoordinator">
+                                Ver funciones <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseCoordinator">
+                                <div class="help-content">
+                                    <h6 class="font-weight-bold">Puede:</h6>
+                                    <ul class="list-unstyled ps-0">
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver todos los permisos</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Generar reportes generales</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Exportar datos en PDF/Excel</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Consultar información de aprendices</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver estadísticas del dashboard</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card role-card h-100 shadow-sm border-info">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="help-icon bg-gradient-info me-3">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div>
+                                    <h5 class="card-title mb-0">Aprendiz</h5>
+                                    <span class="badge bg-info">Usuario</span>
+                                </div>
+                            </div>
+                            <p class="card-text text-muted mb-3">Solicitud de permisos</p>
+                            <button class="btn btn-sm btn-outline-info w-100" data-bs-toggle="collapse" data-bs-target="#collapseApprentice">
+                                Ver funciones <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseApprentice">
+                                <div class="help-content">
+                                    <h6 class="font-weight-bold">Puede:</h6>
+                                    <ul class="list-unstyled ps-0">
+                                        <li><i class="fas fa-check text-success me-2"></i>Crear solicitudes de permiso</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver sus propios permisos</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Cancelar permisos pendientes</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Editar su perfil</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Recibir notificaciones por correo</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card role-card h-100 shadow-sm border-warning">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="help-icon bg-gradient-warning me-3">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <div>
+                                    <h5 class="card-title mb-0">Instructor</h5>
+                                    <span class="badge bg-warning">Aprobación</span>
+                                </div>
+                            </div>
+                            <p class="card-text text-muted mb-3">Gestión de permisos de sus aprendices</p>
+                            <button class="btn btn-sm btn-outline-warning w-100" data-bs-toggle="collapse" data-bs-target="#collapseInstructor">
+                                Ver funciones <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseInstructor">
+                                <div class="help-content">
+                                    <h6 class="font-weight-bold">Puede:</h6>
+                                    <ul class="list-unstyled ps-0">
+                                        <li><i class="fas fa-check text-success me-2"></i>Aprobar/rechazar permisos</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver permisos de sus aprendices</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Agregar comentarios de rechazo</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver su lista de cursos asignados</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Consultar historial de permisos</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card role-card h-100 shadow-sm border-danger">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="help-icon bg-gradient-danger me-3">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div>
+                                    <h5 class="card-title mb-0">Guarda de Seguridad</h5>
+                                    <span class="badge bg-danger">Registro</span>
+                                </div>
+                            </div>
+                            <p class="card-text text-muted mb-3">Control de salidas</p>
+                            <button class="btn btn-sm btn-outline-danger w-100" data-bs-toggle="collapse" data-bs-target="#collapseGuard">
+                                Ver funciones <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseGuard">
+                                <div class="help-content">
+                                    <h6 class="font-weight-bold">Puede:</h6>
+                                    <ul class="list-unstyled ps-0">
+                                        <li><i class="fas fa-check text-success me-2"></i>Buscar permisos aprobados</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Registrar salidas de aprendices</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Verificar documentos de permisos</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver historial de salidas registradas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
 
-      <!-- Rol Instructor -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg text-center p-4 h-100">
-          <i class="bi bi-easel icon"></i>
-          <h4>Rol Instructor</h4>
-          <p class="mt-3">Responsabilidades de los instructores dentro del sistema.</p>
-          <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#">Ver más</button>
-          <div id="info6" class="collapse text-start mt-3">
-          </div>
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="font-weight-bold text-primary">Preguntas Frecuentes</h2>
+                <p class="text-muted">Respuestas a las dudas más comunes</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    <i class="fas fa-question-circle me-2 text-primary"></i>
+                                    ¿Cuánto tiempo tarda en aprobarse un permiso?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    El tiempo de aprobación depende de tu instructor. Generalmente, los permisos se aprueban en un plazo de 24 a 48 horas. 
+                                    Recibirás una notificación por correo electrónico cuando tu permiso sea aprobado o rechazado.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    <i class="fas fa-question-circle me-2 text-primary"></i>
+                                    ¿Puedo cancelar un permiso ya aprobado?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Sí, puedes cancelar permisos que estén en estado <strong>PENDIENTE</strong> o <strong>APROBADO</strong> (antes de la fecha de ejecución). 
+                                    Ve a la lista de permisos, selecciona el permiso y haz clic en "Cancelar". Recibirás una confirmación por correo.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    <i class="fas fa-question-circle me-2 text-primary"></i>
+                                    ¿Qué hago si no recibo el correo de restablecimiento de contraseña?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Primero, revisa tu carpeta de <strong>spam</strong> o <strong>correo no deseado</strong>. 
+                                    Si no aparece, verifica que hayas ingresado correctamente tu correo electrónico. 
+                                    Si el problema persiste, contacta con el administrador del sistema.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    <i class="fas fa-question-circle me-2 text-primary"></i>
+                                    ¿Cómo puedo ver el historial de mis permisos?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Ve al menú <strong>"Permisos"</strong> y verás una lista completa de todos tus permisos con su estado actual 
+                                    (Pendiente, Aprobado, Rechazado, Cancelado o Registrado). Puedes filtrar por estado o buscar por fecha.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    <i class="fas fa-question-circle me-2 text-primary"></i>
+                                    ¿Puedo solicitar varios permisos para el mismo día?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Sí, puedes crear múltiples solicitudes siempre y cuando no haya conflictos de horario. 
+                                    Cada permiso debe tener un rango de horas específico y un motivo válido. 
+                                    Tu instructor evaluará cada solicitud de forma independiente.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="footer pt-3">
-    <div class="container my-auto">
-      <div class="copyright text-center my-auto">
-        <a href="https://sena-clem.blogspot.com/" target="_blank">
-          <span style="color: #00304D; font-weight: bold;">© PERSA - Desarrollado con ♥ por ADSO 2921881 - SENA CLEM</span>
-        </a>
-      </div>
-    </div>
-  </footer>
+    <footer class="footer pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <img src="../public/img/persa-logo.png" alt="Logo PERSA" style="max-height: 60px;" class="mb-3">
+                    <p class="text-muted">Sistema de Permisos de Salidas de Aprendices del SENA</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h6 class="font-weight-bold mb-3">Enlaces Útiles</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#guias" class="text-muted">Guías de uso</a></li>
+                        <li class="mb-2"><a href="#roles" class="text-muted">Roles del sistema</a></li>
+                        <li class="mb-2"><a href="https://www.sena.edu.co" target="_blank" class="text-muted">SENA</a></li>
+                        <li class="mb-2"><a href="https://sena-clem.blogspot.com/" target="_blank" class="text-muted">Blog CLEM</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h6 class="font-weight-bold mb-3">Contacto</h6>
+                    <p class="text-muted mb-2">
+                        <i class="fas fa-envelope me-2"></i>email@example.sena.edu.co
+                    </p>
+                    <p class="text-muted mb-2">
+                        <i class="fas fa-map-marker-alt me-2"></i>SENA - Centro Latinoamericano de Espcies Menores
+                    </p>
+                </div>
+            </div>
+            <hr class="horizontal dark mt-4 mb-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="text-muted mb-0">
+                        <a href="https://sena-clem.blogspot.com/" target="_blank" class="text-dark font-weight-bold">
+                            © PERSA - Desarrollado con <i class="fas fa-heart text-danger"></i> por ADSO 2921881 - SENA CLEM
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.getElementById('searchHelp').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.help-card');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                const parent = card.closest('.col-md-6, .col-lg-4');
+                
+                if (text.includes(searchTerm)) {
+                    parent.style.display = '';
+                    card.classList.add('animate__animated', 'animate__fadeIn');
+                } else {
+                    parent.style.display = 'none';
+                }
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
