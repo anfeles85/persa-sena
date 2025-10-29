@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
         Route::put('/{id}', [UserController::class, 'update'])->name('user.update');
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+        Route::post('/user/import', [UserController::class, 'import'])->name('user.import');
 
         Route::post('/send_email', [UserController::class, 'send_email'])->name('users.send_email');
     });
@@ -81,7 +82,16 @@ Route::middleware('auth')->group(function () {
     //Coordinador - Cursos
     Route::middleware('can:coordinador')->prefix('course')->group(function () {
         Route::resource('/', CourseController::class)->parameters(['' => 'id'])->names('course');
+        
+        Route::get('/course/{course_id}/add_instructor/{instructor_id}', [CourseController::class, 'add_instructor'])
+        ->name('course.add_instructor');
+
+        Route::get('/course/{course_id}/remove_instructor/{instructor_id}', [CourseController::class, 'remove_instructor'])
+        ->name('course.remove_instructor');
+
+        Route::post('/course/import', [CourseController::class, 'import'])->name('course.import');
     });
+
 
     // Permisos
     Route::patch('/permission/{permission}/approve', [PermissionController::class, 'approve'])->name('permission.approve');

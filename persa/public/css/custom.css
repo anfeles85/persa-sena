@@ -881,3 +881,13 @@ ESTILO DEL BOTON DE AYUDA...                                       ||
     opacity: 1;
   }
 }
+
+.custom-hr {
+  border: none;
+  height: 2px;
+  width: 90%;
+  margin: 2.5rem auto;
+  background: linear-gradient(to right, #28a745, #198754, #28a745);
+  border-radius: 2px;
+  opacity: 0.8;
+}

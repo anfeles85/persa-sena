@@ -42,7 +42,7 @@
       </li>
       @endcan
 
-      @can('administrador')
+      @can('coordinador')
       <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('career.*') ? 'active' : '' }}" href="{{ route('career.index') }}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
