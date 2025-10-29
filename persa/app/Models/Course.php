@@ -35,9 +35,14 @@ class Course extends Model
      * relación con la tabla instrcutor_course
      */
     public function instructorCourses(){
-       return $this->belongsToMany(User::class, 'instructor_course', 'instructor_id', 'course_id');
+        return $this->belongsToMany(User::class, 'instructor_course', 'instructor_id', 'course_id');
 
     }
+
+    public function instructors(){
+        return $this->belongsToMany(User::class, 'instructor_course', 'course_id', 'instructor_id');
+    }
+
 
 
 }
