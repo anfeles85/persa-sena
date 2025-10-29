@@ -81,6 +81,12 @@ Route::middleware('auth')->group(function () {
     //Coordinador - Cursos
     Route::middleware('can:coordinador')->prefix('course')->group(function () {
         Route::resource('/', CourseController::class)->parameters(['' => 'id'])->names('course');
+        Route::get('/course/{course_id}/add_instructor/{instructor_id}', [CourseController::class, 'add_instructor'])
+        ->name('course.add_instructor');
+
+        Route::get('/course/{course_id}/remove_instructor/{instructor_id}', [CourseController::class, 'remove_instructor'])
+        ->name('course.remove_instructor');
+
     });
 
     // Permisos
