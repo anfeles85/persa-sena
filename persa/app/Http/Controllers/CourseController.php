@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\CourseImport;
 use App\Models\Career;
 use App\Models\Course;
 use App\Models\InstructorCourse;
@@ -9,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
+use Throwable;
 
 class CourseController extends Controller
 {
@@ -48,6 +52,24 @@ class CourseController extends Controller
         ['name' => 'INACTIVO', 'value' => 'INACTIVO']
     ];
 
+    public function import(Request $request)
+    {
+        $request->validate([
+            'archivo' => 'required|mimes:xlsx,xls',
+        ]);
+
+        try {
+        Excel::import(new CourseImport, $request->file('archivo'));
+
+        return back()->with('success', 'Archivo importado correctamente.');
+        } catch (ValidationException $e) {
+
+            return back()->with('error', 'Error al importar: ' . implode(', ', $e->errors()['headers'] ?? ['Error desconocido']));
+        } catch (Throwable $e) {
+            return back()->with('error', 'Ocurrió un error inesperado: ' . $e->getMessage());
+        }
+    }
+    
     public function index()
     {
         $courses = Course::all();
