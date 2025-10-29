@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\UsersImport;
 use App\Models\Course;
 use App\Models\User;
 use App\Models\Roles;
@@ -11,6 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
+use Throwable;
 
 class UserController extends Controller
 {
@@ -37,6 +41,24 @@ class UserController extends Controller
         ['name' => 'ACTIVO', 'value' => 'ACTIVO'],
         ['name' => 'INACTIVO', 'value' => 'INACTIVO']
     ];
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'archivo' => 'required|mimes:xlsx,xls',
+        ]);
+
+        try {
+            Excel::import(new UsersImport, $request->file('archivo'));
+
+        return back()->with('success', 'Archivo importado correctamente.');
+        } catch (ValidationException $e) {
+
+            return back()->with('error', 'Error al importar: ' . implode(', ', $e->errors()['headers'] ?? ['Error desconocido']));
+        } catch (Throwable $e) {
+            return back()->with('error', 'Ocurrió un error inesperado: ' . $e->getMessage());
+        }
+    }
 
     public function index()
     {
