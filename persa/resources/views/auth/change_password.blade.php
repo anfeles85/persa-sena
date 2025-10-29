@@ -7,7 +7,41 @@
 <div>
     <label class="fs-3">Cambiar contraseña</label>
         <div class="col-lg-12 mb-4">
-            <form action="{{ route('auth.changePassword') }}" method="POST">
+
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>¡Éxito!</strong> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>¡Error!</strong> {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if(session('warning'))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>¡Atención!</strong> {{ session('warning') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>¡Error!</strong> Por favor corrige los siguientes errores:
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            <form action="{{ route('auth.changePassword.update') }}" method="POST">
                 @csrf
 
                 <div class="row form-group">
@@ -37,7 +71,8 @@
 
                 <div class="row">
                     <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-success w-100">Cambiar contraseña</button>
+                        <button type="submit" class="btn btn-success w-50">Cambiar contraseña</button>
+                        <a href="{{ route('index') }}" class="btn btn-danger w-50">Cancelar</a>
                     </div>
                 </div>
 

@@ -5,27 +5,34 @@
 
 <div>
     <label for="" class="fs-3">Editar sede</label>
-        <div class="col-lg-12-mb-4">
+        <div class="col-lg-12 mb-4">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="{{ route('location.update', $location['id']) }}" method="POST">
                 @csrf
-                @method('PUT')
+                @method('PATCH')
                 <div class="row form-group">
                     <div class="col-lg-12 mb-4">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control" id="name" name="name" required value="{{ $location['name'] }}">
+                        <input type="text" class="form-control" id="name" name="name" required value="{{ old('name', $location['name']) }}">
                     </div>
                     <div class="col-lg-12 mb-4">
                         <label for="address">Dirección</label>
-                        <input type="text" class="form-control" id="address" name="address" required value="{{ $location['address'] }}">
+                        <input type="text" class="form-control" id="address" name="address" required value="{{ old('address', $location['address']) }}">
                     </div>
                     <div class="col-lg-12 mb-4">
-                        <label for="type">Tipo</label>
-                        <select name="type" id="type" class="form-control" required>
-                            @foreach ($types as $type)
-                                <option value="{{ $type['value'] }}" @if(old('type', $location['type'] ?? '') == $type['value']) selected @endif>
-                                    {{ $type['name'] }}
-                                </option>
-                            @endforeach
+                        <label for="guard">¿Tiene guardia?</label>
+                        <select name="guard" id="guard" class="form-control" required>
+                            <option value="">Seleccione</option>
+                            <option value="SI" {{ old('guard', $location['guard']) == 'SI' ? 'selected' : '' }}>Sí</option>
+                            <option value="NO" {{ old('guard', $location['guard']) == 'NO' ? 'selected' : '' }}>No</option>
                         </select>
                     </div>
                 </div>

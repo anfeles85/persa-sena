@@ -42,11 +42,11 @@ class MailAblePermissionDeclined extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.permission_rejected',
+            view: 'email.permission_rejected',
             with: [
                 'permission' => $this->permission,
-                'apprentice' => $this->permission->apprentice,
-                'course' => $this->permission->course,
+                'apprentice' => $this->permission->apprentice_user,
+                'course' => $this->permission->apprentice_user->courses->first(),
                 'reason' => $this->permission->rejeactionReason,
             ],
         );

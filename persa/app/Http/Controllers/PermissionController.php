@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\MailAblePermission;
+use App\Mail\MailAblePermissionNotifi;
 use App\Mail\MailAblePermissionAcepted;
 use App\Mail\MailAblePermissionCancel;
 use App\Mail\MailAblePermissionDeclined;
+use App\Mail\MailAblePermissionDeparture;
 use App\Models\Course;
 use App\Models\Location;
 use App\Models\Permission;
@@ -20,12 +21,12 @@ use Illuminate\Support\Facades\Validator;
 class PermissionController extends Controller
 {
     private $rules = [
-        'permission_date' => 'required|date|date_format:Y-m-d',
-        'start_time' => 'required|date_format:H:i',
-        'end_time' => 'required|date_format:H:i',
+        'permission_date' => 'required|date',
+        'start_time' => 'required',
+        'end_time' => 'required',
         'reasons' => 'required|string|min:3|max:60',
-        'location_id' => 'required|numeric|min:1|max:99999999999999999999',
-        'permission_type_id' => 'required|numeric|min:1|max:99999999999999999999',
+        'location_id' => 'required|numeric|min:1',
+        'permission_type_id' => 'required|numeric|min:1',
     ];
 
     private $traductionAttributes = [
@@ -41,7 +42,7 @@ class PermissionController extends Controller
     {
         $roleId = Auth::user()->role_id;
 
-        //permisos del instructor
+        //permisos ordenados por fecha más reciente
         $query = Permission::with([
             'apprentice_user.courses.career',
             'instructor_user',
@@ -50,6 +51,7 @@ class PermissionController extends Controller
             'permissionType'
         ])
             ->orderBy('permission_date', 'desc')
+            ->orderBy('start_time', 'desc')
             ->orderBy('id', 'desc');
 
         if ($roleId == 3) {
@@ -66,6 +68,11 @@ class PermissionController extends Controller
                 ->pluck('user_id');
 
             $query->whereIn('apprentice_id', $apprenticeIds);
+        } elseif ($roleId == 4) {
+            // Guarda ve todos los permisos de sedes con guardia (todos los estados)
+            $query->whereHas('location', function ($q) {
+                $q->where('guard', 'SI');
+            });
         }
 
         // Filtrar por nombre o documento
@@ -126,6 +133,21 @@ class PermissionController extends Controller
                 ->withErrors($validator);
         }
 
+        $apprenticeId = auth()->id();
+
+        // TODO: Validar que el aprendiz no tenga un permiso activo (PENDIENTE, APROBADO o TERMINADO) para la misma fecha
+        // $existingPermission = Permission::where('apprentice_id', $apprenticeId)
+        //     ->where('permission_date', $request->permission_date)
+        //     ->whereIn('status', ['PENDIENTE', 'APROBADO', 'TERMINADO'])
+        //     ->first();
+
+        // if ($existingPermission) {
+        //     return redirect()
+        //         ->route('permission.create')
+        //         ->withInput()
+        //         ->withErrors(['permission_date' => 'Ya tienes un permiso activo para esta fecha. Debes cancelarlo primero si deseas crear uno nuevo.']);
+        // }
+
         $data = $request->only([
             'permission_date',
             'start_time',
@@ -134,8 +156,6 @@ class PermissionController extends Controller
             'location_id',
             'permission_type_id',
         ]);
-
-        $apprenticeId = auth()->id();
 
         $courseId = DB::table('apprentice_course')
             ->where('user_id', $apprenticeId)
@@ -157,62 +177,6 @@ class PermissionController extends Controller
         
         Permission::create($data);
         return redirect()->route('permission.index')->with('success', 'Permiso creado exitosamente');
-
-
-
-        //Permisos del guarda 
-        $query = Permission::with([
-            'apprentice_user.courses.career',
-            'instructor_user',
-            'location',
-            'permissionType'
-        ])
-            ->orderBy('permission_date', 'desc')
-            ->orderBy('id', 'desc');
-
-        if ($roleId == 2) {
-            // guarda → permisos 
-            $courseIds = DB::table('permission')
-                ->where('instructor_id', Auth::id())
-                ->pluck('course_id');
-
-            $apprenticeIds = DB::table('apprentice_course')
-                ->whereIn('course_id', $courseIds)
-                ->pluck('user_id');
-
-            $query->whereIn('apprentice_id', $apprenticeIds);
-        }
-
-        // Filtrar por nombre o documento
-        if ($request->filled('search')) {
-            $search = $request->input('search');
-            $query->whereHas('apprentice_user', function ($q) use ($search) {
-                $q->where('fullname', 'LIKE', "%{$search}%")
-                    ->orWhere('document', 'LIKE', "%{$search}%");
-            });
-        }
-
-        // Filtrar por estado
-        if ($request->filled('status')) {
-            $query->where('status', $request->input('status'));
-        }
-
-        // Filtrar por ficha
-        if ($request->filled('course_id')) {
-            $courseId = $request->input('course_id');
-
-            $query->whereHas('apprentice_user.courses', function ($q) use ($courseId) {
-                $q->where('course.id', $courseId);
-            });
-        }
-
-        $permissions = $query->get();
-        $courses = Course::with('career:id,name')
-            ->select('id', 'number_group', 'career_id')
-            ->orderBy('number_group')
-            ->get();
-
-        return view('permission.index', compact('permissions', 'courses'));
     }
 
     /**
@@ -259,6 +223,29 @@ class PermissionController extends Controller
         $validator = Validator::make($request->all(), $this->rules);
         $validator->setAttributeNames($this->traductionAttributes);
 
+        if ($validator->fails()) {
+            return redirect()
+                ->route('permission.edit', $id)
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        $apprenticeId = auth()->id();
+
+        // TODO: Validar que no tenga otro permiso activo para la misma fecha (excepto el que está editando)
+        // $existingPermission = Permission::where('apprentice_id', $apprenticeId)
+        //     ->where('permission_date', $request->permission_date)
+        //     ->where('id', '!=', $id) // Excluir el permiso actual
+        //     ->whereIn('status', ['PENDIENTE', 'APROBADO', 'TERMINADO'])
+        //     ->first();
+
+        // if ($existingPermission) {
+        //     return redirect()
+        //         ->route('permission.edit', $id)
+        //         ->withInput()
+        //         ->withErrors(['permission_date' => 'Ya tienes otro permiso activo para esta fecha. Debes cancelarlo primero.']);
+        // }
+
         $data = $request->only([
             'permission_date',
             'start_time',
@@ -267,8 +254,6 @@ class PermissionController extends Controller
             'location_id',
             'permission_type_id',
         ]);
-
-        $apprenticeId = auth()->id();
 
         $courseId = DB::table('apprentice_course')
             ->where('user_id', $apprenticeId)
@@ -281,17 +266,9 @@ class PermissionController extends Controller
         $data['instructor_id']  = $instructorId;
         $data['guard_id']       = 1;
         $data['status']         = 'PENDIENTE';
-
         $data['apprentice_id']  = $apprenticeId;
 
-        $permission = Permission::find($id);
-        if ($permission) {
-            $permission->update($request->all());
-            session()->flash('message', 'Permiso actualizado exitosamente');
-        } else {
-            session()->flash('warning', 'No se encuentra el permiso solicitado');
-            return redirect()->route('permission.index');
-        }
+        $permission->update($data);
 
         return redirect()->route('permission.index')->with('success', 'El permiso se editó correctamente.');
     }
@@ -302,8 +279,6 @@ class PermissionController extends Controller
     public function destroy(string $id)
     {
         $permission = Permission::findOrFail($id);
-
-        // Permite solo eliminar permisos que estén en estado PENDIENTE
         if (Auth::user()->role_id == 3 && $permission->status !== 'PENDIENTE') {
             return redirect()->route('permission.index')
                 ->with('warning', 'Solo puedes eliminar permisos que estén en estado PENDIENTE.');
@@ -315,59 +290,100 @@ class PermissionController extends Controller
             ->with('success', 'Permiso eliminado correctamente');
     }
 
+    public function approve(Request $request, Permission $permission){
+    $permission->load(['location', 'apprentice_user']);
 
-
-    // Metodos para enviar correos
-    public function approve(Request $request, Permission $permission)
-    {
+    if ($permission->location->guard == 'SI') { 
         $permission->status = 'APROBADO';
         $permission->save();
-
-        if ($permission->apprentice && $permission->apprentice->role_id == 3) {
-        Mail::to($permission->apprentice->email)
-            ->send(new MailAblePermissionAcepted($permission));
-        }
-
-        return redirect()->back()->with('success', 'El permiso ha sido aprobado y se ha notificado al aprendiz.');
-    }
-
-    public function registerDeparture(Request $request, Permission $permission)
-    {
+        // No enviar email aún, se enviará cuando el guarda registre la salida
+        
+        return redirect()->back()->with('success', 'Permiso aprobado. Pendiente de registro de salida por parte del guarda.');
+    } else {
+        $permission->status = 'TERMINADO';
         $permission->departure_time = now()->format('H:i:s');
         $permission->save();
 
-        if ($permission->apprentice && $permission->apprentice->role_id == 3) {
-        Mail::to($permission->apprentice->email)
-            ->send(new MailAblePermissionAcepted($permission));
+        
+        // Enviar email de aprobación al aprendiz (sedes sin guardia)
+        if ($permission->apprentice_user && $permission->apprentice_user->email) {
+            Mail::to($permission->apprentice_user->email)
+                ->send(new MailAblePermissionAcepted($permission));
+        }
+        
+        return redirect()->back()->with('success', 'El permiso ha sido aprobado y la salida registrada.');
+    }
+}
+
+public function registerDeparture(Request $request, Permission $permission)
+{
+    $permission->load([
+        'location',
+        'permissionType', 
+        'apprentice_user.courses.career', 
+    ]);
+
+    if ($permission->location->guard == 'SI' && $permission->status == 'APROBADO') {
+
+        $permission->departure_time = now()->format('H:i:s');
+        $permission->status = 'TERMINADO';
+        $permission->save();
+
+        // Enviar email de salida registrada al aprendiz
+        if ($permission->apprentice_user && $permission->apprentice_user->role_id == 3) {
+            Mail::to($permission->apprentice_user->email)
+                ->send(new MailAblePermissionDeparture($permission));
         }
 
-        return redirect()->back()->with('success', 'La hora de salida ha sido registrada correctamente.');
+        return redirect()->back()->with('success', 'La hora de salida ha sido registrada.');
     }
+
+    return redirect()->back()->with('warning', 'No es posible registrar la salida. El permiso no está APROBADO o no pertenece a una sede que requiere control de guardia.');
+}
 
     public function reject(Request $request, Permission $permission)
     {
         $permission->status = 'RECHAZADO';
         $permission->save();
 
-        Mail::to($permission->apprentice->email)->send(new MailAblePermissionDeclined($permission, $request));
+        if ($permission->apprentice_user && $permission->apprentice_user->email) {
+            Mail::to($permission->apprentice_user->email)->send(new MailAblePermissionDeclined($permission, $request));
+        }
 
         return redirect()->back()->with('success', 'El permiso ha sido rechazado y se ha notificado al aprendiz.');
     }
 
     public function cancel(Request $request, Permission $permission)
     {
+        // Validar que solo el aprendiz pueda cancelar su propio permiso
+        if (Auth::user()->role_id != 3 || $permission->apprentice_id != Auth::id()) {
+            return redirect()->back()->with('warning', 'Solo el aprendiz puede cancelar su propia solicitud.');
+        }
+
         $permission->status = 'CANCELADO';
         $permission->save();
 
-        Mail::to($permission->apprentice->email)->send(new MailAblePermissionCancel($permission));
+        if ($permission->apprentice_user && $permission->apprentice_user->email) {
+            Mail::to($permission->apprentice_user->email)->send(new MailAblePermissionCancel($permission));
+        }
 
-        return redirect()->back()->with('success', 'El permiso ha sido cancelado');
+        return redirect()->back()->with('success', 'Has cancelado tu solicitud de permiso.');
+    }
+
+    public function terminate(Request $request, Permission $permission)
+    {
+        $permission->status = 'TERMINADO';
+        $permission->save();
+
+        return redirect()->back()->with('success', 'El permiso ha sido terminado correctamente');
     }
 
     public function notify(Request $request, Permission $permission)
     {
-        $permission->load(['apprentice', 'permissionType', 'location']);
-        Mail::to($permission->apprentice->email)->send(new MailAblePermission($permission));
+        $permission->load(['apprentice_user', 'permissionType', 'location']);
+        if ($permission->apprentice_user && $permission->apprentice_user->email) {
+            Mail::to($permission->apprentice_user->email)->send(new MailAblePermissionNotifi($permission));
+        }
 
         return redirect()->back()->with('success', 'Se ha registrado la salida del aprendiz');
     }

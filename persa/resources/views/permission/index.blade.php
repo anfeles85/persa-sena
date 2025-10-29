@@ -34,6 +34,7 @@
             <option value="APROBADO"  {{ request('status')=='APROBADO' ? 'selected' : '' }}>Aprobado</option>
             <option value="RECHAZADO" {{ request('status')=='RECHAZADO' ? 'selected' : '' }}>Rechazado</option>
             <option value="CANCELADO" {{ request('status')=='CANCELADO' ? 'selected' : '' }}>Cancelado</option>
+            <option value="TERMINADO" {{ request('status')=='TERMINADO' ? 'selected' : '' }}>Terminado</option>
         </select>
     </div>
 
@@ -95,13 +96,13 @@
                         <td id="buttons_DE" style="border-top: none;">
                             <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
 
-                                 @if( Auth::user()->role_id == 4 && $permission['status'] == 'APROBADO')
-                                    <form id="form-approve-{{ $permission['id'] }}"
-                                          action="{{ route('permission.registerDeparture', $permission['id']) }}"
+                                 @if( Auth::user()->role_id == 4 && $permission['status'] == 'APROBADO' && is_null($permission['departure_time']))
+                                    <form id="form-terminate-{{ $permission['id'] }}"
+                                            action="{{ route('permission.registerDeparture', $permission['id']) }}"
                                           method="post" class="w-100 w-md-auto">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100">
+                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100" title="Registrar salida">
                                             <i class="fas fa-check"></i>
                                         </button>
                                     </form>
@@ -117,8 +118,8 @@
                                     </button>
                                 @endif
 
-                                {{-- SOLO admin/aprendiz pueden editar --}}
-                                @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
+                                {{-- Editar: Admin siempre puede, Aprendiz solo si está PENDIENTE --}}
+                                @if(Auth::user()->role_id == 1 || (Auth::user()->role_id == 3 && $permission['status'] == 'PENDIENTE'))
                                     <a href="{{ route('permission.edit', $permission['id']) }}"
                                        class="btn btn-primary btn-circle table-btn w-100"
                                        title="Editar">
@@ -126,44 +127,42 @@
                                     </a>
                                 @endif
 
-                                {{-- Aprobar (instructor / guarda) --}}
+                                {{-- Aprobar (SOLO instructor) - SOLO si está PENDIENTE --}}
                                 
-                                @if(Auth::user()->role_id == 2 )
+                                @if(Auth::user()->role_id == 2 && $permission['status'] == 'PENDIENTE')
                                     <form id="form-approve-{{ $permission['id'] }}"
                                           action="{{ route('permission.approve', $permission['id']) }}"
                                           method="post" class="w-100 w-md-auto">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100">
+                                        <button type="submit" class="btn btn-success btn-circle table-btn w-100" title="Aprobar">
                                             <i class="fas fa-check"></i>
                                         </button>
                                     </form>
                                 @endif
 
-                                {{-- Cancelar (instructor / guarda) --}}
-                                @if(Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
+                                {{-- Rechazar (SOLO instructor) - SOLO si está PENDIENTE --}}
+                                @if(Auth::user()->role_id == 2 && $permission['status'] == 'PENDIENTE')
+                                    <form id="form-reject-{{ $permission['id'] }}"
+                                          action="{{ route('permission.reject', $permission['id']) }}"
+                                          method="post" class="w-100 w-md-auto">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn btn-danger btn-circle table-btn w-100" title="Rechazar">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                @endif
+
+                                {{-- Aprendiz puede cancelar su permiso PENDIENTE --}}
+                                @if(Auth::user()->role_id == 3 && $permission['status'] == 'PENDIENTE')
                                     <form id="form-cancel-{{ $permission['id'] }}"
                                           action="{{ route('permission.cancel', $permission['id']) }}"
                                           method="post" class="w-100 w-md-auto">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-warning btn-circle table-btn w-100" title="Cancelar">
+                                        <button type="submit" class="btn btn-danger btn-circle table-btn w-100" title="Cancelar solicitud">
                                             <i class="fas fa-ban"></i>
-                                        </button>
-                                    </form>
-                                @endif
-
-                                {{-- SOLO aprendiz puede eliminar --}}
-                                @if(Auth::user()->role_id == 3)
-                                    <form id="form-delete-{{ $permission['id'] }}"
-                                          action="{{ route('permission.destroy', $permission['id']) }}"
-                                          method="post" class="w-100 w-md-auto">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-circle table-btn w-100"
-                                                title="Eliminar"
-                                                onclick="remove(event, {{ $permission['id'] }})">
-                                            <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
                                 @endif
@@ -182,13 +181,19 @@
                                     </h5>
                                 </div>
                                 <div class="modal-body text-black">
-                                    <p class="mb-2"><strong>Número de documento: </strong>{{ $permission->apprentice_user->document }}</p>
-                                    <p class="mb-2"><strong>Aprendiz: </strong>{{ $permission->apprentice_user->fullname }}</p>
-                                    <p class="mb-2"><strong>Correo: </strong>{{ $permission->apprentice_user->email }}</p>
-                                    <p class="mb-2"><strong>Tipo permiso: </strong>{{ $permission->permissionType->name }}</p>
-                                    <p class="mb-2"><strong>Programa: </strong>{{ $permission->apprentice_user->courses->first()->career->name ?? 'No asignado' }}</p>
-                                    <p class="mb-2"><strong>Tipo de programa: </strong>{{ $permission->apprentice_user->courses->first()->career->type ?? 'No asignado' }}</p>
-                                    <p class="mb-0"><strong>Ficha: </strong>{{ $permission->apprentice_user->courses->first()->number_group ?? 'No asignado' }}</p>
+                                    @if($permission->apprentice_user)
+                                        <p class="mb-2"><strong>Número de documento: </strong>{{ $permission->apprentice_user->document }}</p>
+                                        <p class="mb-2"><strong>Aprendiz: </strong>{{ $permission->apprentice_user->fullname }}</p>
+                                        <p class="mb-2"><strong>Correo: </strong>{{ $permission->apprentice_user->email }}</p>
+                                    @endif
+                                    
+                                    @if($permission->permissionType)
+                                        <p class="mb-2"><strong>Tipo permiso: </strong>{{ $permission->permissionType->name }}</p>
+                                    @endif
+                                    
+                                    <p class="mb-2"><strong>Programa: </strong>{{ $permission->apprentice_user?->courses?->first()?->career?->name ?? 'No asignado' }}</p>
+                                    <p class="mb-2"><strong>Tipo de programa: </strong>{{ $permission->apprentice_user?->courses?->first()?->career?->type ?? 'No asignado' }}</p>
+                                    <p class="mb-0"><strong>Ficha: </strong>{{ $permission->apprentice_user?->courses?->first()?->number_group ?? 'No asignado' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -218,9 +223,22 @@
             $('#table_data').DataTable().destroy();
         }
 
+        
+        const primary = 'rgb(39, 174, 96)';
+        const secondary = 'rgb(30, 132, 73)';
+        const lightGreen = 'rgb(200, 230, 201)';
+        const grayText = '#666';
+        const tableBorder = '#e0e0e0';
+
         const table = $('#table_data').DataTable({
             pageLength: 10,
             lengthChange: false,
+            columnDefs: [{
+                targets: -1,
+                visible: true,
+                searchable: false,
+                orderable: false
+            }],
             language: {
                 paginate: { previous: "Anterior", next: "Siguiente" },
                 search: "Buscar:",
@@ -228,36 +246,180 @@
                 infoEmpty: "No hay registros para mostrar",
                 emptyTable: "No existen registros"
             },
-
             dom: 'frtipB',
             buttons: [
                 {
                     extend: 'excelHtml5',
                     className: 'd-none',
-                    exportOptions: {
-                        columns: ':not(:last-child)'
-                    }
+                    exportOptions: { columns: ':not(:last-child)' }
                 },
                 {
                     extend: 'pdfHtml5',
                     className: 'd-none',
-                    exportOptions: {
-                        columns: ':not(:last-child)'
+                    orientation: 'landscape',
+                    pageSize: 'LETTER',
+                    exportOptions: { columns: ':not(:last-child)' },
+
+                    customize: function (doc) {
+
+                    if (doc.content[0] && (doc.content[0].text || doc.content[0].style === 'title')) {
+                        doc.content.splice(0, 1);
+                    }
+
+                    
+                    if (doc.content[0]) {
+                        doc.content[0].margin = [0, 20, 0, 0];
+                    }
+
+                    
+                    var primary = '#27AE60';
+                    var secondary = '#1E8449';
+                    var lightGreen = '#C8E6C9';
+                    var grayText = '#666666';
+                    var tableBorder = '#E0E0E0';
+
+
+
+                        
+                        doc.pageMargins = [35, 100, 35, 45];
+                        doc.defaultStyle = {
+                            fontSize: 9,
+                            color: '#333333',
+                            font: 'Roboto'
+                        };
+                        doc.styles.tableHeader = {
+                            fillColor: primary,
+                            color: '#FFFFFF',
+                            bold: true,
+                            fontSize: 10,
+                            alignment: 'center'
+                        };
+
+                        
+                        doc.header = function() {
+                            return {
+                                margin: [35, 10, 35, 0],
+                                stack: [
+                                    {
+                                        table: {
+                                            widths: ['25%', '75%'],
+                                            body: [[
+                                                {
+                                                    image: 'data:image/png;base64,{{ base64_encode(file_get_contents(public_path("img/persa-logo.png"))) }}',
+                                                    width: 130,
+                                                    alignment: 'center',
+                                                    border: [true, true, true, true],
+                                                    margin: [5, 8, 5, 8]
+                                                },
+                                                {
+                                                    text: 'REPORTE GENERAL DE PERMISOS',
+                                                    bold: true,
+                                                    fontSize: 18,
+                                                    color: primary,
+                                                    alignment: 'center',
+                                                    margin: [0, 12, 0, 8],
+                                                    border: [true, true, true, true]
+                                                }
+                                            ]]
+                                        },
+                                        layout: {
+                                            hLineWidth: () => 2,
+                                            vLineWidth: () => 2,
+                                            hLineColor: () => primary,
+                                            vLineColor: () => primary
+                                        }
+                                    },
+                                    {
+                                        canvas: [{
+                                            type: 'line',
+                                            x1: 0, y1: 0, x2: 710, y2: 0,
+                                            lineWidth: 2,
+                                            lineColor: primary
+                                        }],
+                                        margin: [0, 8, 0, 0]
+                                    },
+                                    {
+                                        text: [
+                                            { text: 'Generado el: ', bold: true, color: '#333', fontSize: 10 },
+                                            { text: '{{ date("d/m/Y H:i:s") }}', color: grayText, fontSize: 10 }
+                                        ],
+                                        italics: true,
+                                        alignment: 'right',
+                                        margin: [0, 3, 10, 0]
+                                    }
+                                ]
+                            };
+                        };
+
+                        
+                        doc.footer = function(currentPage, pageCount) {
+                            return {
+                                margin: [35, 5, 35, 10],
+                                stack: [
+                                    {
+                                        canvas: [{
+                                            type: 'line',
+                                            x1: 0, y1: 0, x2: 710, y2: 0,
+                                            lineWidth: 1,
+                                            lineColor: '#e0e0e0'
+                                        }],
+                                        margin: [0, 0, 0, 8]
+                                    },
+                                    {
+                                        text: 'Página ' + currentPage + ' de ' + pageCount + ' – Generado por PERSA 1.0',
+                                        alignment: 'center',
+                                        fontSize: 9,
+                                        italics: true,
+                                        color: grayText
+                                    }
+                                ]
+                            };
+                        };
+
+                        const tableNode = doc.content[doc.content.length - 1];
+                        if (tableNode && tableNode.table) {
+                            
+                            tableNode.table.widths = new Array(tableNode.table.body[0].length).fill('*'); 
+                            tableNode.alignment = 'center';
+                            tableNode.margin = [0, 10, 0, 0];
+
+                            const rowCount = tableNode.table.body.length;
+
+                            for (let i = 1; i < rowCount; i++) {
+                                tableNode.table.body[i].forEach(cell => {
+                                    cell.fillColor = (i % 2 === 0) ? lightGreen : '#fff';
+                                    cell.alignment = 'center';
+                                    cell.fontSize = 9;
+                                    cell.margin = [5, 5, 5, 5];
+                                });
+                            }
+
+                            tableNode.layout = {
+                                hLineWidth: (i, node) => (i === 0 || i === node.table.body.length) ? 1 : 0.5,
+                                vLineWidth: () => 0.5,
+                                hLineColor: () => tableBorder,
+                                vLineColor: () => tableBorder,
+                                paddingLeft: () => 5,
+                                paddingRight: () => 5,
+                                paddingTop: () => 4,
+                                paddingBottom: () => 4
+                            };
+                        }
                     }
                 }
             ]
         });
 
-        
         $('#exportExcelBtn').on('click', function(e) {
-            e.preventDefault(); 
+            e.preventDefault();
             table.button('.buttons-excel').trigger();
         });
 
         $('#exportPdfBtn').on('click', function(e) {
-            e.preventDefault(); 
+            e.preventDefault();
             table.button('.buttons-pdf').trigger();
         });
     });
-    </script>
+</script>
+
 @endsection

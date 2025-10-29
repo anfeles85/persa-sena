@@ -10,11 +10,11 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MailAblePermissionCancel extends Mailable
+class MailAblePermissionDeparture extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $permission;
-   
 
     /**
      * Create a new message instance.
@@ -30,7 +30,7 @@ class MailAblePermissionCancel extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Tu solicitud de permiso ha sido CANCELADA - Persa Sena',
+            subject: 'Salida Registrada - Permiso Aprobado',
         );
     }
 
@@ -40,16 +40,9 @@ class MailAblePermissionCancel extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.permission_canceled',
-            with: [
-            'apprentice' => $this->permission->apprentice_user,
-            'permission' => $this->permission,
-            'course' => $this->permission->apprentice_user->courses->first(),
-        ]
+            view: 'email.permission_departure',
         );
     }
-    
-    
 
     /**
      * Get the attachments for the message.

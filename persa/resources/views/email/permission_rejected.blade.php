@@ -33,13 +33,13 @@
         }
         .content h1 {
             font-size: 22px;
-            color: #004080;
+            color: #d32f2f;
         }
         .section-title {
             font-weight: bold;
             margin-top: 20px;
             margin-bottom: 10px;
-            color: #004080;
+            color: #d32f2f;
         }
         .info-table {
             width: 100%;
@@ -55,6 +55,12 @@
             background-color: #f0f0f0;
             font-weight: bold;
             width: 40%;
+        }
+        .reason-box {
+            background-color: #ffebee;
+            border-left: 4px solid #d32f2f;
+            padding: 15px;
+            margin: 20px 0;
         }
         .footer {
             text-align: center;
@@ -72,11 +78,40 @@
     </div>
 
     <div class="content">
-        <h1>Permiso Cancelado</h1>
-        <p>Aprendiz <strong>{{ $apprentice->fullname }}</strong>. Usted ha cancelado su solicitud de permiso.</p>
+        <h1>Permiso Rechazado</h1>
+        <p>Aprendiz <strong>{{ $apprentice->fullname ?? 'N/A' }}</strong>, lamentamos informarle que su solicitud de permiso ha sido <strong>rechazada</strong>.</p>
 
+        <div class="section-title">Información del Permiso:</div>
+        <table class="info-table">
+            <tr>
+                <td class="label">Fecha del Permiso:</td>
+                <td>{{ $permission->permission_date ?? 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td class="label">Hora de Inicio:</td>
+                <td>{{ $permission->start_time ?? 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td class="label">Hora de Fin:</td>
+                <td>{{ $permission->end_time ?? 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td class="label">Motivo:</td>
+                <td>{{ $permission->reasons ?? 'N/A' }}</td>
+            </tr>
+        </table>
 
-    <div align="center">
+        @if(isset($reason) && $reason)
+        <div class="section-title">Motivo del Rechazo:</div>
+        <div class="reason-box">
+            <p style="margin: 0;">{{ $reason }}</p>
+        </div>
+        @endif
+
+        <p>Si tiene alguna pregunta o necesita más información, por favor contacte a su instructor.</p>
+    </div>
+
+    <div class="footer">
         <em>Persa - Este es un correo generado automáticamente.
             Por favor, no responda a este mensaje.
         </em>

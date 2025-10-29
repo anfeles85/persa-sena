@@ -39,7 +39,6 @@ class ApprenticeController extends Controller
     {
         $user = Auth::user();
         
-        // Si es instructor (role_id = 2), solo mostrar sus fichas asignadas
         if ($user->role_id == 2) {
             $courses = Course::with('career')
                            ->where('status', 'ACTIVO')
@@ -118,7 +117,9 @@ class ApprenticeController extends Controller
         $roles = Roles::all();
         $user = Auth::user();
         
-        if (method_exists($user, 'courses')) {
+        if ($user->role_id == 2) {
+            $user->load('instructorCourses.career');
+        } elseif (method_exists($user, 'courses')) {
             $user->load('courses.career');
         }
         
@@ -189,8 +190,7 @@ class ApprenticeController extends Controller
 
         $apprentice->courses()->sync([$request->input('course_id')]);
 
-        session()->flash('success', 'Perfil del aprendiz actualizado correctamente.');
-        return redirect()->route('apprentice.profile', $id);
+        return redirect()->route('apprentice.index')->with('success', 'Perfil del aprendiz actualizado correctamente.');
     }
 
     public function update(Request $request)

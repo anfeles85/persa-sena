@@ -63,45 +63,65 @@
             padding: 15px;
             background-color: #f4f4f4;
         }
+        .highlight {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-left: 4px solid #4caf50;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
         <img src="{{ $message->embed(asset('img/persa-logo-readme.png')) }}" alt="Logo Persa">
+        <img src="{{ $message->embed(asset('img/sena-logo.png')) }}" alt="Logo SENA">
     </div>
 
     <div class="content">
-        <h1>Salida del aprendiz</h1>
-        <p>Aprendiz <strong>{{ $apprentice->fullname }}</strong>. El guarda ha <strong>aprobado</strong> su salida.</p>
+        <h1>Salida Registrada - Permiso Aprobado</h1>
+        
+        <div class="highlight">
+            <p><strong>{{ $permission->apprentice_user->fullname }}</strong>, el guarda de seguridad ha registrado tu salida.</p>
+            <p>Tu permiso ha sido completado exitosamente.</p>
+        </div>
 
         <!-- Datos del aprendiz -->
         <div class="section-title">Datos del aprendiz</div>
         <table class="info-table">
-            <tr><td class="label">Nombre</td><td>{{ $apprentice->fullname }}</td></tr>
-            <tr><td class="label">Correo</td><td>{{ $apprentice->email }}</td></tr>
-            <tr><td class="label">Estado</td><td>{{ $apprentice->status }}</td></tr>
+            <tr><td class="label">Nombre</td><td>{{ $permission->apprentice_user->fullname }}</td></tr>
+            <tr><td class="label">Correo</td><td>{{ $permission->apprentice_user->email }}</td></tr>
+            <tr><td class="label">Documento</td><td>{{ $permission->apprentice_user->document }}</td></tr>
         </table>
 
+        @if($permission->apprentice_user->courses->isNotEmpty())
         <!-- Ficha -->
         <div class="section-title">Ficha</div>
         <table class="info-table">
-            <tr><td class="label">Número</td><td>#{{ $course->id }}</td></tr>
-            <tr><td class="label">Programa</td><td>{{ $course->career->name }} ({{ $course->career->type }})</td></tr>
+            @php
+                $course = $permission->apprentice_user->courses->first();
+            @endphp
+            <tr><td class="label">Número de Ficha</td><td>#{{ $course->number_group }}</td></tr>
+            <tr><td class="label">Programa</td><td>{{ $course->career?->name }}</td></tr>
         </table>
+        @endif
 
         <!-- Datos del permiso -->
-        <div class="section-title">Permiso</div>
+        <div class="section-title">Detalles del Permiso</div>
         <table class="info-table">
-            <tr><td class="label">Fecha</td><td>{{ $permission->permission_date }}</td></tr>
+            <tr><td class="label">Fecha</td><td>{{ \Carbon\Carbon::parse($permission->permission_date)->format('d/m/Y') }}</td></tr>
             <tr><td class="label">Hora de inicio</td><td>{{ $permission->start_time }}</td></tr>
             <tr><td class="label">Hora de fin</td><td>{{ $permission->end_time }}</td></tr>
-            <tr><td class="label">Hora de salida</td><td>{{ $permission->departure_time }}</td></tr>
             <tr><td class="label">Motivo</td><td>{{ $permission->reasons }}</td></tr>
-            <tr><td class="label">Tipo</td><td>{{ $permission->type->name }}</td></tr>
-            <tr><td class="label">Lugar</td><td>{{ $permission->location->name }} - {{ $permission->location->address }}</td></tr>
+            <tr><td class="label">Tipo</td><td>{{ $permission->permissionType?->name }}</td></tr>
+            <tr><td class="label">Lugar</td><td>{{ $permission->location?->name }} - {{ $permission->location?->address }}</td></tr>
+            <tr><td class="label">Hora de Salida Registrada</td><td style="color: #4caf50;"><strong>{{ $permission->departure_time }}</strong></td></tr>
             <tr><td class="label">Estado</td><td style="color: green;"><strong>{{ $permission->status }}</strong></td></tr>
         </table>
+
+        <p style="margin-top: 20px; color: #666;">
+            Tu permiso fue aprobado por el instructor y la salida ha sido registrada por el personal de seguridad.
+        </p>
     </div>
 
     <div align="center">
@@ -112,4 +132,3 @@
 </div>
 </body>
 </html>
-
