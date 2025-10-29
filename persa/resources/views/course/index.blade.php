@@ -1,10 +1,10 @@
 @extends('templates.base')
-@section('title', 'Fichas')
-@section('header', 'Fichas')
+@section('title', 'Grupos')
+@section('header', 'Grupos')
 @section('content')
 
 
-<label class="fs-2">Fichas</label>
+<label class="fs-2">Grupos</label>
 <div class="row">
     <div class="col-lg-12 mb-4 d-grid gap-2 d-md-block">
         <div class="d-flex gap-2">
@@ -26,7 +26,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Ficha</th>
-                    <th>Nombre</th>
+                    <th>Programa</th>
                     <th>Jornada</th>
                     <th>Trimestre</th>
                     <th>Año</th>
