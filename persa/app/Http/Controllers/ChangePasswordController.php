@@ -26,23 +26,30 @@ class ChangePasswordController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ], [], $this->traductionAttributes);
 
-        $user = User::where('email', 'software.clem@gmail.com')->first();
+        // Asegurarnos que hay un usuario autenticado
+        if (!auth()->check()) {
+            return redirect()->route('auth.login')->with('warning', 'Debes iniciar sesión para cambiar la contraseña');
+        }
+
+        $user = User::find(auth()->id());
 
         if (!$user) {
-            return redirect()->back()->with('error', 'Usuario no encontrado');
+            return redirect()->route('auth.login')->with('error', 'Usuario no encontrado');
         }
 
+        // Verificar contraseña actual
         if (!Hash::check($request->current_password, $user->password)) {
-            return redirect()->back()->with('error', 'La contraseña es incorrecta');
+            return redirect()->back()->with('error', 'La contraseña actual es incorrecta');
         }
 
+        // Evitar que la nueva contraseña sea igual a la actual
         if (Hash::check($request->password, $user->password)) {
             return redirect()->back()->with('error', 'La nueva contraseña no puede ser igual a la contraseña actual');
         }
 
-        $user->update([
-            'password' => Hash::make($request->password),
-        ]);
+        // Actualizar contraseña
+        $user->password = Hash::make($request->password);
+        $user->save();
 
         return redirect()->back()->with('success', 'Contraseña cambiada exitosamente');
     }

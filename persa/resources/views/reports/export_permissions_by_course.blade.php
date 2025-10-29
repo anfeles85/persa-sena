@@ -1,21 +1,18 @@
 @extends('templates.base_reports')
 
-@section('header', 'Reporte de Permisos por Curso')
-
-@section('subtitle')
-    <strong>Ficha:</strong> {{ $course->number_group ?? $course->id }} | 
-    <strong>Programa:</strong> {{ $course->career->name ?? 'N/A' }}
-@endsection
+@section('header', 'Reporte permisos por ficha')
 
 @section('content')
     <section id="results">
         @if (isset($course) && $apprentices->count() > 0)
+            <h4>Ficha: {{ $course->number_group ?? $course->id }}</h4>
+            <hr>
 
             @foreach ($apprentices as $apprentice)
                 <h5>Aprendiz: {{ $apprentice->fullname }} (Documento: {{ $apprentice->document}})</h5>
 
                 @if ($apprentice->permissions->isEmpty())
-                    <p style="color: #666; font-style: italic; padding-left: 20px;">No tiene permisos registrados.</p>
+                    <p>No tiene permisos registrados.</p>
                 @else
                     <table id="reportTable">
                         <thead>
@@ -29,10 +26,10 @@
                         <tbody>
                             @foreach ($apprentice->permissions as $permission)
                                 <tr>
-                                    <td>{{ $permission->permission_date ? \Carbon\Carbon::parse($permission->permission_date)->format('d/m/Y') : 'N/A' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($permission->permission_date)->format('d/m/Y') }}</td>
                                     <td>{{ $permission->permissionType->name ?? 'N/A' }}</td>
                                     <td>{{ $permission->location->name ?? 'N/A' }}</td>
-                                    <td style="text-align: left;">{{ $permission->reasons ?? 'Sin motivo' }}</td>
+                                    <td>{{ $permission->reasons }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -42,9 +39,7 @@
                 <br>
             @endforeach
         @else
-            <div class="no-data-message">
-                <p><strong>No hay permisos para esta ficha.</strong></p>
-            </div>
+            <p><strong>No existen resultados en el reporte.</strong></p>
         @endif
     </section>
 @endsection
