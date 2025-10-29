@@ -8,6 +8,7 @@
             <form action="{{ route('course.update', $course['id']) }}" method="POST">
                 @csrf
                 @method('PUT')
+                
                 <div class="row form-group col-lg-12">
                     <div class="col-lg-6 mb-4">
                         <label for="shift">Jornada</label>
@@ -30,6 +31,7 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="row form-group col-lg-12">
                     <div class="col-lg-6 mb-4">
                         <label for="year">Año</label>
@@ -46,6 +48,7 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="row form-group col-lg-12">
                     <div class="col-lg-6 mb-4">
                         <label for="career_id">Carrera</label>
@@ -60,15 +63,17 @@
                         </select>
                     </div>
                     <div class="col-lg-6 mb-4">
-                        <label for="number_group">Numero de ficha</label>
+                        <label for="number_group">Número de ficha</label>
                         <input type="number" class="form-control" name="number_group" id="number_group" required value="{{ $course['number_group'] }}">
                     </div>
                 </div>
 
+                <hr class="custom-hr">
+
                 <div class="row form-group">
                     <div class="col-lg-6">
-                        <label>Instructores sin asignar</label>
-                        <table class="table striped hover">
+                        <label class="fs-5">Instructores sin asignar</label>
+                        <table id="table_data" class="table striped hover">
                             <thead>
                                 <th>Documento</th>
                                 <th>Nombre</th>
@@ -97,8 +102,8 @@
                     </div>
 
                     <div class="col-lg-6">
-                        <label>Instructores asignados</label>
-                        <table class="table striped hover">
+                        <label class="fs-5">Instructores asignados</label>
+                        <table id="table_data" class="table striped hover">
                             <thead>
                                 <th>Documento</th>
                                 <th>Nombre</th>
@@ -127,11 +132,12 @@
                     </div>
                 </div>
 
+                <br><br>
 
                 <div class="row">
                     <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-success w-50">Guardar</button>
-                    <a href="{{ route('course.index') }}" class="btn btn-danger w-50">Cancelar</a>
+                        <button type="submit" class="btn btn-success w-50">Guardar</button>
+                        <a href="{{ route('course.index') }}" class="btn btn-danger w-50">Cancelar</a>
                     </div>
                 </div>
             </form>
