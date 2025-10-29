@@ -11,13 +11,13 @@ class LocationController extends Controller
     private $rules = [
         'name' => 'required|string|max:50',
         'address' => 'required|string|max:50',
-        'guard'=> 'required|string|max:50',
+        'guard'=> 'required|in:SI,NO',
     ];
 
     private $traductionAttributes = [
         'name' => 'nombre',
         'address' => 'dirección',
-        'guard' => 'Tiene guardia?'
+        'guard' => '¿Tiene guardia?'
     ];
 
     public function index()

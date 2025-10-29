@@ -21,12 +21,12 @@ use Illuminate\Support\Facades\Validator;
 class PermissionController extends Controller
 {
     private $rules = [
-        'permission_date' => 'required|date|date_format:Y-m-d',
-        'start_time' => 'required|date_format:H:i',
-        'end_time' => 'required|date_format:H:i',
+        'permission_date' => 'required|date',
+        'start_time' => 'required',
+        'end_time' => 'required',
         'reasons' => 'required|string|min:3|max:60',
-        'location_id' => 'required|numeric|min:1|max:99999999999999999999',
-        'permission_type_id' => 'required|numeric|min:1|max:99999999999999999999',
+        'location_id' => 'required|numeric|min:1',
+        'permission_type_id' => 'required|numeric|min:1',
     ];
 
     private $traductionAttributes = [
@@ -42,7 +42,7 @@ class PermissionController extends Controller
     {
         $roleId = Auth::user()->role_id;
 
-        //permisos del instructor
+        //permisos ordenados por fecha más reciente
         $query = Permission::with([
             'apprentice_user.courses.career',
             'instructor_user',
@@ -51,6 +51,7 @@ class PermissionController extends Controller
             'permissionType'
         ])
             ->orderBy('permission_date', 'desc')
+            ->orderBy('start_time', 'desc')
             ->orderBy('id', 'desc');
 
         if ($roleId == 3) {

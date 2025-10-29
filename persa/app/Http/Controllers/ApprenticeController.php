@@ -190,8 +190,7 @@ class ApprenticeController extends Controller
 
         $apprentice->courses()->sync([$request->input('course_id')]);
 
-        session()->flash('success', 'Perfil del aprendiz actualizado correctamente.');
-        return redirect()->route('apprentice.profile', $id);
+        return redirect()->route('apprentice.index')->with('success', 'Perfil del aprendiz actualizado correctamente.');
     }
 
     public function update(Request $request)

@@ -91,7 +91,7 @@ class AuthController extends Controller
                     ->withErrors(['email' => 'Su cuenta está inactiva. Contacte al administrador.']);
             }
 
-            return redirect()->intended('index');
+            return redirect()->route('index');
         }
 
         return back()->withErrors([

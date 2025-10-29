@@ -6,6 +6,15 @@
     <div>
         <label class="fs-3">Crear sede</label>
         <div class="col-lg-12 mb-4">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="{{ route('location.store') }}" method="POST">
                 @csrf
                 <div class="row form-group">
@@ -20,6 +29,16 @@
                         <label for="address">Direccion</label>
                         <input type="text" class="form-control" name="address" id="address"
                          required value="{{ old('address') }}">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-12 mb-4">
+                        <label for="guard">¿Tiene guardia?</label>
+                        <select name="guard" id="guard" class="form-control" required>
+                            <option value="">Seleccione</option>
+                            <option value="SI" {{ old('guard') == 'SI' ? 'selected' : '' }}>Sí</option>
+                            <option value="NO" {{ old('guard') == 'NO' ? 'selected' : '' }}>No</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">

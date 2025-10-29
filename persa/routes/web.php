@@ -28,7 +28,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/register', [ApprenticeController::class, 'store'])->name('auth.store');
 
     Route::get('/changePassword', [ChangePasswordController::class, 'index'])->name('auth.changePassword');
-    Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword');
+    Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('auth.changePassword.update');
 
     Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('auth.forget-password');
     Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('auth.forget-password-link');
@@ -86,6 +86,7 @@ Route::middleware('auth')->group(function () {
     // Permisos
     Route::patch('/permission/{permission}/approve', [PermissionController::class, 'approve'])->name('permission.approve');
     Route::patch('/permissions/{permission}/register-departure', [PermissionController::class, 'registerDeparture'])->name('permission.registerDeparture');
+    Route::patch('/permission/{permission}/reject', [PermissionController::class, 'reject'])->name('permission.reject');
     Route::patch('/permission/{permission}/cancel', [PermissionController::class, 'cancel'])->name('permission.cancel');
     Route::patch('/permission/{permission}/terminate', [PermissionController::class, 'terminate'])->name('permission.terminate');
     Route::prefix('permission')->group(function () {
