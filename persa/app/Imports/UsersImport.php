@@ -35,7 +35,7 @@ class UsersImport implements ToModel, WithHeadingRow
 
         return new User([
             'document' => $row['document'],
-            'name' => $row['name'],
+            'fullname' => $row['fullname'] ?? null,
             'email' => $row['email'],
             'role_id' => $row['role_id'] ?? 2,
             'status' => $row['status'] ?? 'ACTIVO',
@@ -45,7 +45,7 @@ class UsersImport implements ToModel, WithHeadingRow
 
     private function validateHeaders($headers)
     {
-        $requiredHeaders = ['document', 'name', 'email', 'role_id', 'status'];
+        $requiredHeaders = ['document', 'fullname', 'email', 'role_id', 'status'];
 
         $missing = array_diff($requiredHeaders, $headers);
 

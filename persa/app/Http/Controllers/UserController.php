@@ -45,7 +45,7 @@ class UserController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'archivo' => 'required|mimes:xlsx,xls',
+            'archivo' => 'required|mimes:xlsx',
         ]);
 
         try {
