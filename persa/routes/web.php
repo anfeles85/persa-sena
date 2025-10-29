@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
         Route::put('/{id}', [UserController::class, 'update'])->name('user.update');
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+        Route::post('/user/import', [UserController::class, 'import'])->name('user.import');
 
         Route::post('/send_email', [UserController::class, 'send_email'])->name('users.send_email');
     });

@@ -1,69 +1,78 @@
 $(document).ready(function () {
-    const dataTableOptions = {
-        pageLength: 10,
-        lengthChange: false,
-        language: {
-            paginate: {
-                previous: "Anterior",
-                next: "Siguiente"
-            },
-            search: "Buscar:",
-            info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-            infoEmpty: "",
-            emptyTable: "No existen registros"
+    function initializeDataTable() {
+        if (window.innerWidth > 1520) {
+            if (!$.fn.DataTable.isDataTable('#table_data')) {
+                const dataTableOptions = {
+                    pageLength: 10,
+                    responsive: true,
+                    lengthChange: false,
+                    language: {
+                        paginate: {
+                            previous: "Anterior",
+                            next: "Siguiente"
+                        },
+                        search: "Buscar:",
+                        info: "Mostrando START a END de TOTAL registros",
+                        infoEmpty: "",
+                        emptyTable: "No existen registros"
+                    }
+                };
+                $('#table_data').DataTable(dataTableOptions);
+            }
+        } else {
+            if ($.fn.DataTable.isDataTable('#table_data')) {
+                $('#table_data').DataTable().destroy();
+            }
         }
-    };
-
-    // checa si la tabla ya está inicializada y la destruye
-    if ($.fn.DataTable.isDataTable('#table_data')) {
-        $('#table_data').DataTable().destroy();
     }
 
-    //  inicializa la tabla con las opciones
-    $('#table_data').DataTable(dataTableOptions);
+    initializeDataTable();
+
+    $(window).resize(function () {
+        initializeDataTable();
+    });
 });
 
 function remove(event, id) {
-  event.preventDefault(); // solo se previene el evento, no se pasa el id aquí
+    event.preventDefault();
+    Swal.fire({
+        title: "¿Estas seguro?",
+        text: "¡Esta acción no se puede revertir!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "eliminar",
+        cancelButtonText: "cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
 
-  Swal.fire({
-  title: "¿Estas seguro?",
-  text: "¡Esta acción no se puede revertir!",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "eliminar",
-  cancelButtonText: "cancelar"
-}).then((result) => {
-  if (result.isConfirmed) {
-    
-      const form = document.getElementById(`form-delete-${id}`);
-      if (form) {
-        form.submit();
-      }
-    
-  }
-});
+            const form = document.getElementById(form-delete-${id});
+            if (form) {
+                form.submit();
+            }
+
+        }
+    });
 }
 
 function update() {
-  Swal.fire({
-    position: 'top-end',
-    icon: 'success',
-    title: 'Actualizado correctamente',
-    showConfirmButton: false,
-    timer: 1500
-  });
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Actualizado correctamente',
+        showConfirmButton: false,
+        timer: 1500
+    });
 }
 
 function create() {
-  Swal.fire({
-    title: 'Creado exitosamente',
-    text: 'El registro se ha creado con exitosamente',
-    icon: 'success',
-    confirmButtonText: 'Aceptar'
-  });
+    Swal.fire({
+        title: 'Creado exitosamente',
+        text: 'El registro se ha creado con exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -90,4 +99,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-
