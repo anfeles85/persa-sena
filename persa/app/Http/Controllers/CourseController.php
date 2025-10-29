@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Career;
 use App\Models\Course;
+use App\Models\InstructorCourse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
@@ -40,10 +43,10 @@ class CourseController extends Controller
         ['name' => 'NOCTURNA', 'value' => 'NOCTURNA']
     ];
 
-     private $status = [
+    private $status = [
         ['name' => 'ACTIVO', 'value' => 'ACTIVO'],
         ['name' => 'INACTIVO', 'value' => 'INACTIVO']
-     ];
+    ];
 
     public function index()
     {
@@ -58,10 +61,11 @@ class CourseController extends Controller
     {
         $courses = Course::all();
         $careers = Career::all();
+        $instructors = InstructorCourse::all();
         $shifts = $this->shifts;
         $trimesters = $this->trimesters;
         $status = $this->status;
-        return view('course.create', compact('courses','careers','shifts','trimesters','status'));
+        return view('course.create', compact('courses','careers', 'instructors','shifts','trimesters','status'));
     }
 
     /**
@@ -90,20 +94,33 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
+    public function edit(string $id){
         $course = Course::find($id);
-        if ($course) // si existe
-        {
+        if ($course) {
+            $courses = Course::all();
             $careers = Career::all();
             $shifts = $this->shifts;
             $trimesters = $this->trimesters;
             $status = $this->status;
-            return view('course.edit', compact('course', 'careers', 'shifts', 'trimesters', 'status'));
-        }
-        else
-        {
-            session()->flash('warning', 'No se encuentra el técnico solicitado');
+
+            // Consultar instructores disponibles (rol = 2)
+            $query = DB::select("SELECT * FROM users 
+                WHERE role_id = 2 
+                AND users.id NOT IN (
+                    SELECT instructor_course.instructor_id FROM instructor_course
+                    WHERE instructor_course.course_id = ?)", [$id]);
+
+            $availableInstructors = Collection::make($query);
+
+            // Instructores ya asignados a este curso
+            $addedInstructors = $course->instructors;
+
+            return view('course.edit', compact(
+                'course', 'courses', 'careers', 'shifts', 'trimesters', 'status',
+                'availableInstructors', 'addedInstructors'
+            ));
+        } else {
+            session()->flash('warning', 'No se encuentra el curso solicitado');
             return redirect()->route('course.index');
         }
     }
@@ -142,4 +159,45 @@ class CourseController extends Controller
         Course::destroy($id); 
         return redirect()->route('course.index')->with('success', 'Curso eliminado correctamente');
     }
+
+    public function add_instructor(string $course_id, string $instructor_id){
+        $course = Course::find($course_id);
+        if (!$course) {
+            session()->flash('error', 'No se encuentra el curso');
+            return redirect()->route('course.edit', $course_id);
+        }
+
+        $instructor = \App\Models\User::find($instructor_id);
+        if (!$instructor || $instructor->role_id != 2) {
+            session()->flash('error', 'El usuario seleccionado no es un instructor válido');
+            return redirect()->route('course.edit', $course_id);
+        }
+
+        // Asociar instructor al curso
+        $course->instructors()->attach($instructor_id);
+        session()->flash('message', 'Instructor agregado exitosamente');
+        return redirect()->route('course.edit', $course_id);
+    }
+
+    public function remove_instructor(string $course_id, string $instructor_id){
+        $course = Course::find($course_id);
+        if (!$course) {
+            session()->flash('error', 'No se encuentra el curso');
+            return redirect()->route('course.edit', $course_id);
+        }
+
+        $instructor = \App\Models\User::find($instructor_id);
+        if (!$instructor || $instructor->role_id != 2) {
+            session()->flash('error', 'El usuario seleccionado no es un instructor válido');
+            return redirect()->route('course.edit', $course_id);
+        }
+
+        // Quitar relación
+        $course->instructors()->detach($instructor_id);
+        session()->flash('message', 'Instructor eliminado exitosamente');
+        return redirect()->route('course.edit', $course_id);
+    }
+
+
+
 }
