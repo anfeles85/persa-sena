@@ -89,7 +89,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/course/{course_id}/remove_instructor/{instructor_id}', [CourseController::class, 'remove_instructor'])
         ->name('course.remove_instructor');
 
-        Route::post('/course/import', [CourseController::class, 'import'])->name('course.import');
+        Route::post('/import', [CourseController::class, 'import'])->name('course.import');
     });
 
 

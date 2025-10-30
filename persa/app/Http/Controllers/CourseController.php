@@ -52,21 +52,58 @@ class CourseController extends Controller
         ['name' => 'INACTIVO', 'value' => 'INACTIVO']
     ];
 
+    /**
+     * Importar cursos desde archivo Excel.
+     */
     public function import(Request $request)
     {
         $request->validate([
             'archivo' => 'required|mimes:xlsx,xls',
+        ], [
+            'archivo.required' => 'Debes seleccionar un archivo.',
+            'archivo.mimes'    => 'El archivo debe ser de tipo .xls o .xlsx',
         ]);
 
         try {
-        Excel::import(new CourseImport, $request->file('archivo'));
+            $import = new CourseImport();
+            Excel::import($import, $request->file('archivo'));
 
-        return back()->with('success', 'Archivo importado correctamente.');
-        } catch (ValidationException $e) {
+            $groupedErrors = $import->getGroupedErrors();
+            $skipped = $import->getSkipped();
+            $imported = $import->getImported();
 
-            return back()->with('error', 'Error al importar: ' . implode(', ', $e->errors()['headers'] ?? ['Error desconocido']));
-        } catch (Throwable $e) {
-            return back()->with('error', 'Ocurrió un error inesperado: ' . $e->getMessage());
+            if (!empty($groupedErrors) || count($skipped) > 0) {
+                if (count($skipped) > 0 && empty($groupedErrors)) {
+                
+                    return redirect()->route('course.index')
+                        ->with('success', "¡Importación completada parcialmente! Se importaron {$imported} registros. Se omitieron " . count($skipped) . " por programa inexistente.");
+                }
+            }
+
+    
+            if ($imported === 0 && count($skipped) === 0) {
+                return redirect()->route('course.index')
+                    ->with('error', 'El archivo no contiene registros válidos para importar.');
+            }
+
+            if (!empty($groupedErrors) || count($skipped) > 0) {
+                $errorDetails = "";
+
+                if (count($skipped) > 0) {
+                    $fichasOmitidas = collect($skipped)->pluck('ficha')->implode(', ');
+                    $errorDetails .= "Se omitieron " . count($skipped) . " registros (fichas: {$fichasOmitidas}) porque el programa no existe en la base de datos. ";
+                }
+
+                return redirect()->route('course.index')
+                    ->with('success', "Importación parcial: Se importaron {$imported} registros. {$errorDetails}");
+            }
+
+            return redirect()->route('course.index')
+                ->with('error', "¡Importación completada correctamente! Se importaron {$imported} registros.");
+
+        } catch (\Throwable $e) {
+            return redirect()->route('course.index')
+                ->with('error', 'Error al procesar el archivo: ' . $e->getMessage());
         }
     }
     
