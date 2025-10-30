@@ -24,13 +24,16 @@
 </form>
 
 <div class="row">
-     <form action="{{ route('user.import') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
+    <div class="col-lg-12 mb-4 gap-2 d-md-flex justify-content-md-start">
+        {{-- Formulario de importación --}}
+        <form action="{{ route('user.import') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
             @csrf
             <input type="file" name="archivo" accept=".xlsx,.xls,.csv" required class="form-control form-control-sm" style="width:200px;">
             <button type="submit" class="btn btn-primary btn-sm">
-                <i class="fas fa-file-import me-1"></i> Importar Excel
+                <i class="fas fa-file-import me-1"></i> Importar Excel Instructores
             </button>
         </form>
+    </div>
     <div class="col-lg-12 mb-4 d-grid gap-2 d-md-flex justify-content-md-start">
         <a href="{{ route('user.create') }}" class="btn btn-success">Crear</a>
         
