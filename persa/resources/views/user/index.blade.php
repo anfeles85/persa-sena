@@ -44,7 +44,11 @@
         <button id="exportPdfBtn" class="btn btn-danger">
             <i class="fas fa-file-pdf"></i> PDF
         </button>
-    </div>   
+        {{-- Botones para descargar la plantilla en excel --}}
+        <a href="{{ asset('template_excel/usuarios_cursos.xlsx') }}" class="btn btn-primary d-flex align-items-center justify-content-center" download="usuarios.xlsx">
+            <i class="fas fa-file-download me-1"></i> Plantilla
+        </a>
+    </div>
 </div>
 
 
