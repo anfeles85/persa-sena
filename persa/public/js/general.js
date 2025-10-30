@@ -46,12 +46,10 @@ function remove(event, id) {
         cancelButtonText: "cancelar"
     }).then((result) => {
         if (result.isConfirmed) {
-
-            const form = document.getElementById(form-delete-${id});
+            const form = document.getElementById(`form-delete-${id}`);
             if (form) {
                 form.submit();
             }
-
         }
     });
 }
@@ -79,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const body = document.querySelector("body");
     const success = body.dataset.success;
     const error = body.dataset.error;
+    const warning = body.dataset.warning;
 
     if (success) {
         Swal.fire({

@@ -10,9 +10,9 @@
         <div class="d-flex gap-2">
         <form action="{{ route('course.import') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
             @csrf
-            <input type="file" name="archivo" accept=".xlsx,.xls,.csv" required class="form-control form-control-sm" style="width:200px;">
+            <input type="file" name="archivo" accept=".xlsx,.xls,.csv" required class="form-control form-control-sm" />
             <button type="submit" class="btn btn-primary btn-sm">
-                <i class="fas fa-file-import me-1"></i> Importar Excel
+                <i class="fas fa-file-import me-1"></i> Importar
             </button>
         </form>
         <a href="{{ route('course.create') }}" class="btn btn-success">Crear</a>
