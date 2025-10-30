@@ -16,6 +16,10 @@
             </button>
         </form>
         <a href="{{ route('course.create') }}" class="btn btn-success">Crear</a>
+        {{-- Botones para descargar la plantilla en excel --}}
+        <a href="{{ asset('template_excel/cursos.xlsx') }}" class="btn btn-primary d-flex align-items-center justify-content-center" download="cursos.xlsx">
+            <i class="fas fa-file-download me-1"></i> Plantilla
+        </a>
     </div>
 </div>
 
