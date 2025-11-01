@@ -331,14 +331,18 @@ public function registerDeparture(Request $request, Permission $permission)
 
         // Enviar email de salida registrada al aprendiz
         if ($permission->apprentice_user && $permission->apprentice_user->role_id == 3) {
-            Mail::to($permission->apprentice_user->email)
-                ->send(new MailAblePermissionDeparture($permission));
+
+            $apprentice = $permission->apprentice_user;
+            $course = $permission->apprentice_user->courses->first();
+            
+           Mail::to($apprentice->email)
+                ->send(new MailAblePermissionDeparture($permission, $apprentice, $course));
         }
 
         return redirect()->back()->with('success', 'La hora de salida ha sido registrada.');
     }
 
-    return redirect()->back()->with('warning', 'No es posible registrar la salida. El permiso no está APROBADO o no pertenece a una sede que requiere control de guardia.');
+    return redirect()->back()->with('warning', 'No es posible registrar la salida. El permiso no está aprobado o la sede no tiene guardia.');
 }
 
     public function reject(Request $request, Permission $permission)
