@@ -1,181 +1,375 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manual de Ayuda - PERSA</title>
-    <link rel="icon" type="image/png" href="../../public/img/sena-logo.png">
+    <link rel="icon" type="image/png" href="/img/sena-logo.png">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" />
-    
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-    
+
     <style>
-.help-page {
-    background-color: #f8f9fa;
-}
+        .help-page {
+            background-color: #f8f9fa;
+        }
 
-.help-hero {
-    padding: 80px 0 60px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-}
+        .help-hero {
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
 
-.help-logo {
-    max-width: 200px;
-}
+        .help-logo {
+            max-width: 200px;
+        }
 
-.help-illustration {
-    max-width: 80%;
-}
+        .help-illustration {
+            max-width: 80%;
+        }
 
-.help-search {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
+        .help-search {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
 
-.help-search .input-group {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 0.75rem;
-}
+        .help-search .input-group {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 0.75rem;
+        }
 
-.help-card {
-    border: none;
-    border-radius: 1rem;
-    transition: all 0.3s ease;
-    overflow: hidden;
-}
+        .help-card {
+            border: none;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
 
-.help-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-}
+        .help-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+        }
 
-.help-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    color: white;
-    font-size: 1.8rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+        .help-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
-.help-content {
-    text-align: left;
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
+        .help-content {
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
 
-.help-content ol, .help-content ul {
-    margin-bottom: 1rem;
-}
+        .help-content ol, .help-content ul {
+            margin-bottom: 1rem;
+        }
 
-.help-content li {
-    margin-bottom: 0.5rem;
-}
-.role-card {
-    border-width: 2px;
-}
+        .help-content li {
+            margin-bottom: 0.5rem;
+        }
 
-.role-card .badge {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.6rem;
-}
+        .role-card {
+            border-width: 2px;
+        }
 
-.accordion-item {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 0.75rem !important;
-    overflow: hidden;
-}
+        .role-card .badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+        }
 
-.accordion-button {
-    font-weight: 600;
-    color: #344767;
-    background-color: #f8f9fa;
-}
+        .accordion-item {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 0.75rem !important;
+            overflow: hidden;
+        }
 
-.accordion-button:not(.collapsed) {
-    background-color: #e7f3ff;
-    color: #0066cc;
-    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
-}
+        .accordion-button {
+            font-weight: 600;
+            color: #344767;
+            background-color: #f8f9fa;
+        }
 
-.accordion-button:focus {
-    box-shadow: none;
-    border-color: rgba(0, 102, 204, 0.5);
-}
+        .accordion-button:not(.collapsed) {
+            background-color: #e7f3ff;
+            color: #0066cc;
+            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+        }
 
-.accordion-body {
-    padding: 1.5rem;
-    background-color: #ffffff;
-}
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(0, 102, 204, 0.5);
+        }
 
-.bg-gradient-primary {
-    background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
-}
+        .accordion-body {
+            padding: 1.5rem;
+            background-color: #ffffff;
+        }
 
-.bg-gradient-success {
-    background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
-}
+        .bg-gradient-primary {
+            background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+        }
 
-.bg-gradient-warning {
-    background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important;
-}
+        .bg-gradient-success {
+            background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
+        }
 
-.bg-gradient-danger {
-    background: linear-gradient(87deg, #f5365c 0, #f56036 100%) !important;
-}
+        .bg-gradient-warning {
+            background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important;
+        }
 
-.bg-gradient-info {
-    background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;
-}
+        .bg-gradient-danger {
+            background: linear-gradient(87deg, #f5365c 0, #f56036 100%) !important;
+        }
 
-.bg-gradient-secondary {
-    background: linear-gradient(87deg, #8392ab 0, #838bab 100%) !important;
-}
+        .bg-gradient-info {
+            background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;
+        }
 
-@media (max-width: 991px) {
-    .help-hero {
-        padding: 60px 0 40px;
-    }
-    
-    .help-logo {
-        max-width: 150px;
-    }
-    
-    .help-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
-    }
-}
+        .bg-gradient-secondary {
+            background: linear-gradient(87deg, #8392ab 0, #838bab 100%) !important;
+        }
 
-@media (max-width: 767px) {
-    .help-hero h1 {
-        font-size: 2rem;
-    }
-    
-    .help-hero .lead {
-        font-size: 1rem;
-    }
-    
-    .help-card {
-        margin-bottom: 1rem;
-    }
-}
+        .navbar-main {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
 
-* {
-    transition: color 0.15s ease-in-out, 
-                background-color 0.15s ease-in-out, 
-                border-color 0.15s ease-in-out, 
-                box-shadow 0.15s ease-in-out;
-}
+        .footer {
+            background-color: #f8f9fa;
+        }
+
+        @media (max-width: 991px) {
+            .help-hero {
+                padding: 60px 0 40px;
+            }
+            
+            .help-logo {
+                max-width: 150px;
+            }
+            
+            .help-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .help-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .help-hero .lead {
+                font-size: 1rem;
+            }
+            
+            .help-card {
+                margin-bottom: 1rem;
+            }
+        }
+
+        .help-card, .btn, a {
+            transition: color 0.15s ease-in-out, 
+                        background-color 0.15s ease-in-out, 
+                        border-color 0.15s ease-in-out, 
+                        box-shadow 0.15s ease-in-out,
+                        transform 0.15s ease-in-out;
+        }
+
+        .alert {
+            border-radius: 0.75rem;
+            border: none;
+        }
+
+        .badge {
+            font-weight: 600;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        .list-unstyled li {
+            padding: 0.25rem 0;
+        }
+
+        .input-group-text {
+            background-color: #fff;
+            border-right: none;
+        }
+
+        .input-group .form-control {
+            border-left: none;
+        }
+
+        .input-group .form-control:focus {
+            box-shadow: none;
+            border-color: #ced4da;
+        }
+
+        .btn {
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .card {
+            border: none;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+        }
+
+        .font-weight-bold {
+            font-weight: 700 !important;
+        }
+
+        .text-muted {
+            color: #6c757d !important;
+        }
+
+        section {
+            position: relative;
+        }
+
+        .navbar-brand-img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .z-index-sticky {
+            z-index: 1020;
+        }
+
+        .shadow-sm {
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+        }
+
+        .border-radius-xl {
+            border-radius: 1rem !important;
+        }
+
+        .d-none {
+            display: none !important;
+        }
+
+        .d-lg-block {
+            display: block !important;
+        }
+
+        @media (max-width: 991.98px) {
+            .d-lg-block {
+                display: none !important;
+            }
+        }
+
+        .gap-2 {
+            gap: 0.5rem !important;
+        }
+
+        .gap-3 {
+            gap: 1rem !important;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-start {
+            text-align: left !important;
+        }
+
+        .text-success {
+            color: #28a745 !important;
+        }
+
+        .text-danger {
+            color: #dc3545 !important;
+        }
+
+        .text-dark {
+            color: #343a40 !important;
+        }
+
+        .text-primary {
+            color: #5e72e4 !important;
+        }
+
+        .bg-light {
+            background-color: #f8f9fa !important;
+        }
+
+        .py-2 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+        .py-4 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+        .py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+        .px-0 { padding-left: 0 !important; padding-right: 0 !important; }
+        .px-3 { padding-left: 1rem !important; padding-right: 1rem !important; }
+        .py-1 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
+        .pt-5 { padding-top: 3rem !important; }
+        .pb-4 { padding-bottom: 1.5rem !important; }
+
+        .mb-0 { margin-bottom: 0 !important; }
+        .mb-2 { margin-bottom: 0.5rem !important; }
+        .mb-3 { margin-bottom: 1rem !important; }
+        .mb-4 { margin-bottom: 1.5rem !important; }
+        .mb-5 { margin-bottom: 3rem !important; }
+        .me-1 { margin-right: 0.25rem !important; }
+        .me-2 { margin-right: 0.5rem !important; }
+        .me-3 { margin-right: 1rem !important; }
+        .ms-1 { margin-left: 0.25rem !important; }
+        .ms-3 { margin-left: 1rem !important; }
+        .mt-0 { margin-top: 0 !important; }
+        .mt-2 { margin-top: 0.5rem !important; }
+        .mt-3 { margin-top: 1rem !important; }
+        .mt-4 { margin-top: 1.5rem !important; }
+        .mx-4 { margin-left: 1.5rem !important; margin-right: 1.5rem !important; }
+
+        .d-flex { display: flex !important; }
+        .flex-wrap { flex-wrap: wrap !important; }
+        .align-items-center { align-items: center !important; }
+        .justify-content-center { justify-content: center !important; }
+        .justify-content-lg-start { justify-content: flex-start !important; }
+
+        .position-sticky { position: sticky !important; }
+
+        .w-100 { width: 100% !important; }
+
+        .h-100 { height: 100% !important; }
     </style>
 </head>
 
@@ -194,9 +388,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 text-center text-lg-start">
                     <img src="../public/img/persa-logo.png" alt="Logo PERSA" class="help-logo mb-3">
-                    <h1 class="display-4 font-weight-bold text-dark mb-3">
-                        Manual de Ayuda
-                    </h1>
+                    <h1 class="display-4 font-weight-bold text-dark mb-3">Manual de Ayuda</h1>
                     <p class="lead text-muted mb-4">
                         Bienvenido al centro de ayuda de PERSA. Aquí encontrarás guías detalladas 
                         para aprovechar al máximo todas las funcionalidades del sistema de permisos.
@@ -211,12 +403,12 @@
                     </div>
                 </div>
                 <div class="col-lg-6 d-none d-lg-block text-center">
-                    <img src="../public/img/sena-logo.png" alt="Ilustración SENA" class="img-fluid help-illustration">
+                    <img src="../public/img/sena-logo.png" alt="Logo SENA" class="img-fluid help-illustration">
                 </div>
             </div>
         </div>
     </section>
-  
+
     <section class="help-search py-4 bg-light">
         <div class="container">
             <div class="row justify-content-center">
@@ -271,6 +463,43 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card help-card h-100 shadow-sm">
                         <div class="card-body text-center">
+                            <div class="help-icon bg-gradient-info">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <h5 class="card-title mt-3">Registrarse (Aprendiz)</h5>
+                            <p class="card-text text-muted">Crea tu cuenta de aprendiz en el sistema</p>
+                            <button class="btn btn-outline-info btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseRegister">
+                                Ver más <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseRegister">
+                                <div class="help-content text-start">
+                                    <ol class="ps-3">
+                                        <li>En la página de inicio, haz clic en <strong>"Registrarse"</strong></li>
+                                        <li>Completa el formulario con:
+                                            <ul class="mt-2">
+                                                <li>Número de documento</li>
+                                                <li>Selecciona tu <strong>ficha/curso</strong></li>
+                                                <li>Nombre completo</li>
+                                                <li>Correo electrónico institucional</li>
+                                                <li>Contraseña segura (mínimo 6 caracteres)</li>
+                                            </ul>
+                                        </li>
+                                        <li>Confirma tu contraseña</li>
+                                        <li>Haz clic en <strong>"Registrarse"</strong></li>
+                                    </ol>
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                        <strong>Importante:</strong> Solo los aprendices pueden auto-registrarse. Los instructores y guardas deben ser creados por el administrador.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card h-100 shadow-sm">
+                        <div class="card-body text-center">
                             <div class="help-icon bg-gradient-warning">
                                 <i class="fas fa-key"></i>
                             </div>
@@ -313,21 +542,20 @@
                             <div class="collapse mt-3" id="collapseProfile">
                                 <div class="help-content text-start">
                                     <ol class="ps-3">
-                                        <li>En el menú lateral izquierdo, ve a la sección <strong>"Perfil"</strong> (está entre las últimas opciones)</li>
-                                        <li>Visualiza tu información personal actual</li>
-                                        <li>Haz clic en el botón <strong>"Editar"</strong></li>
-                                        <li>Modifica los campos permitidos:
+                                        <li>En el menú lateral, haz clic en tu nombre de usuario</li>
+                                        <li>Selecciona <strong>"Mi Perfil"</strong></li>
+                                        <li>Visualiza tu información actual</li>
+                                        <li>Modifica los campos editables:
                                             <ul class="mt-2">
-                                                <li>Nombre completo</li>
                                                 <li>Correo electrónico</li>
                                                 <li>Contraseña (opcional)</li>
                                             </ul>
                                         </li>
-                                        <li>Haz clic en <strong>"Guardar cambios"</strong></li>
+                                        <li>Haz clic en <strong>"Actualizar Email"</strong></li>
                                     </ol>
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         <i class="fas fa-check-circle me-2"></i>
-                                        <strong>Nota:</strong> El documento de identidad y rol no son editables
+                                        <strong>Nota:</strong> El documento y nombre completo no son editables por seguridad
                                     </div>
                                 </div>
                             </div>
@@ -351,13 +579,14 @@
                                     <ol class="ps-3">
                                         <li>Ve al menú <strong>"Permisos"</strong></li>
                                         <li>Haz clic en el botón <strong>"Crear"</strong></li>
+                                        <li>El sistema automáticamente selecciona <strong>la fecha actual</strong> (no se puede modificar)</li>
                                         <li>Completa el formulario:
                                             <ul class="mt-2">
-                                                <li><strong>Fecha:</strong> Solo se permite el día actual</li>
-                                                <li>Hora de inicio y fin</li>
-                                                <li>Tipo de permiso</li>
-                                                <li>Ubicación/Sede</li>
-                                                <li>Motivo detallado</li>
+                                                <li><strong>Hora de inicio:</strong> Cuando necesitas salir</li>
+                                                <li><strong>Hora de fin:</strong> Cuando regresas</li>
+                                                <li><strong>Tipo de permiso:</strong> Selecciona según tu necesidad</li>
+                                                <li><strong>Ubicación:</strong> Sede donde te encuentras</li>
+                                                <li><strong>Motivo:</strong> Descripción detallada</li>
                                             </ul>
                                         </li>
                                         <li>Haz clic en <strong>"Guardar"</strong></li>
@@ -365,14 +594,167 @@
                                     </ol>
                                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                         <i class="fas fa-exclamation-triangle me-2"></i>
-                                        <strong>Importante:</strong>
+                                        <strong>Restricciones importantes:</strong>
                                         <ul class="mb-0 mt-2">
                                             <li>Solo puedes crear <strong>1 permiso por día</strong></li>
                                             <li>El permiso debe ser para <strong>el mismo día</strong></li>
-                                            <li>Si no se aprueba antes de que termine el día, será <strong>cancelado automáticamente</strong></li>
-                                            <li>No se pueden editar/eliminar permisos <strong>aprobados, rechazados o cancelados</strong></li>
+                                            <li>Si no se aprueba antes de las 23:59, será <strong>cancelado automáticamente</strong></li>
+                                            <li>No se pueden editar permisos <strong>aprobados, rechazados o cancelados</strong></li>
                                         </ul>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="help-icon bg-gradient-primary">
+                                <i class="fas fa-users-cog"></i>
+                            </div>
+                            <h5 class="card-title mt-3">Gestionar Usuarios</h5>
+                            <p class="card-text text-muted">Crear, editar e importar usuarios</p>
+                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseUsers">
+                                Ver más <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseUsers">
+                                <div class="help-content text-start">
+                                    <h6 class="font-weight-bold">Crear usuario individual:</h6>
+                                    <ol class="ps-3">
+                                        <li>Ve al menú <strong>"Usuarios"</strong></li>
+                                        <li>Haz clic en <strong>"Crear"</strong></li>
+                                        <li>Completa el formulario (nombre, email, documento, rol, estado)</li>
+                                        <li>Si es aprendiz, selecciona la <strong>ficha</strong></li>
+                                        <li>Haz clic en <strong>"Guardar"</strong></li>
+                                    </ol>
+
+                                    <h6 class="font-weight-bold mt-3">Importar usuarios masivamente (Excel):</h6>
+                                    <ol class="ps-3">
+                                        <li>En <strong>"Usuarios"</strong>, haz clic en <strong>"Plantilla"</strong> para descargar el archivo Excel</li>
+                                        <li>Abre la plantilla y completa los datos:
+                                            <ul class="mt-2">
+                                                <li><code>document</code>: Número de documento</li>
+                                                <li><code>fullname</code>: Nombre completo</li>
+                                                <li><code>email</code>: Correo electrónico</li>
+                                                <li><code>password</code>: Contraseña (mínimo 6 caracteres)</li>
+                                                <li><code>status</code>: ACTIVO o INACTIVO</li>
+                                                <li><code>role</code>: INSTRUCTOR o GUARDA</li>
+                                                <li><code>course_id</code>: (Solo para aprendices, ID de la ficha)</li>
+                                            </ul>
+                                        </li>
+                                        <li>Guarda el archivo Excel</li>
+                                        <li>En PERSA, haz clic en <strong>"Seleccionar archivo"</strong></li>
+                                        <li>Selecciona tu archivo Excel</li>
+                                        <li>Haz clic en <strong>"Importar Excel Instructores"</strong></li>
+                                        <li>El sistema validará y creará los usuarios</li>
+                                    </ol>
+
+                                    <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                                        <i class="fas fa-lightbulb me-2"></i>
+                                        <strong>Ventaja:</strong> Con la importación masiva puedes crear múltiples instructores o guardas de seguridad en segundos
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="help-icon bg-gradient-success">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h5 class="card-title mt-3">Gestionar Cursos/Fichas</h5>
+                            <p class="card-text text-muted">Crear, editar e importar fichas</p>
+                            <button class="btn btn-outline-success btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseCourses">
+                                Ver más <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseCourses">
+                                <div class="help-content text-start">
+                                    <h6 class="font-weight-bold">Crear ficha individual:</h6>
+                                    <ol class="ps-3">
+                                        <li>Ve al menú <strong>"Grupos"</strong></li>
+                                        <li>Haz clic en <strong>"Crear"</strong></li>
+                                        <li>Completa los datos:
+                                            <ul class="mt-2">
+                                                <li>Número de ficha</li>
+                                                <li>Jornada (Mañana, Tarde, Noche)</li>
+                                                <li>Trimestre actual</li>
+                                                <li>Año</li>
+                                                <li>Programa de formación</li>
+                                                <li>Estado (ACTIVO/INACTIVO)</li>
+                                            </ul>
+                                        </li>
+                                        <li>Haz clic en <strong>"Guardar"</strong></li>
+                                    </ol>
+
+                                    <h6 class="font-weight-bold mt-3">Importar fichas masivamente (Excel):</h6>
+                                    <ol class="ps-3">
+                                        <li>En <strong>"Grupos"</strong>, haz clic en <strong>"Plantilla"</strong> para descargar el archivo Excel</li>
+                                        <li>Abre la plantilla y completa las columnas:
+                                            <ul class="mt-2">
+                                                <li><code>number_group</code>: Número de ficha (único)</li>
+                                                <li><code>shift</code>: MAÑANA, TARDE o NOCHE</li>
+                                                <li><code>trimester</code>: Ejemplo: I, II, III, etc.</li>
+                                                <li><code>year</code>: Año actual (2025)</li>
+                                                <li><code>status</code>: ACTIVO o INACTIVO</li>
+                                                <li><code>career</code>: Nombre exacto del programa</li>
+                                            </ul>
+                                        </li>
+                                        <li>Guarda el archivo</li>
+                                        <li>En PERSA, selecciona el archivo</li>
+                                        <li>Haz clic en <strong>"Importar"</strong></li>
+                                        <li>El sistema validará y creará las fichas</li>
+                                    </ol>
+
+                                    <h6 class="font-weight-bold mt-3">Asignar instructores a una ficha:</h6>
+                                    <ol class="ps-3">
+                                        <li>Haz clic en <strong>"Editar"</strong> en la ficha deseada</li>
+                                        <li>En la sección <strong>"Instructores sin asignar"</strong>, haz clic en el <strong>botón (+)</strong></li>
+                                        <li>El instructor se moverá a <strong>"Instructores asignados"</strong></li>
+                                        <li>Para retirar, haz clic en el <strong>botón (-)</strong></li>
+                                    </ol>
+
+                                    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                                        <i class="fas fa-check-circle me-2"></i>
+                                        <strong>Tip:</strong> Usa la importación masiva al inicio del trimestre para crear todas las fichas de una vez
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="help-icon bg-gradient-secondary">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h5 class="card-title mt-3">Buscar Aprendices</h5>
+                            <p class="card-text text-muted">Consultar aprendices por ficha</p>
+                            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseSearch">
+                                Ver más <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseSearch">
+                                <div class="help-content text-start">
+                                    <ol class="ps-3">
+                                        <li>Ve al menú <strong>"Buscar aprendiz"</strong></li>
+                                        <li>Selecciona una <strong>ficha</strong> del menú desplegable</li>
+                                        <li>El sistema mostrará todos los aprendices de esa ficha</li>
+                                        <li>Puedes ver:
+                                            <ul class="mt-2">
+                                                <li>Documento</li>
+                                                <li>Nombre completo</li>
+                                                <li>Correo electrónico</li>
+                                                <li>Estado (ACTIVO/INACTIVO)</li>
+                                            </ul>
+                                        </li>
+                                        <li>Exporta la lista en <strong>PDF</strong> o <strong>Excel</strong></li>
+                                    </ol>
                                 </div>
                             </div>
                         </div>
@@ -386,7 +768,7 @@
                                 <i class="fas fa-chart-bar"></i>
                             </div>
                             <h5 class="card-title mt-3">Ver Reportes</h5>
-                            <p class="card-text text-muted">Genera y descarga reportes en PDF/Excel</p>
+                            <p class="card-text text-muted">Genera y descarga reportes en PDF</p>
                             <button class="btn btn-outline-danger btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseReports">
                                 Ver más <i class="fas fa-chevron-down ms-1"></i>
                             </button>
@@ -396,15 +778,19 @@
                                         <li>Ve al menú <strong>"Reportes"</strong></li>
                                         <li>Selecciona el tipo de reporte:
                                             <ul class="mt-2">
-                                                <li>Por curso/ficha</li>
-                                                <li>Por aprendiz</li>
-                                                <li>Por rango de fechas</li>
+                                                <li><strong>Por ficha:</strong> Todos los permisos de una ficha específica</li>
+                                                <li><strong>Por aprendiz:</strong> Historial completo de un aprendiz</li>
+                                                <li><strong>Por rango de fechas:</strong> Permisos entre dos fechas</li>
                                             </ul>
                                         </li>
                                         <li>Completa los filtros requeridos</li>
-                                        <li>Haz clic en <strong>"Generar reporte"</strong></li>
-                                        <li>Descarga en formato <strong>PDF</strong> o <strong>Excel</strong></li>
+                                        <li>Haz clic en el botón <strong>PDF (rojo)</strong></li>
+                                        <li>El archivo se descargará automáticamente</li>
                                     </ol>
+                                    <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Nota:</strong> Los reportes incluyen logo, fecha de generación y datos completos con estilos profesionales
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -424,16 +810,51 @@
                             </button>
                             <div class="collapse mt-3" id="collapseNotifications">
                                 <div class="help-content text-start">
-                                    <p><strong>Recibirás notificaciones por correo cuando:</strong></p>
+                                    <p><strong>Recibirás notificaciones por correo automáticamente cuando:</strong></p>
                                     <ul class="ps-3">
-                                        <li>Tu permiso sea <span class="badge bg-success">aprobado</span></li>
-                                        <li>Tu permiso sea <span class="badge bg-danger">rechazado</span></li>
-                                        <li>Tu permiso sea <span class="badge bg-warning">cancelado</span></li>
-                                        <li>Se registre tu <span class="badge bg-info">salida</span></li>
+                                        <li><span class="badge bg-success">Aprobado:</span> Tu instructor aprueba tu permiso</li>
+                                        <li><span class="badge bg-danger">Rechazado:</span> Tu instructor rechaza tu permiso (incluye motivo)</li>
+                                        <li><span class="badge bg-warning">Cancelado:</span> El sistema cancela permisos no aprobados</li>
+                                        <li><span class="badge bg-info">Registrado:</span> El guarda registra tu salida</li>
                                     </ul>
                                     <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
                                         <i class="fas fa-envelope me-2"></i>
-                                        <strong>Revisa:</strong> Tu bandeja de entrada y la carpeta de spam
+                                        <strong>Importante:</strong> Revisa tu bandeja de entrada y carpeta de spam regularmente
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card help-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="help-icon bg-gradient-primary">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <h5 class="card-title mt-3">Dashboard</h5>
+                            <p class="card-text text-muted">Visualiza estadísticas del sistema</p>
+                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseDashboard">
+                                Ver más <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <div class="collapse mt-3" id="collapseDashboard">
+                                <div class="help-content text-start">
+                                    <p><strong>El Dashboard muestra:</strong></p>
+                                    <ul class="ps-3">
+                                        <li><strong>Total de programas:</strong> Número de carreras registradas</li>
+                                        <li><strong>Total de permisos:</strong> Cantidad general de permisos</li>
+                                        <li><strong>Total de usuarios:</strong> Todos los registrados en el sistema</li>
+                                        <li><strong>Gráficas interactivas:</strong>
+                                            <ul class="mt-2">
+                                                <li>Top 5 instructores con más permisos aprobados</li>
+                                                <li>Permisos por ubicación/sede</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Nota:</strong> Solo visible para el rol <strong>Coordinador/Administrador</strong>
                                     </div>
                                 </div>
                             </div>
@@ -460,7 +881,7 @@
                                     <i class="fas fa-user-shield"></i>
                                 </div>
                                 <div>
-                                    <h5 class="card-title mb-0">Administrador</h5>
+                                    <h5 class="card-title mb-0">Coordinador</h5>
                                     <span class="badge bg-primary">Control Total</span>
                                 </div>
                             </div>
@@ -473,43 +894,16 @@
                                     <h6 class="font-weight-bold">Puede:</h6>
                                     <ul class="list-unstyled ps-0">
                                         <li><i class="fas fa-check text-success me-2"></i>Crear, editar y eliminar usuarios</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Gestionar todos los permisos</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Administrar cursos y programas</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Importar usuarios masivamente desde Excel</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Gestionar todos los permisos del sistema</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Administrar cursos/fichas y programas</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Importar fichas masivamente desde Excel</li>
                                         <li><i class="fas fa-check text-success me-2"></i>Ver y generar todos los reportes</li>
                                         <li><i class="fas fa-check text-success me-2"></i>Configurar tipos de permisos</li>
                                         <li><i class="fas fa-check text-success me-2"></i>Gestionar ubicaciones/sedes</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card help-card role-card h-100 shadow-sm border-success">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="help-icon bg-gradient-success me-3">
-                                    <i class="fas fa-user-tie"></i>
-                                </div>
-                                <div>
-                                    <h5 class="card-title mb-0">Coordinador</h5>
-                                    <span class="badge bg-success">Gestión</span>
-                                </div>
-                            </div>
-                            <p class="card-text text-muted mb-3">Supervisión y reportes</p>
-                            <button class="btn btn-sm btn-outline-success w-100" data-bs-toggle="collapse" data-bs-target="#collapseCoordinator">
-                                Ver funciones <i class="fas fa-chevron-down ms-1"></i>
-                            </button>
-                            <div class="collapse mt-3" id="collapseCoordinator">
-                                <div class="help-content">
-                                    <h6 class="font-weight-bold">Puede:</h6>
-                                    <ul class="list-unstyled ps-0">
-                                        <li><i class="fas fa-check text-success me-2"></i>Ver todos los permisos</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Generar reportes generales</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Exportar datos en PDF/Excel</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Consultar información de aprendices</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Ver estadísticas del dashboard</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver el Dashboard con estadísticas</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Buscar aprendices por ficha</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Exportar datos en PDF y Excel</li>
                                     </ul>
                                 </div>
                             </div>
@@ -537,12 +931,21 @@
                                 <div class="help-content">
                                     <h6 class="font-weight-bold">Puede:</h6>
                                     <ul class="list-unstyled ps-0">
-                                        <li><i class="fas fa-check text-success me-2"></i>Crear solicitudes de permiso</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Crear solicitudes de permiso (1 por día)</li>
                                         <li><i class="fas fa-check text-success me-2"></i>Ver sus propios permisos</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Cancelar permisos pendientes</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Editar su perfil</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Editar permisos PENDIENTES (mismo día)</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Cancelar permisos PENDIENTES</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver detalles completos de cada permiso</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Editar su correo electrónico</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Cambiar su contraseña</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver su ficha asignada</li>
                                         <li><i class="fas fa-check text-success me-2"></i>Recibir notificaciones por correo</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Filtrar permisos por estado</li>
                                     </ul>
+                                    <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                        <strong>Límites:</strong> Solo 1 permiso por día, debe ser para el mismo día
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -561,7 +964,7 @@
                                     <span class="badge bg-warning">Aprobación</span>
                                 </div>
                             </div>
-                            <p class="card-text text-muted mb-3">Gestión de permisos de sus aprendices</p>
+                            <p class="card-text text-muted mb-3">Gestión de permisos de aprendices</p>
                             <button class="btn btn-sm btn-outline-warning w-100" data-bs-toggle="collapse" data-bs-target="#collapseInstructor">
                                 Ver funciones <i class="fas fa-chevron-down ms-1"></i>
                             </button>
@@ -569,11 +972,15 @@
                                 <div class="help-content">
                                     <h6 class="font-weight-bold">Puede:</h6>
                                     <ul class="list-unstyled ps-0">
-                                        <li><i class="fas fa-check text-success me-2"></i>Aprobar/rechazar permisos</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Ver permisos de sus aprendices</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Agregar comentarios de rechazo</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Ver su lista de cursos asignados</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Consultar historial de permisos</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver permisos de sus aprendices (fichas asignadas)</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Aprobar permisos PENDIENTES</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Rechazar permisos con motivo</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver detalles completos de cada permiso</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Filtrar permisos por estado y ficha</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver sus fichas asignadas en el perfil</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Generar reportes de sus fichas</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Exportar permisos en PDF/Excel</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Editar su perfil</li>
                                     </ul>
                                 </div>
                             </div>
@@ -601,11 +1008,18 @@
                                 <div class="help-content">
                                     <h6 class="font-weight-bold">Puede:</h6>
                                     <ul class="list-unstyled ps-0">
-                                        <li><i class="fas fa-check text-success me-2"></i>Buscar permisos aprobados</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Registrar salidas de aprendices</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Verificar documentos de permisos</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Buscar permisos por documento de aprendiz</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver solo permisos <strong>APROBADOS</strong></li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Registrar salida del aprendiz</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Verificar datos del permiso antes de registrar</li>
                                         <li><i class="fas fa-check text-success me-2"></i>Ver historial de salidas registradas</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Filtrar permisos por estado</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Ver detalles del aprendiz (nombre, documento, ficha)</li>
                                     </ul>
+                                    <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Proceso:</strong> Solicita el documento → Busca → Verifica → Registra salida
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -625,7 +1039,6 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="accordion" id="faqAccordion">
-                        <!-- FAQ 1 - ACTUALIZADA -->
                         <div class="accordion-item mb-3">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
@@ -637,12 +1050,11 @@
                                 <div class="accordion-body">
                                     PERSA está diseñado para gestionar permisos <strong>en tiempo real</strong>. Los permisos deben solicitarse el mismo día 
                                     en que necesitas salir del centro de formación. Si el permiso no es aprobado antes de que termine el día, 
-                                    el sistema lo <strong>cancela automáticamente</strong> por seguridad y control.
+                                    el sistema lo <strong>cancela automáticamente</strong> a las 23:59 por seguridad y control.
                                 </div>
                             </div>
                         </div>
 
-                        <!-- FAQ 2 - ACTUALIZADA -->
                         <div class="accordion-item mb-3">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
@@ -659,7 +1071,6 @@
                             </div>
                         </div>
 
-                        <!-- FAQ 3 -->
                         <div class="accordion-item mb-3">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
@@ -671,12 +1082,11 @@
                                 <div class="accordion-body">
                                     Primero, revisa tu carpeta de <strong>spam</strong> o <strong>correo no deseado</strong>. 
                                     Si no aparece, verifica que hayas ingresado correctamente tu correo electrónico. 
-                                    Si el problema persiste, contacta con el administrador del sistema.
+                                    El enlace expira en 60 minutos. Si el problema persiste, contacta con el administrador del sistema.
                                 </div>
                             </div>
                         </div>
 
-                        <!-- FAQ 4 -->
                         <div class="accordion-item mb-3">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
@@ -687,12 +1097,12 @@
                             <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
                                     Ve al menú <strong>"Permisos"</strong> y verás una lista completa de todos tus permisos con su estado actual 
-                                    (Pendiente, Aprobado, Rechazado, Cancelado o Registrado). Puedes filtrar por estado o buscar por fecha.
+                                    (Pendiente, Aprobado, Rechazado, Cancelado o Registrado). Puedes usar los filtros para buscar por estado 
+                                    o el buscador para encontrar permisos específicos.
                                 </div>
                             </div>
                         </div>
 
-                        <!-- FAQ 5 - ACTUALIZADA -->
                         <div class="accordion-item mb-3">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
@@ -702,9 +1112,48 @@
                             </h2>
                             <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    <strong>No</strong>, el sistema solo permite <strong>crear 1 permiso por día</strong>. 
-                                    Esta restricción garantiza un mejor control de las salidas de los aprendices. 
-                                    Si necesitas salir en diferentes horarios, incluye toda la información en un solo permiso con el rango de horas completo.
+                                    <strong>No</strong>, el sistema solo permite <strong>crear 1 permiso por día</strong> por razones de control y seguridad. 
+                                    Si necesitas salir en diferentes horarios, incluye toda la información en un solo permiso especificando 
+                                    el rango de horas completo (hora inicio y hora fin).
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                    <i class="fas fa-question-circle me-2 text-primary"></i>
+                                    ¿Cómo funciona la importación masiva de usuarios o fichas?
+                                </button>
+                            </h2>
+                            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <strong>Paso 1:</strong> Descarga la plantilla Excel desde el botón <strong>"Plantilla"</strong> en la sección de Usuarios o Grupos.<br>
+                                    <strong>Paso 2:</strong> Completa los datos siguiendo el formato exacto de las columnas.<br>
+                                    <strong>Paso 3:</strong> Guarda el archivo y súbelo usando el botón <strong>"Importar"</strong>.<br>
+                                    <strong>Paso 4:</strong> El sistema validará los datos y te mostrará un resumen de registros importados exitosamente y errores (si los hay).<br><br>
+                                    <strong>Ventajas:</strong> Ahorra tiempo al crear múltiples usuarios o fichas de una sola vez, ideal para inicios de trimestre.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                                    <i class="fas fa-question-circle me-2 text-primary"></i>
+                                    ¿Qué información incluyen los reportes PDF?
+                                </button>
+                            </h2>
+                            <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Los reportes PDF incluyen:<br>
+                                    • <strong>Logo de PERSA</strong> en el encabezado<br>
+                                    • <strong>Fecha y hora de generación</strong><br>
+                                    • <strong>Filtros aplicados</strong> (ficha, aprendiz, rango de fechas)<br>
+                                    • <strong>Datos completos:</strong> documento, nombre, programa, fecha del permiso, horario, motivo, ubicación, estado<br>
+                                    • <strong>Formato profesional</strong> con tabla organizada y colores corporativos<br>
+                                    • <strong>Paginación</strong> en el pie de página<br><br>
+                                    Los archivos Excel contienen la misma información en formato editable.
                                 </div>
                             </div>
                         </div>
@@ -719,7 +1168,7 @@
             <div class="row">
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <img src="../public/img/persa-logo.png" alt="Logo PERSA" style="max-height: 60px;" class="mb-3">
-                    <p class="text-muted">Sistema de Permisos de Salidas de Aprendices del SENA</p>
+                    <p class="text-muted">Sistema de Permisos de Salidas de Aprendices del SENA - Centro Latinoamericano de Especies Menores</p>
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <h6 class="font-weight-bold mb-3">Enlaces Útiles</h6>
@@ -733,10 +1182,10 @@
                 <div class="col-lg-4">
                     <h6 class="font-weight-bold mb-3">Contacto</h6>
                     <p class="text-muted mb-2">
-                        <i class="fas fa-envelope me-2"></i>email@example.sena.edu.co
+                        <i class="fas fa-map-marker-alt me-2"></i>SENA - Centro Latinoamericano de Especies Menores (CLEM)
                     </p>
                     <p class="text-muted mb-2">
-                        <i class="fas fa-map-marker-alt me-2"></i>SENA - Centro Latinoamericano de Espcies Menores
+                        <i class="fas fa-graduation-cap me-2"></i>Programa ADSO - Ficha 2921881
                     </p>
                 </div>
             </div>
@@ -745,7 +1194,7 @@
                 <div class="col-12 text-center">
                     <p class="text-muted mb-0">
                         <a href="https://sena-clem.blogspot.com/" target="_blank" class="text-dark font-weight-bold">
-                            © PERSA - Desarrollado con <i class="fas fa-heart text-danger"></i> por ADSO 2921881 - SENA CLEM
+                            © 2025 PERSA - Desarrollado con <i class="fas fa-heart text-danger"></i> por ADSO 2921881 - SENA CLEM
                         </a>
                     </p>
                 </div>
@@ -756,6 +1205,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
+        // Buscador en tiempo real
         document.getElementById('searchHelp').addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
             const cards = document.querySelectorAll('.help-card');
@@ -766,13 +1216,13 @@
                 
                 if (text.includes(searchTerm)) {
                     parent.style.display = '';
-                    card.classList.add('animate__animated', 'animate__fadeIn');
                 } else {
                     parent.style.display = 'none';
                 }
             });
         });
 
+        // Smooth scroll para enlaces internos
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
