@@ -2,7 +2,9 @@
 
 namespace App\Mail;
 
+use App\Models\Course;
 use App\Models\Permission;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -15,13 +17,17 @@ class MailAblePermissionDeparture extends Mailable
     use Queueable, SerializesModels;
 
     public $permission;
+    public $apprentice;
+    public $course;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Permission $permission)
+    public function __construct(Permission $permission, User $apprentice, Course $course)
     {
         $this->permission = $permission;
+        $this->apprentice = $apprentice;
+        $this->course = $course;
     }
 
     /**
@@ -41,6 +47,11 @@ class MailAblePermissionDeparture extends Mailable
     {
         return new Content(
             view: 'email.permission_departure',
+            with: [
+                'permission' => $this->permission,
+                'apprentice' => $this->apprentice,
+                'course'     => $this->course,
+            ],
         );
     }
 

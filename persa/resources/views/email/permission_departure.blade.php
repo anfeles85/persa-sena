@@ -163,7 +163,7 @@
             <!-- Contenido -->
             <div class="content">
                 <div class="greeting">
-                    Hola <strong>{{ $apprentice->fullname }}</strong>,<br>
+                    <strong>{{ $apprentice->fullname }}</strong>,<br>
                     Tu salida ha sido registrada exitosamente por el personal de guardia.
                 </div>
 

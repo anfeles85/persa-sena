@@ -191,10 +191,10 @@
                                         <p class="mb-2"><strong>Tipo permiso: </strong>{{ $permission->permissionType->name }}</p>
                                     @endif
                                     
+                                    <p class="mb-2"><strong>Motivo: </strong>{{ $permission->reasons ?? 'No especificado' }}</p>
                                     <p class="mb-2"><strong>Programa: </strong>{{ $permission->apprentice_user?->courses?->first()?->career?->name ?? 'No asignado' }}</p>
                                     <p class="mb-2"><strong>Tipo de programa: </strong>{{ $permission->apprentice_user?->courses?->first()?->career?->type ?? 'No asignado' }}</p>
-                                    <p class="mb-0"><strong>Ficha: </strong>{{ $permission->apprentice_user?->courses?->first()?->number_group ?? 'No asignado' }}</p>
-                                </div>
+                                    <p class="mb-0"><strong>Ficha: </strong>{{ $permission->apprentice_user?->courses?->first()?->number_group ?? 'No asignado' }}</p>                                </div>
                             </div>
                         </div>
                     </div>
