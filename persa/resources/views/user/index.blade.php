@@ -5,9 +5,10 @@
 
 @section('content')
 
+
+
 <label class="fs-2">Usuarios</label>
 
-{{-- Filtros de roles --}}
 <form method="GET" action="{{ url()->current() }}" class="row g-2 mb-3">
     <div class="col-6 col-md-auto d-grid">
         <a href="{{ route('user.index') }}" class="btn btn-outline-primary w-100">Todos</a>
@@ -25,29 +26,35 @@
 
 <div class="row">
     <div class="col-lg-12 mb-4 gap-2 d-md-flex justify-content-md-start">
-        {{-- Formulario de importación --}}
+    
         <form action="{{ route('user.import') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
             @csrf
             <input type="file" name="archivo" accept=".xlsx,.xls,.csv" required class="form-control form-control-sm" style="width:200px;">
             <button type="submit" class="btn btn-primary btn-sm">
-                <i class="fas fa-file-import me-1"></i> Importar Excel Instructores
+                <i class="fas fa-file-excel me-1"></i> Importar Excel Instructores
             </button>
         </form>
     </div>
     <div class="col-lg-12 mb-4 d-grid gap-2 d-md-flex justify-content-md-start">
         <a href="{{ route('user.create') }}" class="btn btn-success">Crear</a>
         
-        {{-- Botones de exportación --}}
+        
         <button id="exportExcelBtn" class="btn btn-success">
             <i class="fas fa-file-excel"></i> Excel
         </button>
         <button id="exportPdfBtn" class="btn btn-danger">
             <i class="fas fa-file-pdf"></i> PDF
         </button>
-        {{-- Botones para descargar la plantilla en excel --}}
+
+        
         <a href="{{ asset('template_excel/usuarios_cursos.xlsx') }}" class="btn btn-primary d-flex align-items-center justify-content-center" download="usuarios.xlsx">
             <i class="fas fa-file-download me-1"></i> Plantilla
         </a>
+        
+        
+        <button id="help_import" class="btn btn-primary" onclick="openHelpWindow()" title="Ver formato de archivo de importación">
+            <i class="fas fa-search me-1"></i> Ayuda de exportacion
+        </button>
     </div>
 </div>
 
@@ -93,14 +100,14 @@
                         <td data-label="Estado">{{ $user->status }}</td>
                         <td id="buttons_DE" style="border-top: none;">
                             <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 w-100">
-                                {{-- Botón Editar --}}
+                                
                                 <a href="{{ route('user.edit', $user->id) }}"
                                    class="btn btn-primary btn-circle table-btn w-100"
                                    title="Editar">
                                     <i class="far fa-edit"></i>
                                 </a>
 
-                                {{-- Botón Eliminar --}}
+                                
                                 <form id="form-delete-{{ $user->id }}"
                                       action="{{ route('user.destroy', $user->id) }}"
                                       method="POST" class="w-100">
@@ -123,6 +130,68 @@
     </div>
 </div>
 
+
+<div id="helpWindowContent" class="d-none help-popup">
+    <div class="help-content-box">
+        <h4>Formato Requerido para Importación de Usuarios</h4>
+        <p>La hoja de cálculo para la importación de usuarios debe contener exactamente los siguientes encabezados en la primera fila. La información de cada columna debe seguir el formato del ejemplo:</p>
+
+        <table class="table-bordered help-table">
+            <thead>
+                <tr>
+                    <th>Columna</th>
+                    <th>Descripción</th>
+                    <th>Ejemplo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>document</code></td>
+                    <td>Número de documento de identidad del usuario.</td>
+                    <td><code>123456789</code></td>
+                </tr>
+                <tr>
+                    <td><code>fullname</code></td>
+                    <td>Nombre completo del usuario.</td>
+                    <td><code>Juan Pérez</code></td>
+                </tr>
+                <tr>
+                    <td><code>email</code></td>
+                    <td>Correo electrónico del usuario.</td>
+                    <td><code>juan.perez@sena.edu.co</code></td>
+                </tr>
+                <tr>
+                    <td><code>password</code></td>
+                    <td>Contraseña inicial.</td>
+                    <td><code>123456789</code></td>
+                </tr>
+                <tr>
+                    <td><code>status</code></td>
+                    <td>Estado del usuario. Debe ser <code>ACTIVO</code> o <code>INACTIVO</code>.</td>
+                    <td><code>ACTIVO</code></td>
+                </tr>
+                <tr>
+                    <td><code>role_id</code></td>
+                    <td>ID numérico del rol (debe consultar los IDs en la base de datos).</td>
+                    <td><code>2</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6>Ejemplo visual del archivo de importación:</h6>
+        <div class="text-center">
+            <img src="{{ asset('template_excel/Example_user.jpeg') }}" alt="Ejemplo de archivo Excel/CSV para importación de usuarios" class="help-img img-fluid" />
+        </div>
+
+        <div class="alert-info help-alert">
+            Utilice el botón "Plantilla" para descargar un archivo con los encabezados listos para ser diligenciados.
+        </div>
+        <div class="text-end mt-3">
+             <button class="help-close-btn" onclick="window.close()">Cerrar</button>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('scripts')
@@ -137,6 +206,43 @@
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 
     <script>
+    function openHelpWindow(e) {
+        if (e && e.preventDefault) e.preventDefault();
+
+        const el = document.getElementById('helpWindowContent');
+        if (!el) {
+            alert('Contenido de ayuda no encontrado.');
+            return;
+        }
+
+        const content = el.innerHTML;
+        const baseTag = document.querySelector('base');
+        const baseHref = baseTag ? baseTag.href : window.location.origin + '/';
+        const customCss = @json(asset('css/custom.css?v=2.1.0'));
+
+        const helpWindow = window.open('', 'AyudaImportacion', 'width=900,height=700,scrollbars=yes,resizable=yes');
+        if (!helpWindow) {
+            alert('Popup bloqueado. Por favor permite popups para este sitio.');
+            return;
+        }
+
+        try {
+            helpWindow.document.open();
+            helpWindow.document.write('<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ayuda de Importación</title>');
+            helpWindow.document.write('<base href="' + baseHref + '">');
+            helpWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">');
+            helpWindow.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">');
+            helpWindow.document.write('<link rel="stylesheet" href="' + customCss + '">');
+            helpWindow.document.write('</head><body class="help-window-body">');
+            helpWindow.document.write(content);
+            helpWindow.document.write('</body></html>');
+            helpWindow.document.close();
+        } catch (err) {
+            console.error('Error abriendo ventana de ayuda:', err);
+            alert('No se pudo abrir la ventana de ayuda.');
+        }
+    }
+    
     $(document).ready(function() {
         if ($.fn.DataTable.isDataTable('#table_data')) {
             $('#table_data').DataTable().destroy();
@@ -200,7 +306,7 @@
 
 
                         
-                        doc.pageMargins = [35, 100, 35, 45];
+                        doc.pageMargins = [35, 80, 35, 45]; 
                         doc.defaultStyle = {
                             fontSize: 9,
                             color: '#333333',
@@ -217,18 +323,18 @@
                         
                         doc.header = function() {
                             return {
-                                margin: [35, 10, 35, 0],
+                                margin: [0, -20, 0, 0], // Margen negativo para jalar el encabezado hacia arriba
                                 stack: [
                                     {
                                         table: {
-                                            widths: ['25%', '75%'],
+                                            widths: ['15%', '85%'], 
                                             body: [[
                                                 {
                                                     image: 'data:image/png;base64,{{ base64_encode(file_get_contents(public_path("img/persa-logo.png"))) }}',
-                                                    width: 130,
+                                                    width: 80, 
                                                     alignment: 'center',
-                                                    border: [true, true, true, true],
-                                                    margin: [5, 8, 5, 8]
+                                                    border: [false, false, false, false], 
+                                                    margin: [0, 5, 0, 0] 
                                                 },
                                                 {
                                                     text: 'REPORTE GENERAL DE PERMISOS',
@@ -237,13 +343,13 @@
                                                     color: primary,
                                                     alignment: 'center',
                                                     margin: [0, 12, 0, 8],
-                                                    border: [true, true, true, true]
+                                                    border: [false, false, false, false]
                                                 }
                                             ]]
                                         },
                                         layout: {
-                                            hLineWidth: () => 2,
-                                            vLineWidth: () => 2,
+                                            hLineWidth: () => 0, 
+                                            vLineWidth: () => 0, 
                                             hLineColor: () => primary,
                                             vLineColor: () => primary
                                         }
@@ -251,7 +357,7 @@
                                     {
                                         canvas: [{
                                             type: 'line',
-                                            x1: 0, y1: 0, x2: 710, y2: 0,
+                                            x1: 0, y1: 0, x2: 790, y2: 0, 
                                             lineWidth: 2,
                                             lineColor: primary
                                         }],
@@ -278,7 +384,7 @@
                                     {
                                         canvas: [{
                                             type: 'line',
-                                            x1: 0, y1: 0, x2: 710, y2: 0,
+                                            x1: 0, y1: 0, x2: 790, y2: 0, 
                                             lineWidth: 1,
                                             lineColor: '#e0e0e0'
                                         }],
@@ -301,8 +407,6 @@
                             tableNode.table.widths = new Array(tableNode.table.body[0].length).fill('*'); 
                             tableNode.alignment = 'center';
                             tableNode.margin = [0, 10, 0, 0];
-
-                            const rowCount = tableNode.table.body.length;
 
                             for (let i = 1; i < rowCount; i++) {
                                 tableNode.table.body[i].forEach(cell => {

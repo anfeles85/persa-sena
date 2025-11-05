@@ -891,3 +891,83 @@ ESTILO DEL BOTON DE AYUDA...                                       ||
   border-radius: 2px;
   opacity: 0.8;
 }
+
+/* 
+=====================================================================
+ESTILO DE LAS VISTAS EMERGENTES ...                                ||        
+=====================================================================
+*/
+.help-popup {
+    padding: 18px;
+    background-color: #f4f4f4;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.help-content-box {
+    background-color: #fff;
+    padding: 18px;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.help-table {
+    width: 90%;
+    margin: 0 auto 0 auto;
+    border-collapse: collapse;
+}
+.help-table th,
+.help-table td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: left;
+}
+.help-table thead th {
+    background-color: #0d6efd;
+    color: #fff;
+    font-weight: 600;
+}
+
+.help-img {
+    max-width: 90%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.help-alert {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 12px;
+    border: 1px solid #bee5eb;
+}
+
+.help-close-btn {
+    padding: 8px 14px;
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.help-close-btn:hover { opacity: 0.95; }
+
+.help-content-box .fa,
+.help-content-box .fas,
+.help-content-box .far,
+.help-content-box .fab {
+    font-size: 14px;
+    line-height: 1;
+    vertical-align: middle;
+    margin-right: .45rem;
+}
+
+@media (max-width: 576px) {
+    .help-table, .help-content-box { padding: 12px; }
+    .help-table { width: 100%; }
+}
