@@ -162,7 +162,7 @@
         }
     </style>
     <div class="content-box">
-        <h4><i class="fas fa-search me-2"></i> Formato Requerido para Importación de Usuarios</h4>
+        <h4>Formato Requerido para Importación de Usuarios</h4>
         <p>La hoja de cálculo para la importación de usuarios debe contener exactamente los siguientes encabezados en la primera fila. La información de cada columna debe seguir el formato del ejemplo:</p>
         
         <table class="table-bordered table-format">
@@ -213,7 +213,6 @@
         </div>
 
         <div class="alert-info">
-            <i class="fas fa-exclamation-triangle me-1"></i>
             Utilice el botón "Plantilla" para descargar un archivo con los encabezados listos para ser diligenciados.
         </div>
         <div style="text-align: right; margin-top: 15px;">
