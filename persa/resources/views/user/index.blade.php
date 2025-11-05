@@ -5,22 +5,10 @@
 
 @section('content')
 
-{{-- FIX: Código CSS inyectado para eliminar el margen superior del body y alinear el encabezado azul --}}
-<style>
-    body {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-    }
-    /* Si tu plantilla principal usa un contenedor para todo el contenido (ej: .wrapper), también le quitamos el margen. */
-    .main-content, .wrapper {
-        padding-top: 0 !important;
-        margin-top: 0 !important;
-    }
-</style>
+
 
 <label class="fs-2">Usuarios</label>
 
-{{-- Filtros de roles --}}
 <form method="GET" action="{{ url()->current() }}" class="row g-2 mb-3">
     <div class="col-6 col-md-auto d-grid">
         <a href="{{ route('user.index') }}" class="btn btn-outline-primary w-100">Todos</a>
@@ -38,19 +26,19 @@
 
 <div class="row">
     <div class="col-lg-12 mb-4 gap-2 d-md-flex justify-content-md-start">
-        {{-- Formulario de importación --}}
+    
         <form action="{{ route('user.import') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
             @csrf
             <input type="file" name="archivo" accept=".xlsx,.xls,.csv" required class="form-control form-control-sm" style="width:200px;">
             <button type="submit" class="btn btn-primary btn-sm">
-                <i class="fas fa-file-import me-1"></i> Importar Excel Instructores
+                <i class="fas fa-file-excel me-1"></i> Importar Excel Instructores
             </button>
         </form>
     </div>
     <div class="col-lg-12 mb-4 d-grid gap-2 d-md-flex justify-content-md-start">
         <a href="{{ route('user.create') }}" class="btn btn-success">Crear</a>
         
-        {{-- Botones de exportación --}}
+        
         <button id="exportExcelBtn" class="btn btn-success">
             <i class="fas fa-file-excel"></i> Excel
         </button>
@@ -58,12 +46,12 @@
             <i class="fas fa-file-pdf"></i> PDF
         </button>
 
-        {{-- Botones para descargar la plantilla en excel --}}
+        
         <a href="{{ asset('template_excel/usuarios_cursos.xlsx') }}" class="btn btn-primary d-flex align-items-center justify-content-center" download="usuarios.xlsx">
             <i class="fas fa-file-download me-1"></i> Plantilla
         </a>
         
-        {{-- Botón de Ayuda de expostacion --}}
+        
         <button id="help_import" class="btn btn-primary" onclick="openHelpWindow()" title="Ver formato de archivo de importación">
             <i class="fas fa-search me-1"></i> Ayuda de exportacion
         </button>
@@ -112,14 +100,14 @@
                         <td data-label="Estado">{{ $user->status }}</td>
                         <td id="buttons_DE" style="border-top: none;">
                             <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 w-100">
-                                {{-- Botón Editar --}}
+                                
                                 <a href="{{ route('user.edit', $user->id) }}"
                                    class="btn btn-primary btn-circle table-btn w-100"
                                    title="Editar">
                                     <i class="far fa-edit"></i>
                                 </a>
 
-                                {{-- Botón Eliminar --}}
+                                
                                 <form id="form-delete-{{ $user->id }}"
                                       action="{{ route('user.destroy', $user->id) }}"
                                       method="POST" class="w-100">
@@ -142,35 +130,18 @@
     </div>
 </div>
 
-{{-- Contenido Oculto para la Ventana Pop-up (Ayuda de exportacion) --}}
-<div id="helpWindowContent" style="display: none;">
-    {{-- estilos para la ventana emergente --}}
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; margin: 0; }
-        .content-box { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .table-primary th { background-color: #0d6efd; color: white; }
-        .table-bordered th, .table-bordered td { border: 1px solid #dee2e6; padding: 8px; }
-        .text-center { text-align: center; }
-        .alert-info { background-color: #d1ecf1; color: #0c5460; padding: 10px; border-radius: 5px; margin-top: 15px; border: 1px solid #bee5eb; }
-        .img-fluid { max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 4px; margin-top: 10px; }
-        h4 { margin-bottom: 20px; color: #0d6efd; }
-        h6 { margin-top: 20px; }
-        .table-format {
-            width: 90%; 
-            margin: 0 auto; 
-            border-collapse: collapse;
-        }
-    </style>
-    <div class="content-box">
+
+<div id="helpWindowContent" class="d-none help-popup">
+    <div class="help-content-box">
         <h4>Formato Requerido para Importación de Usuarios</h4>
         <p>La hoja de cálculo para la importación de usuarios debe contener exactamente los siguientes encabezados en la primera fila. La información de cada columna debe seguir el formato del ejemplo:</p>
-        
-        <table class="table-bordered table-format">
-            <thead class="table-primary">
+
+        <table class="table-bordered help-table">
+            <thead>
                 <tr>
-                    <th style="background-color: #0d6efd; color: white;">Columna</th>
-                    <th style="background-color: #0d6efd; color: white;">Descripción</th>
-                    <th style="background-color: #0d6efd; color: white;">Ejemplo</th>
+                    <th>Columna</th>
+                    <th>Descripción</th>
+                    <th>Ejemplo</th>
                 </tr>
             </thead>
             <tbody>
@@ -206,17 +177,17 @@
                 </tr>
             </tbody>
         </table>
-        
+
         <h6>Ejemplo visual del archivo de importación:</h6>
         <div class="text-center">
-            <img src="{{ asset('template_excel/Example_user.jpeg') }}" alt="Ejemplo de archivo Excel/CSV para importación de usuarios" class="img-fluid" />
+            <img src="{{ asset('template_excel/Example_user.jpeg') }}" alt="Ejemplo de archivo Excel/CSV para importación de usuarios" class="help-img img-fluid" />
         </div>
 
-        <div class="alert-info">
+        <div class="alert-info help-alert">
             Utilice el botón "Plantilla" para descargar un archivo con los encabezados listos para ser diligenciados.
         </div>
-        <div style="text-align: right; margin-top: 15px;">
-             <button onclick="window.close()" style="padding: 8px 15px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">Cerrar</button>
+        <div class="text-end mt-3">
+             <button class="help-close-btn" onclick="window.close()">Cerrar</button>
         </div>
     </div>
 </div>
@@ -235,25 +206,41 @@
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 
     <script>
-    // FUNCIÓN DE VENTANA POP-UP (SOLUCIÓN TIPO VISOR)
-    function openHelpWindow() {
-        // Obtener el contenido HTML de la ayuda (incluyendo los estilos inline)
-        const content = document.getElementById('helpWindowContent').innerHTML;
+    function openHelpWindow(e) {
+        if (e && e.preventDefault) e.preventDefault();
 
-        //Abrir una nueva ventana con dimensiones personalizadas
-        const helpWindow = window.open('', 'AyudaImportacion', 'width=850,height=650,scrollbars=yes,resizable=yes');
-        
-        // Construir el documento HTML completo para la nueva ventana
-        helpWindow.document.write('<!DOCTYPE html><html><head><title>Ayuda de Importación</title>');
-        // Incluye Font Awesome para el icono de lupa
-        helpWindow.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">'); 
-        helpWindow.document.write('</head><body>');
-        
-        // Escribe el contenido del DIV (que incluye los estilos y la estructura)
-        helpWindow.document.write(content);
-        
-        helpWindow.document.write('</body></html>');
-        helpWindow.document.close(); // Finaliza la escritura del documento
+        const el = document.getElementById('helpWindowContent');
+        if (!el) {
+            alert('Contenido de ayuda no encontrado.');
+            return;
+        }
+
+        const content = el.innerHTML;
+        const baseTag = document.querySelector('base');
+        const baseHref = baseTag ? baseTag.href : window.location.origin + '/';
+        const customCss = @json(asset('css/custom.css?v=2.1.0'));
+
+        const helpWindow = window.open('', 'AyudaImportacion', 'width=900,height=700,scrollbars=yes,resizable=yes');
+        if (!helpWindow) {
+            alert('Popup bloqueado. Por favor permite popups para este sitio.');
+            return;
+        }
+
+        try {
+            helpWindow.document.open();
+            helpWindow.document.write('<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ayuda de Importación</title>');
+            helpWindow.document.write('<base href="' + baseHref + '">');
+            helpWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">');
+            helpWindow.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">');
+            helpWindow.document.write('<link rel="stylesheet" href="' + customCss + '">');
+            helpWindow.document.write('</head><body class="help-window-body">');
+            helpWindow.document.write(content);
+            helpWindow.document.write('</body></html>');
+            helpWindow.document.close();
+        } catch (err) {
+            console.error('Error abriendo ventana de ayuda:', err);
+            alert('No se pudo abrir la ventana de ayuda.');
+        }
     }
     
     $(document).ready(function() {
