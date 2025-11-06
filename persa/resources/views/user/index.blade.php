@@ -47,7 +47,7 @@
         </button>
 
         
-        <a href="{{ asset('template_excel/usuarios_cursos.xlsx') }}" class="btn btn-primary d-flex align-items-center justify-content-center" download="usuarios.xlsx">
+        <a href="{{ asset('template_excel/usuarios.xlsx') }}" class="btn btn-primary d-flex align-items-center justify-content-center" download="usuarios.xlsx">
             <i class="fas fa-file-download me-1"></i> Plantilla
         </a>
         
@@ -164,16 +164,6 @@
                     <td><code>password</code></td>
                     <td>Contraseña inicial.</td>
                     <td><code>123456789</code></td>
-                </tr>
-                <tr>
-                    <td><code>status</code></td>
-                    <td>Estado del usuario. Debe ser <code>ACTIVO</code> o <code>INACTIVO</code>.</td>
-                    <td><code>ACTIVO</code></td>
-                </tr>
-                <tr>
-                    <td><code>role_id</code></td>
-                    <td>ID numérico del rol (debe consultar los IDs en la base de datos).</td>
-                    <td><code>2</code></td>
                 </tr>
             </tbody>
         </table>
@@ -323,7 +313,7 @@
                         
                         doc.header = function() {
                             return {
-                                margin: [0, -20, 0, 0], // Margen negativo para jalar el encabezado hacia arriba
+                                margin: [0, -20, 0, 0],
                                 stack: [
                                     {
                                         table: {

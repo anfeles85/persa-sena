@@ -4,74 +4,136 @@ namespace App\Imports;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithStartRow;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 
-class UsersImport implements ToModel, WithHeadingRow
+class UsersImport implements ToModel, WithHeadingRow, WithStartRow, SkipsEmptyRows
 {
-    private bool $validatedHeaders = false;
+    public function startRow(): int
+    {
+        return 1;
+    }
+
+    private function mapRowKeys(array $row): array
+    {
+        $normalized = [];
+        foreach ($row as $k => $v) {
+            $key = mb_strtolower(trim((string) $k));
+            $key = preg_replace('/\s+/', '_', $key);
+            $normalized[$key] = is_null($v) ? null : trim((string) $v);
+        }
+
+        $documentKeys = ['document', 'documento', 'dni', 'identificacion', 'identificación', 'id'];
+        $fullnameKeys = ['fullname', 'full_name', 'name', 'nombre', 'nombres', 'apellidos'];
+        $emailKeys = ['email', 'correo', 'correo_electronico', 'correo_electrónico', 'correo electrónico', 'mail'];
+
+        $getFirst = function(array $keys) use ($normalized) {
+            foreach ($keys as $k) {
+                if (array_key_exists($k, $normalized) && $normalized[$k] !== null && $normalized[$k] !== '') {
+                    return $normalized[$k];
+                }
+            }
+            return null;
+        };
+
+        $document = $getFirst($documentKeys);
+        $fullname = $getFirst($fullnameKeys);
+        $email = $getFirst($emailKeys);
+
+        if (empty($document) || empty($email) || empty($fullname)) {
+            $values = array_values($row);
+            $flatten = array_map(function($v){ return is_null($v) ? null : trim((string)$v); }, $values);
+
+            if (empty($email)) {
+                foreach ($flatten as $cell) {
+                    if ($cell !== null && $cell !== '' && filter_var($cell, FILTER_VALIDATE_EMAIL)) {
+                        $email = $cell;
+                        break;
+                    }
+                }
+            }
+
+            if (empty($document)) {
+                foreach ($flatten as $cell) {
+                    if ($cell === null || $cell === '') continue;
+                    if ($email !== null && $cell === $email) continue;
+                    if (preg_match('/^[\dA-Za-z\-\_]{4,}$/', $cell)) {
+                        $document = $cell;
+                        break;
+                    }
+                }
+            }
+
+            if (empty($fullname)) {
+                foreach ($flatten as $cell) {
+                    if ($cell === null || $cell === '') continue;
+                    if ($cell === $email || $cell === $document) continue;
+                    $fullname = $cell;
+                    break;
+                }
+            }
+        }
+
+        return [
+            'document' => $document,
+            'fullname' => $fullname,
+            'email'    => $email,
+        ];
+    }
 
     public function model(array $row)
     {
-        // Traducción estricta del campo 'status' (solo acepta activo/inactivo en ES o EN)
-        $statusRaw = isset($row['status']) ? trim(strtolower($row['status'])) : '';
-        if (in_array($statusRaw, ['active', 'activo'])) {
-            $row['status'] = 'ACTIVO';
-        } elseif (in_array($statusRaw, ['inactive', 'inactivo'])) {
-            $row['status'] = 'INACTIVO';
-        } else {
+        $allEmpty = true;
+        foreach ($row as $cell) {
+            if (!is_null($cell) && trim((string)$cell) !== '') {
+                $allEmpty = false;
+                break;
+            }
+        }
+        if ($allEmpty) {
+            return null;
+        }
+
+        $mapped = $this->mapRowKeys($row);
+
+        $headers = ['document','fullname','email'];
+        $isHeaderRow = true;
+        foreach ($headers as $h) {
+            if (!isset($mapped[$h]) || strtolower(trim((string)$mapped[$h])) !== $h) {
+                $isHeaderRow = false;
+                break;
+            }
+        }
+        if ($isHeaderRow) {
+            Log::info('UsersImport: fila de encabezado detectada y omitida');
+            return null;
+        }
+
+        if (empty($mapped['document']) || empty($mapped['email'])) {
+            $rowValues = array_map(function($v){ return is_null($v) ? '' : trim((string)$v); }, array_values($row));
+            Log::error('UsersImport: fila inválida detectada', ['detected_values' => $rowValues, 'mapped' => $mapped]);
             throw ValidationException::withMessages([
-            'status' => ["Valor de status inválido: '{$row['status']}'. Debe ser 'activo'/'inactivo' (ES) o 'active'/'inactive' (EN)."],
+                'import_row' => [
+                    'Falta "document" o "email" en una fila. Valores detectados: ' . implode(' | ', $rowValues) .
+                    '. Asegure encabezados: Documento, Nombre, Email (o coloque valores en columnas esperadas).'
+                ]
             ]);
         }
-        // Validar los encabezados solo una vez
-        if (!$this->validatedHeaders) {
-            $this->validateHeaders(array_keys($row));
-            $this->validatedHeaders = true;
-        }
-        // Verificar si el usuario ya existe por 'documento'
-        if (!isset($row['document']) || empty($row['document'])) {
-            return null;
-        }
 
-        // Verificar si el usuario ya existe por 'documento' o 'email'
-        $existingUser = User::where('document', $row['document'])
-            ->orWhere('email', $row['email'])
-            ->first();
-        // Si el usuario ya existe, no crear uno nuevo
-        if ($existingUser) {
-            return null;
-        }
-        //Hash de la contraseña usando el valor del 'documento'
-        $hashedPassword = Hash::make($row['document']);
+        $forcedStatus = 'ACTIVO';
+        $forcedRoleId = 2;
 
-        // utiliza un valor predeterminado de 2 si role_id no está presente o está vacío
-        $role_id = (int) (isset($row['role_id']) && $row['role_id'] !== '' ? $row['role_id'] : 2);
-
-        // Crear un nuevo usuario
         return new User([
-            'document' => $row['document'],
-            'fullname' => $row['fullname'] ?? null,
-            'email' => $row['email'],
-            'role_id' => $role_id,
-            'status' => $row['status'] ?? 'ACTIVO',
-            'password' => $hashedPassword,
+            'document' => $mapped['document'],
+            'fullname' => $mapped['fullname'] ?? null,
+            'email'    => $mapped['email'],
+            'role_id'  => $forcedRoleId,
+            'status'   => $forcedStatus,
+            'password' => Hash::make($mapped['document']),
         ]);
-    }
-
-    private function validateHeaders($headers)
-    {
-        // make role_id optional so imports without that column use a default value
-        $requiredHeaders = ['document', 'fullname', 'email', 'status'];
-
-        $missing = array_diff($requiredHeaders, $headers);
-        $missing = array_diff($requiredHeaders, $headers);
-
-        if (!empty($missing)) {
-            throw ValidationException::withMessages([
-                'headers' => ['Faltan las siguientes columnas en el Excel: ' . implode(', ', $missing)],
-            ]);
-        }
     }
 }
