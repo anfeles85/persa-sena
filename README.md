@@ -16,11 +16,30 @@ El sistema centraliza el manejo de **usuarios, roles, permisos, sedes y reportes
   <img src="https://img.shields.io/badge/PHP-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white" height="25">
   <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white" height="25">
   <img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white" height="25">
-</p>⚙️ Frameworks y Librerías
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" height="25">
+</p>
+
+⚙️ Frameworks y Librerías
 
 <p align="center">
   <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" height="25">
   <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" height="25">
+  <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white" height="25">
+  <img src="https://img.shields.io/badge/DataTables-1D7298?style=for-the-badge&logo=datatables&logoColor=white" height="25">
+  <img src="https://img.shields.io/badge/Composer-885630?style=for-the-badge&logo=composer&logoColor=white" height="25">
+</p>
+
+
+**Librerías Frontend detalladas:**
+
+<p align="center">
+  <img src="https://img.shields.io/badge/dompdf-FF6B6B?style=for-the-badge&logo=pdf&logoColor=white" height="25">
+  <img src="https://img.shields.io/badge/Font%20Awesome-228AE6?style=for-the-badge&logo=fontawesome&logoColor=white" height="25">
+  <img src="https://img.shields.io/badge/Google%20reCAPTCHA-4285F4?style=for-the-badge&logo=google&logoColor=white" height="25">
+  <img src="https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white" height="25">
+  <img src="https://img.shields.io/badge/Argon%20Dashboard-5e72e4?style=for-the-badge&logo=creativetim&logoColor=white" height="25">
+</p>
+
 </p>
 
 ---
@@ -84,23 +103,9 @@ php artisan serve
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/H2kl0">
-        <img src="https://github.com/H2kl0.png" width="100px;" alt="H2kl0"/><br />
-        <sub><b>Juan Fernando Velásquez Sarmiento</b></sub>
-      </a>
-    </td>
-    <td align="center">
       <a href="https://github.com/Linavs18">
         <img src="https://github.com/Linavs18.png" width="100px;" alt="Linavs18"/><br />
         <sub><b>Lina Vanessa Salcedo Cuellar</b></sub>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/tiannrg">
-        <img src="https://github.com/tiannrg.png" width="100px;" alt="tiannrg"/><br />
-        <sub><b>Sebastian Rojas Gonzalez</b></sub>
       </a>
     </td>
     <td align="center">
@@ -109,22 +114,32 @@ php artisan serve
         <sub><b>Juan Sebastian Rodriguez Cruz</b></sub>
       </a>
     </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/brahianqf07">
-        <img src="https://github.com/brahianqf07.png" width="100px;" alt="brahianqf07"/><br />
-        <sub><b>Brahian Stiven Quintero Florez</b></sub>
-      </a>
-    </td>
     <td align="center">
       <a href="https://github.com/AlejandroOcampo20">
         <img src="https://github.com/AlejandroOcampo20.png" width="100px;" alt="AlejandroOcampo20"/><br />
         <sub><b>Manuel Alejandro Ocampo Saya</b></sub>
       </a>
     </td>
+    <td align="center">
+      <a href="https://github.com/marulandadanna2">
+        <img src="https://github.com/marulandadanna2.png" width="100px;" alt="marulandadanna2"/><br />
+        <sub><b>Danna Sofia Marulanda Bahena</b></sub>
+      </a>
+    </td>
   </tr>
-  <tr>
+    <tr>
+    <td align="center">
+      <a href="https://github.com/H2kl0">
+        <img src="https://github.com/H2kl0.png" width="100px;" alt="H2kl0"/><br />
+        <sub><b>Juan Fernando Velasquez Sarmiento</b></sub>
+      </a>
+    </td>
+        <td align="center">
+      <a href="https://github.com/tiannrg">
+        <img src="https://github.com/tiannrg.png" width="100px;" alt="tiannrg"/><br />
+        <sub><b>Sebastian Rojas Gonzalez</b></sub>
+      </a>
+    </td>
     <td align="center">
       <a href="https://github.com/tatiana-carvajal">
         <img src="https://github.com/tatiana-carvajal.png" width="100px;" alt="tatiana-carvajal"/><br />
@@ -132,9 +147,9 @@ php artisan serve
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/marulandadanna2">
-        <img src="https://github.com/marulandadanna2.png" width="100px;" alt="marulandadanna2"/><br />
-        <sub><b>Danna Sofia Marulanda Bahena</b></sub>
+      <a href="https://github.com/brahianqf07">
+        <img src="https://github.com/brahianqf07.png" width="100px;" alt="brahianqf07"/><br />
+        <sub><b>Brahian Stiven Quintero Florez</b></sub>
       </a>
     </td>
   </tr>
