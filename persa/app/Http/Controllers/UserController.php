@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
+use Illuminate\Database\QueryException;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
 use Throwable;
@@ -43,22 +44,29 @@ class UserController extends Controller
     ];
 
     public function import(Request $request)
-    {
-        $request->validate([
-            'archivo' => 'required|mimes:xlsx',
-        ]);
+{
+    $request->validate([
+        'archivo' => 'required|mimes:xlsx',
+    ]);
 
-        try {
-            Excel::import(new UsersImport, $request->file('archivo'));
+    try {
+        Excel::import(new UsersImport, $request->file('archivo'));
 
         return back()->with('success', 'Archivo importado correctamente.');
-        } catch (ValidationException $e) {
-
-            return back()->with('error', 'Error al importar: ' . implode(', ', $e->errors()['headers'] ?? ['Error desconocido']));
-        } catch (Throwable $e) {
-            return back()->with('error', 'Ocurrió un error inesperado: ' . $e->getMessage());
+    } catch (ValidationException $e) {
+    $headers = ($e->errors() ?? [])['headers'] ?? ['Error desconocido'];
+    $message = is_array($headers) ? implode(', ', $headers) : (string) $headers;
+    return back()->with('error', 'Error al importar: ' . $message);
+    } catch (QueryException $e) {
+        if ($e->getCode() == 23000) {
+            // Error de integridad: registro duplicado
+            return back()->with('error', 'Uno o más registros ya existen en la base de datos. Verifique que los documentos de identidad no se repitan en el archivo.');
         }
+        return back()->with('error', 'Error en la base de datos: ' . $e->getMessage());
+    } catch (Throwable $e) {
+        return back()->with('error', 'Ocurrió un error inesperado: ' . $e->getMessage());
     }
+}
 
     public function index()
     {
