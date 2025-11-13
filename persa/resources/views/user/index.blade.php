@@ -102,15 +102,15 @@
                             <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 w-100">
                                 
                                 <a href="{{ route('user.edit', $user->id) }}"
-                                   class="btn btn-primary btn-circle table-btn w-100"
-                                   title="Editar">
+                                    class="btn btn-primary btn-circle table-btn w-100"
+                                    title="Editar">
                                     <i class="far fa-edit"></i>
                                 </a>
 
                                 
                                 <form id="form-delete-{{ $user->id }}"
-                                      action="{{ route('user.destroy', $user->id) }}"
-                                      method="POST" class="w-100">
+                                        action="{{ route('user.destroy', $user->id) }}"
+                                        method="POST" class="w-100">
                                     @csrf
                                     @method('DELETE')
                                     <button type="button"
@@ -177,7 +177,7 @@
             Utilice el botón "Plantilla" para descargar un archivo con los encabezados listos para ser diligenciados.
         </div>
         <div class="text-end mt-3">
-             <button class="help-close-btn" onclick="window.close()">Cerrar</button>
+                <button class="help-close-btn" onclick="window.close()">Cerrar</button>
         </div>
     </div>
 </div>
@@ -276,97 +276,65 @@
                     exportOptions: { columns: ':not(:last-child)' },
 
                     customize: function (doc) {
+                        if (doc.content[0] && (doc.content[0].text || doc.content[0].style === 'title')) {
+                            doc.content.splice(0, 1);
+                        }
 
-                    if (doc.content[0] && (doc.content[0].text || doc.content[0].style === 'title')) {
-                        doc.content.splice(0, 1);
-                    }
-
-                    
-                    if (doc.content[0]) {
-                        doc.content[0].margin = [0, 20, 0, 0];
-                    }
-
-                    
-                    var primary = '#27AE60';
-                    var secondary = '#1E8449';
-                    var lightGreen = '#C8E6C9';
-                    var grayText = '#666666';
-                    var tableBorder = '#E0E0E0';
-
-
-
-                        
-                        doc.pageMargins = [35, 80, 35, 45]; 
+                        doc.pageMargins = [35, 80, 35, 45];
                         doc.defaultStyle = {
                             fontSize: 9,
-                            color: '#333333',
-                            font: 'Roboto'
+                            color: '#333333'
                         };
                         doc.styles.tableHeader = {
-                            fillColor: primary,
+                            fillColor: '#27AE60',
                             color: '#FFFFFF',
                             bold: true,
                             fontSize: 10,
                             alignment: 'center'
                         };
 
-                        
                         doc.header = function() {
                             return {
-                                margin: [0, -20, 0, 0],
+                                margin: [35, 15, 35, 0],
                                 stack: [
                                     {
-                                        table: {
-                                            widths: ['15%', '85%'], 
-                                            body: [[
-                                                {
-                                                    image: 'data:image/png;base64,{{ base64_encode(file_get_contents(public_path("img/persa-logo.png"))) }}',
-                                                    width: 80, 
-                                                    alignment: 'center',
-                                                    border: [false, false, false, false], 
-                                                    margin: [0, 5, 0, 0] 
-                                                },
-                                                {
-                                                    text: 'REPORTE GENERAL DE PERMISOS',
-                                                    bold: true,
-                                                    fontSize: 18,
-                                                    color: primary,
-                                                    alignment: 'center',
-                                                    margin: [0, 12, 0, 8],
-                                                    border: [false, false, false, false]
-                                                }
-                                            ]]
-                                        },
-                                        layout: {
-                                            hLineWidth: () => 0, 
-                                            vLineWidth: () => 0, 
-                                            hLineColor: () => primary,
-                                            vLineColor: () => primary
-                                        }
+                                        columns: [
+                                            {
+                                                image: 'data:image/png;base64,{{ base64_encode(file_get_contents(public_path("img/persa-logo.png"))) }}',
+                                                width: 60,
+                                                alignment: 'left'
+                                            },
+                                            {
+                                                text: 'REPORTE DE USUARIOS',
+                                                bold: true,
+                                                fontSize: 16,
+                                                color: '#27AE60',
+                                                alignment: 'center',
+                                                margin: [0, 15, 0, 0]
+                                            }
+                                        ]
                                     },
                                     {
                                         canvas: [{
                                             type: 'line',
-                                            x1: 0, y1: 0, x2: 790, y2: 0, 
-                                            lineWidth: 2,
-                                            lineColor: primary
+                                            x1: 0, y1: 0, x2: 520, y2: 0,
+                                            lineWidth: 1.5,
+                                            lineColor: '#27AE60'
                                         }],
-                                        margin: [0, 8, 0, 0]
+                                        margin: [0, 5, 0, 0]
                                     },
                                     {
-                                        text: [
-                                            { text: 'Generado el: ', bold: true, color: '#333', fontSize: 10 },
-                                            { text: '{{ date("d/m/Y H:i:s") }}', color: grayText, fontSize: 10 }
-                                        ],
+                                        text: 'Generado el {{ date("d/m/Y H:i:s") }}',
+                                        fontSize: 9,
                                         italics: true,
                                         alignment: 'right',
+                                        color: '#666',
                                         margin: [0, 3, 10, 0]
                                     }
                                 ]
                             };
                         };
 
-                        
                         doc.footer = function(currentPage, pageCount) {
                             return {
                                 margin: [35, 5, 35, 10],
@@ -374,9 +342,9 @@
                                     {
                                         canvas: [{
                                             type: 'line',
-                                            x1: 0, y1: 0, x2: 790, y2: 0, 
+                                            x1: 0, y1: 0, x2: 520, y2: 0,
                                             lineWidth: 1,
-                                            lineColor: '#e0e0e0'
+                                            lineColor: '#E0E0E0'
                                         }],
                                         margin: [0, 0, 0, 8]
                                     },
@@ -385,7 +353,7 @@
                                         alignment: 'center',
                                         fontSize: 9,
                                         italics: true,
-                                        color: grayText
+                                        color: '#666'
                                     }
                                 ]
                             };
@@ -393,14 +361,14 @@
 
                         const tableNode = doc.content[doc.content.length - 1];
                         if (tableNode && tableNode.table) {
-                            
-                            tableNode.table.widths = new Array(tableNode.table.body[0].length).fill('*'); 
+                            const rowCount = tableNode.table.body.length;
+                            tableNode.table.widths = new Array(tableNode.table.body[0].length).fill('*');
                             tableNode.alignment = 'center';
                             tableNode.margin = [0, 10, 0, 0];
 
                             for (let i = 1; i < rowCount; i++) {
                                 tableNode.table.body[i].forEach(cell => {
-                                    cell.fillColor = (i % 2 === 0) ? lightGreen : '#fff';
+                                    cell.fillColor = (i % 2 === 0) ? '#C8E6C9' : '#FFFFFF';
                                     cell.alignment = 'center';
                                     cell.fontSize = 9;
                                     cell.margin = [5, 5, 5, 5];
@@ -410,12 +378,8 @@
                             tableNode.layout = {
                                 hLineWidth: (i, node) => (i === 0 || i === node.table.body.length) ? 1 : 0.5,
                                 vLineWidth: () => 0.5,
-                                hLineColor: () => tableBorder,
-                                vLineColor: () => tableBorder,
-                                paddingLeft: () => 5,
-                                paddingRight: () => 5,
-                                paddingTop: () => 4,
-                                paddingBottom: () => 4
+                                hLineColor: () => '#E0E0E0',
+                                vLineColor: () => '#E0E0E0'
                             };
                         }
                     }
