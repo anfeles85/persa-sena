@@ -23,7 +23,7 @@
         
         
         <button id="help_import" class="btn btn-primary" onclick="openHelpWindow(event)" title="Ver formato de archivo de importación">
-            <i class="fas fa-search me-1"></i> Ayuda de exportación
+            <i class="fas fa-search me-1"></i> Ayuda de importación
         </button>
     </div>
 </div>
