@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    
     function initializeDataTable() {
         if (window.innerWidth > 1520) {
             if (!$.fn.DataTable.isDataTable('#table_data')) {
@@ -12,8 +13,8 @@ $(document).ready(function () {
                             next: "Siguiente"
                         },
                         search: "Buscar:",
-                        info: "Mostrando START a END de TOTAL registros",
-                        infoEmpty: "",
+                        info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                        infoEmpty: "Mostrando 0 registros",
                         emptyTable: "No existen registros"
                     }
                 };
