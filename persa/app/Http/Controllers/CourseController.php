@@ -83,7 +83,7 @@ class CourseController extends Controller
     
             if ($imported === 0 && count($skipped) === 0) {
                 return redirect()->route('course.index')
-                    ->with('error', 'El archivo no contiene registros válidos para importar.');
+                    ->with('error', 'Uno o más registros ya existen en la base de datos. Verifique que los numeros de los grupos no se repitan en el archivo.');
             }
 
             if (!empty($groupedErrors) || count($skipped) > 0) {
