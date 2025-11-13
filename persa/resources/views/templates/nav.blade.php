@@ -1,4 +1,4 @@
-<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main">
+<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main" style="overflow-y: auto; max-height: 100vh;">
   <div class="sidenav-header">
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
        aria-hidden="true" id="iconSidenav"></i>
@@ -7,13 +7,24 @@
     </a>
   </div>
   <hr class="horizontal dark mt-0">
+  
   <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
     <ul class="navbar-nav">
 
       @can('coordinador')
       <li class="nav-item">
-        <a class="nav-link {{ (request()->routeIs('user.*') && !request()->routeIs('user.profile')) ? 'active' : '' }}"
-           href="{{ route('user.index') }}">
+        <a class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}" href="{{ route('index') }}">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fas fa-globe text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Dashboard</span>
+        </a>
+      </li>
+      @endcan
+
+      @can('coordinador')
+      <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('user.*') && !request()->routeIs('user.profile') ? 'active' : '' }}" href="{{ route('user.index') }}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fas fa-user text-dark text-sm opacity-10"></i>
           </div>
@@ -40,9 +51,7 @@
           <span class="nav-link-text ms-1">Tipo de permiso</span>
         </a>
       </li>
-      @endcan
 
-      @can('coordinador')
       <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('career.*') ? 'active' : '' }}" href="{{ route('career.index') }}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -51,9 +60,7 @@
           <span class="nav-link-text ms-1">Programa</span>
         </a>
       </li>
-      @endcan
 
-      @can('coordinador')
       <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('location.*') ? 'active' : '' }}" href="{{ route('location.index') }}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -62,9 +69,7 @@
           <span class="nav-link-text ms-1">Sede</span>
         </a>
       </li>
-      @endcan
 
-      @can('coordinador')
       <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('course.*') ? 'active' : '' }}" href="{{ route('course.index') }}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -84,9 +89,7 @@
           <span class="nav-link-text ms-1">Reportes</span>
         </a>
       </li>
-      @endcan
 
-      @can('coordinador-instructor')
       <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('apprentice.*') ? 'active' : '' }}" href="{{ route('apprentice.index') }}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
