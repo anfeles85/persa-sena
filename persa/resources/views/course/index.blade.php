@@ -10,9 +10,10 @@
         <form action="{{ route('course.import') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
             @csrf
             <input type="file" name="archivo" accept=".xlsx,.xls,.csv" required class="form-control form-control-sm" />
-            <button type="submit" class="btn btn-primary btn-sm">
+           <button type="submit" id="importBtn" class="btn btn-primary btn-sm">
                 <i class="fas fa-file-excel me-1"></i> Importar Excel de Fichas
             </button>
+
         </form>
         <a href="{{ route('course.create') }}" class="btn btn-success">Crear</a>
         
@@ -190,4 +191,18 @@
         }
     }
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form[action="{{ route('course.import') }}"]');
+            const importBtn = document.getElementById('importBtn');
+
+            if (form && importBtn) {
+            form.addEventListener('submit', () => {
+            importBtn.disabled = true;
+            importBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> <span style="color: #fff;">Importando...</span>';
+            });
+            }
+        });
+    </script>
+
 @endsection
