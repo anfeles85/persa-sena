@@ -3,7 +3,7 @@
 @section('header', 'Tipos de Permiso')
 @section('content')
 
-<label class="fs-2">Tipo de permisos</label>
+<label class="fs-2">Tipo de Permisos</label>
 
 <div class="row">
     <div class="col-lg-12 mb-4 d-grid gap-2 d-md-block">

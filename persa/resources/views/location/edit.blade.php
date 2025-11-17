@@ -4,7 +4,7 @@
 @section('content')
 
 <div>
-    <label for="" class="fs-3">Editar sede</label>
+    <label for="" class="fs-3">Editar Sede</label>
         <div class="col-lg-12 mb-4">
             @if ($errors->any())
                 <div class="alert alert-danger">

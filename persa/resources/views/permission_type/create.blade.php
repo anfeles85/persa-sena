@@ -4,7 +4,7 @@
 @section('content')
 
     <div>
-        <label class="fs-3">Crear tipo de permiso</label>
+        <label class="fs-3">Crear Tipo de Permiso</label>
         <div class="col-lg-12 mb-4">
             <form action="{{ route('permission_type.store') }}" method="POST">
                 @csrf
