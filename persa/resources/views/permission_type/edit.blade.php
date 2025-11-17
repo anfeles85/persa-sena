@@ -4,7 +4,7 @@
 @section('content')
 
 <div>
-    <label for="" class="fs-3">Editar tipo de permiso</label>
+    <label for="" class="fs-3">Editar Tipo de Permiso</label>
         <div class="col-lg-12-mb-4">
             <form action="{{ route('permission_type.update', $permission_type['id']) }}" method="POST">
                 @csrf

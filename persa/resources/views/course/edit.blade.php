@@ -1,9 +1,9 @@
 @extends('templates.base')
-@section('title', 'Editar Curso')
-@section('header', 'Editar Curso')
+@section('title', 'Editar Grupos')
+@section('header', 'Editar Grupos')
 @section('content')
     <div>
-        <label class="fs-3">Editar Curso</label>
+        <label class="fs-3">Editar Grupos</label>
         <div class="col-lg-12 mb-4">
             <form action="{{ route('course.update', $course['id']) }}" method="POST">
                 @csrf

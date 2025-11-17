@@ -1,9 +1,9 @@
 @extends('templates.base')
-@section('title', 'Crear Curso')
-@section('header', 'Crear Curso')
+@section('title', 'Crear Grupo')
+@section('header', 'Crear Grupo')
 @section('content')
     <div>
-        <label class="fs-3">Crear Curso</label>
+        <label class="fs-3">Crear Grupos</label>
         <div class="col-lg-12 mb-4">
             <form action="{{ route('course.store') }}" method="POST">
                 @csrf
