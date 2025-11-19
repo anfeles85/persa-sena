@@ -11,6 +11,7 @@ use App\Models\Course;
 use App\Models\Location;
 use App\Models\Permission;
 use App\Models\PermissionType;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -103,6 +104,22 @@ class PermissionController extends Controller
             ->select('id', 'number_group', 'career_id')
             ->orderBy('number_group')
             ->get();
+
+        $permissions = $query->get();
+    
+        if ($roleId == 2) {
+            $courses = User::find(Auth::id())
+                ->instructorCourses()
+                ->with('career:id,name')
+                ->select('course.id', 'course.number_group', 'course.career_id')
+                ->orderBy('course.number_group')
+                ->get();
+        } else {
+            $courses = Course::with('career:id,name')
+                ->select('id', 'number_group', 'career_id')
+                ->orderBy('number_group')
+                ->get();
+        }
 
         return view('permission.index', compact('permissions', 'courses'));
     }

@@ -40,8 +40,10 @@
 
     @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
         <div class="col-12 col-md-auto">
-            <select name="course_id" class="form-control">
-                <option value="">Ficha</option>
+            <select name="course_id" class="form-control" {{ $courses->isEmpty() ? 'disabled' : '' }}>
+                <option value="">
+                    {{ $courses->isEmpty() ? 'Sin fichas asignadas' : 'Ficha' }}
+                </option>
                 @foreach($courses as $course)
                     <option value="{{ $course->id }}" {{ request('course_id')==$course->id ? 'selected' : '' }}>
                         {{ $course->number_group }} - {{ $course->career->name }}
