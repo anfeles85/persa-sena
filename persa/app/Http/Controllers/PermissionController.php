@@ -145,7 +145,7 @@ class PermissionController extends Controller
              return redirect()
                  ->route('permission.create')
                  ->withInput()
-                 ->withErrors(['permission_date' => 'Ya tienes un permiso activo para esta fecha. Deben cancelarlo primero si deseas crear uno nuevo.']);
+                 ->with('error', 'Ya tienes un permiso en proceso');
          }
 
         $data = $request->only([
