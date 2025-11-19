@@ -56,7 +56,7 @@ class CourseImport implements
             'shift'        => $row['shift'] ?? $row['jornada'] ?? null,
             'trimester'    => $row['trimester'] ?? $row['trimestre'] ?? null,
             'year'         => $row['year'] ?? $row['año'] ?? null,
-            'status'       => $row['status'] ?? $row['estado'] ?? 'ACTIVO',
+            'status'       => 'ACTIVO',
             'career_id'    => $career->id,
         ]);
     }
@@ -68,7 +68,6 @@ class CourseImport implements
             'shift'        => 'required|string|max:50',
             'trimester'    => 'required|string|max:10',
             'year'         => 'required|numeric|min:2000',
-            'status'       => 'required|string|max:50',
             'career'       => 'required|string|max:255',
         ];
     }
@@ -80,7 +79,6 @@ class CourseImport implements
             'shift.required'        => 'La jornada es obligatoria.',
             'trimester.required'    => 'El trimestre es obligatorio.',
             'year.required'         => 'El año es obligatorio.',
-            'status.required'       => 'El estado es obligatorio.',
             'career.required'       => 'El programa es obligatorio.',
         ];
     }
@@ -104,7 +102,7 @@ class CourseImport implements
 
     private function validateHeaders($headers)
     {
-        $requiredHeaders = ['number_group', 'shift', 'trimester', 'year', 'status', 'career'];
+        $requiredHeaders = ['number_group', 'shift', 'trimester', 'year', 'career'];
         $missing = array_diff($requiredHeaders, $headers);
 
         if (!empty($missing)) {
