@@ -125,17 +125,13 @@
                     <td>Año de inicio del grupo.</td>
                     <td><code>2023</code></td>
                 </tr>
-                <tr>
-                    <td><code>status</code></td>
-                    <td>Estado del grupo. Debe ser <code>ACTIVO</code> o <code>INACTIVO</code>.</td>
-                    <td><code>ACTIVO</code></td>
-                </tr>
+                <br>
             </tbody>
         </table>
 
         <h6>Ejemplo visual del archivo de importación:</h6>
         <div class="text-center">
-            <img src="{{ asset('template_excel/Example_course.jpeg') }}" alt="Ejemplo de archivo Excel/CSV para importación de grupos" class="help-img img-fluid" />
+            <img src="{{ asset('template_excel/Example_course.png') }}" alt="Ejemplo de archivo Excel/CSV para importación de grupos" class="help-img img-fluid" />
         </div>
 
         <div class="alert-info help-alert">
