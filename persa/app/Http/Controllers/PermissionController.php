@@ -11,6 +11,7 @@ use App\Models\Course;
 use App\Models\Location;
 use App\Models\Permission;
 use App\Models\PermissionType;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -104,6 +105,22 @@ class PermissionController extends Controller
             ->orderBy('number_group')
             ->get();
 
+        $permissions = $query->get();
+    
+        if ($roleId == 2) {
+            $courses = User::find(Auth::id())
+                ->instructorCourses()
+                ->with('career:id,name')
+                ->select('course.id', 'course.number_group', 'course.career_id')
+                ->orderBy('course.number_group')
+                ->get();
+        } else {
+            $courses = Course::with('career:id,name')
+                ->select('id', 'number_group', 'career_id')
+                ->orderBy('number_group')
+                ->get();
+        }
+
         return view('permission.index', compact('permissions', 'courses'));
     }
 
@@ -136,17 +153,17 @@ class PermissionController extends Controller
         $apprenticeId = auth()->id();
 
         // TODO: Validar que el aprendiz no tenga un permiso activo (PENDIENTE, APROBADO o TERMINADO) para la misma fecha
-        // $existingPermission = Permission::where('apprentice_id', $apprenticeId)
-        //     ->where('permission_date', $request->permission_date)
-        //     ->whereIn('status', ['PENDIENTE', 'APROBADO', 'TERMINADO'])
-        //     ->first();
+         $existingPermission = Permission::where('apprentice_id', $apprenticeId)
+             ->where('permission_date', $request->permission_date)
+             ->whereIn('status', ['PENDIENTE', 'APROBADO', 'TERMINADO'])
+             ->first();
 
-        // if ($existingPermission) {
-        //     return redirect()
-        //         ->route('permission.create')
-        //         ->withInput()
-        //         ->withErrors(['permission_date' => 'Ya tienes un permiso activo para esta fecha. Debes cancelarlo primero si deseas crear uno nuevo.']);
-        // }
+         if ($existingPermission) {
+             return redirect()
+                 ->route('permission.create')
+                 ->withInput()
+                 ->with('error', 'Ya tienes un permiso en proceso');
+         }
 
         $data = $request->only([
             'permission_date',

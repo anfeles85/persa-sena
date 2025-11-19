@@ -114,16 +114,17 @@ CREATE TABLE IF NOT EXISTS `instructor_course` (
   KEY `instructor_course_instructor_id_foreign` (`instructor_id`),
   CONSTRAINT `instructor_course_course_id_foreign` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `instructor_course_instructor_id_foreign` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.instructor_course: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla persa_db.instructor_course: ~7 rows (aproximadamente)
 INSERT INTO `instructor_course` (`id`, `instructor_id`, `course_id`, `created_at`, `updated_at`) VALUES
 	(1, 3, 1, NULL, NULL),
 	(2, 4, 2, NULL, NULL),
 	(3, 5, 3, NULL, NULL),
 	(4, 6, 4, NULL, NULL),
 	(5, 7, 1, NULL, NULL),
-	(6, 4, 6, NULL, NULL);
+	(6, 4, 6, NULL, NULL),
+	(8, 17, 6, NULL, NULL);
 
 -- Volcando estructura para tabla persa_db.location
 CREATE TABLE IF NOT EXISTS `location` (
@@ -185,9 +186,9 @@ CREATE TABLE IF NOT EXISTS `permission` (
   `end_time` time NOT NULL COMMENT 'Hora de fin',
   `departure_time` time DEFAULT NULL COMMENT 'Hora de salida',
   `reasons` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Motivo del permiso',
-  `instructor_id` bigint unsigned NOT NULL,
+  `instructor_id` bigint unsigned DEFAULT NULL,
   `apprentice_id` bigint unsigned NOT NULL,
-  `guard_id` bigint unsigned NOT NULL,
+  `guard_id` bigint unsigned DEFAULT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Estado',
   `location_id` bigint unsigned NOT NULL,
   `permission_type_id` bigint unsigned NOT NULL,
@@ -285,11 +286,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`),
   KEY `users_role_id_foreign` (`role_id`),
   CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla persa_db.users: ~15 rows (aproximadamente)
+-- Volcando datos para la tabla persa_db.users: ~16 rows (aproximadamente)
 INSERT INTO `users` (`id`, `document`, `fullname`, `email`, `password`, `status`, `role_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 123, 'Miss Sallie Zieme PhD', 'software.clem@gmail.com', '$2y$12$ic131//9JxY/UZ3ot.anhOfn.WViaorftj.q9iUkRIEClhV2cFpXi', 'ACTIVO', 1, 'UXIn52WVJnQyDUtCnKgemxacqvDwp2PdhIoQa42RlCCcphDlHjbcb9kpiJNt', '2025-06-26 18:11:51', '2025-08-05 19:02:36'),
+	(1, 123, 'Miss Sallie Zieme PhD', 'software.clem@gmail.com', '$2y$12$ic131//9JxY/UZ3ot.anhOfn.WViaorftj.q9iUkRIEClhV2cFpXi', 'ACTIVO', 1, '1jVLSXmsBfGCWYICKJE9GJVrhj0xjZLtJ30h489VvUyd0V2efbtrBo5k0bj4', '2025-06-26 18:11:51', '2025-08-05 19:02:36'),
 	(2, 456, 'Miss Reta Runolfsdottir', 'magnus.schaden@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 1, 'dL2DvyMDgP', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(3, 789, 'Miss Millie Davis', 'jordy70@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 2, 'zJaV6rAYQkPF9Lwz1bFb5uPOkZ6msRFG9i51DCdfbmbZ3Rl7qsGpPWP2YVp2', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(4, 134, 'Dr. Taylor Klein', 'murazik.ahmad@example.net', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 2, 'IDELtuaGUXXr4dSXNQwIIUQqBoJEUkbsX5WhsWIo2Dbr2Hszct7qfdn147IP', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
@@ -303,7 +304,8 @@ INSERT INTO `users` (`id`, `document`, `fullname`, `email`, `password`, `status`
 	(13, 2312, 'Dr. Allen Cruickshank III', 'adrain97@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'ACTIVO', 4, 'KD7MO6DBJ9', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(14, 324, 'Mr. Jarod Anderson PhD', 'rau.rashad@example.com', '$2y$12$RPUi1mVtauI503zI7p.2LulMC70AgRqcOzU9uKYjWPAT2nzVi1Sfm', 'INACTIVO', 4, 'zALvAeKTiP', '2025-06-26 18:11:51', '2025-06-26 18:11:51'),
 	(15, 1117012959, 'LINA VANESSA SALCEDO CUELLAR', 'nosemk9@gmail.com', '$2y$12$RDLMtGSSs2H7hqqODDyT3u4j6s9fej205Agk9knRzat/qc9OSC9Zm', 'ACTIVO', 3, NULL, '2025-08-14 19:23:38', '2025-08-23 06:36:44'),
-	(16, 1107843290, 'JUAN SEBASTIAN RODRIGUEZ CRUZ', 'sr1290853@gmail.com', '$2y$12$Bq8LBXIuAkj6d9IZKAz91u4KfG/970E2cBZC6BeLFDjMwdCsZqp4a', 'ACTIVO', 3, NULL, '2025-08-14 21:37:11', '2025-08-14 21:37:11');
+	(16, 1107843290, 'JUAN SEBASTIAN RODRIGUEZ CRUZ', 'sr1290853@gmail.com', '$2y$12$Bq8LBXIuAkj6d9IZKAz91u4KfG/970E2cBZC6BeLFDjMwdCsZqp4a', 'ACTIVO', 3, NULL, '2025-08-14 21:37:11', '2025-08-14 21:37:11'),
+	(17, 123456789, 'Hola como estas', 'lvb45204@gmail.com', '$2y$12$Ifea0VudLVDs5Sv9hJ2adu7n7PLPvRQr0HjUs2dAltlHJyZOwK.y6', 'ACTIVO', 2, NULL, '2025-11-19 20:34:02', '2025-11-19 20:34:02');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
