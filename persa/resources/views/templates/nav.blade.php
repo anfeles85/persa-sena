@@ -8,7 +8,7 @@
   </div>
   <hr class="horizontal dark mt-0">
   
-  <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+  <div id="sidenav-collapse-main">
     <ul class="navbar-nav">
 
       @can('coordinador')

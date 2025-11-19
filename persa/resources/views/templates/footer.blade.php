@@ -7,10 +7,12 @@
         <div class="container my-auto">
             <div class="copyright text-center my-auto">
                 <a href="https://sena-clem.blogspot.com/" target="_blank">
-                    <span style="color: #00304D; font-weight: bold;" class="text-start">©
-                    PERSA -
+                    <span style="color: #00304D; font-weight: bold;" class="text-start">
+                        ©PERSA v{{ ENV('VERSION') }}
+                    <br>
                     Desarrollado con &hearts; por
-                    ADSO 2921881 - SENA CLEM</span>
+                    ADSO 2921881 - SENA CLEM
+                    </span>
                 </a>
                 
             </div>
