@@ -136,17 +136,17 @@ class PermissionController extends Controller
         $apprenticeId = auth()->id();
 
         // TODO: Validar que el aprendiz no tenga un permiso activo (PENDIENTE, APROBADO o TERMINADO) para la misma fecha
-        // $existingPermission = Permission::where('apprentice_id', $apprenticeId)
-        //     ->where('permission_date', $request->permission_date)
-        //     ->whereIn('status', ['PENDIENTE', 'APROBADO', 'TERMINADO'])
-        //     ->first();
+         $existingPermission = Permission::where('apprentice_id', $apprenticeId)
+             ->where('permission_date', $request->permission_date)
+             ->whereIn('status', ['PENDIENTE', 'APROBADO', 'TERMINADO'])
+             ->first();
 
-        // if ($existingPermission) {
-        //     return redirect()
-        //         ->route('permission.create')
-        //         ->withInput()
-        //         ->withErrors(['permission_date' => 'Ya tienes un permiso activo para esta fecha. Debes cancelarlo primero si deseas crear uno nuevo.']);
-        // }
+         if ($existingPermission) {
+             return redirect()
+                 ->route('permission.create')
+                 ->withInput()
+                 ->with('error', 'Ya tienes un permiso en proceso');
+         }
 
         $data = $request->only([
             'permission_date',
