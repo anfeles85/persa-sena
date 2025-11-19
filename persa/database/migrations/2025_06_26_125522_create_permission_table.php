@@ -18,9 +18,9 @@ return new class extends Migration
             $table->time('end_time')->comment('Hora de fin');
             $table->time('departure_time')->nullable()->comment('Hora de salida');
             $table->string('reasons')->comment('Motivo del permiso');
-            $table->foreignId('instructor_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('instructor_id')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('apprentice_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('guard_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('guard_id')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('status')->comment('Estado');
             $table->foreignId('location_id')->constrained('location')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('permission_type_id')->constrained('permission_type')->onDelete('cascade')->onUpdate('cascade');
