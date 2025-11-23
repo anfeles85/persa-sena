@@ -967,6 +967,43 @@ ESTILO DE LAS VISTAS EMERGENTES ...                                ||
     margin-right: .45rem;
 }
 
+.form-check {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-check-input {
+    width: 18px;
+    height: 18px;
+    margin-top: 0.15rem;
+    cursor: pointer;
+    border: 2px solid #cbd5e1;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.form-check-input:checked {
+    background-color: #22c55e;
+    border-color: #22c55e;
+}
+
+.form-check-input:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 0.2rem rgba(34, 197, 94, 0.25);
+}
+
+.form-check-label {
+    margin-left: 0.5rem;
+    color: #64748b;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.form-check-label:hover {
+    color: #22c55e;
+}
+
 @media (max-width: 576px) {
     .help-table, .help-content-box { padding: 12px; }
     .help-table { width: 100%; }
