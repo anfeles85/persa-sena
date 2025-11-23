@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="col-12 col-md-10 mx-auto">
-    <label class="fs-3">Crear usuario</label>
+    <label class="fs-3">Crear Usuario</label>
     <form action="{{ route('user.store') }}" method="POST">
         @csrf
 

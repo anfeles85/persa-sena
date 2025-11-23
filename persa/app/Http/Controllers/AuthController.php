@@ -79,24 +79,25 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-            'g-recaptcha-response' => 'required|captcha',
-        ]);
+            'g-recaptcha-response' => 'required|captcha'
+        ], [], $this->traductionAttributes);
 
-        if (Auth::attempt($request->only('email','password'))) {
-            $request->session()->regenerate();
+        $credentials = $request->only('email', 'password');
+        $remember = $request->has('remember');
 
-            if (strtoupper(Auth::user()->status) !== 'ACTIVO') {
+        if (Auth::attempt($credentials, $remember)) {
+            $user = Auth::user();
+
+            if ($user->status == 'INACTIVO') {
                 Auth::logout();
-                return redirect()->route('auth.index')
-                    ->withErrors(['email' => 'Su cuenta está inactiva. Contacte al administrador.']);
+                return redirect()->route('auth.index')->with('message', 'Tu cuenta está inactiva. Contacta al administrador.');
             }
 
+            $request->session()->regenerate();
             return redirect()->route('index');
         }
 
-        return back()->withErrors([
-            'email' => 'Credenciales incorrectas'
-        ])->onlyInput('email');
+        return redirect()->route('auth.index')->withErrors(['email' => 'Las credenciales no coinciden con nuestros registros.']);
     }
 
 

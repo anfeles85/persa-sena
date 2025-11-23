@@ -78,11 +78,28 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="password" 
-                                   name="password" 
-                                   class="form-control" 
-                                   placeholder="Ingrese su contraseña" 
-                                   required>
+                            <div class="input-password-wrapper">
+                                <input type="password" 
+                                       id="password-login"
+                                       name="password" 
+                                       class="form-control password-input" 
+                                       placeholder="Ingrese su contraseña" 
+                                       required>
+                                <i class="fa fa-eye toggle-password-icon" toggle="#password-login"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       name="remember" 
+                                       id="remember"
+                                       {{ old('remember') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="remember">
+                                    Recordar contraseña
+                                </label>
+                            </div>
                         </div>
                         
                         <button type="submit" class="btn-login">
@@ -120,6 +137,18 @@
                 if (this.textContent.includes('Registrarse')) {
                     window.location.href = "{{ route('auth.register') }}";
                 }
+            });
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('.toggle-password-icon').forEach(function (element) {
+            element.addEventListener('click', function () {
+                const input = document.querySelector(this.getAttribute('toggle'));
+                const isPassword = input.type === 'password';
+                input.type = isPassword ? 'text' : 'password';
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
             });
         });
     </script>

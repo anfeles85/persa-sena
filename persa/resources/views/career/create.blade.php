@@ -1,10 +1,10 @@
 @extends('templates.base')
-@section('title', 'Crear Carrera')
-@section('header', 'Crear Carrera')
+@section('title', 'Crear Programa')
+@section('header', 'Crear Programa')
 @section('content')
 
     <div>
-        <label class="fs-3">Crear carerra</label>
+        <label class="fs-3">Crear Programa</label>
         <div class="col-lg-12 mb-4">
             <form action="{{ route('career.store') }}" method="POST">
                 @csrf

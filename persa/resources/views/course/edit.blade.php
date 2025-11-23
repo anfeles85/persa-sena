@@ -1,9 +1,9 @@
 @extends('templates.base')
-@section('title', 'Editar Curso')
-@section('header', 'Editar Curso')
+@section('title', 'Editar Grupos')
+@section('header', 'Editar Grupos')
 @section('content')
     <div>
-        <label class="fs-3">Editar Curso</label>
+        <label class="fs-3">Editar Grupos</label>
         <div class="col-lg-12 mb-4">
             <form action="{{ route('course.update', $course['id']) }}" method="POST">
                 @csrf
@@ -77,7 +77,6 @@
                             <thead>
                                 <th>Documento</th>
                                 <th>Nombre</th>
-                                <th>Correo</th>
                                 <th>Agregar</th>
                             </thead>
                             <tbody>
@@ -88,7 +87,6 @@
                                         <tr>
                                             <td>{{ $user->document }}</td>
                                             <td>{{ $user->fullname }}</td>
-                                            <td>{{ $user->email }}</td>
                                             <td>
                                                 <a href="{{ route('course.add_instructor', [$course->id, $user->id]) }}" class="btn btn-success btn-circle bt-sm" title="Agregar">
                                                     <i class="fas fa-fw fa-plus"></i>
@@ -107,7 +105,6 @@
                             <thead>
                                 <th>Documento</th>
                                 <th>Nombre</th>
-                                <th>Correo</th>
                                 <th>Retirar</th>
                             </thead>
                             <tbody>
@@ -118,7 +115,6 @@
                                         <tr>
                                             <td>{{ $user->document }}</td>
                                             <td>{{ $user->fullname }}</td>
-                                            <td>{{ $user->email }}</td>
                                             <td>
                                                 <a href="{{ route('course.remove_instructor', [$course->id, $user->id]) }}" class="btn btn-danger btn-circle bt-sm" title="Retirar">
                                                     <i class="fas fa-fw fa-minus"></i>

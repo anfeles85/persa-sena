@@ -1,10 +1,10 @@
 @extends('templates.base')
-@section('title', 'Editar Carrera')
-@section('header', 'Editar Carrera')
+@section('title', 'Editar Programa')
+@section('header', 'Editar Programa')
 @section('content')
 
 <div>
-    <label for="" class="fs-3">Editar carrera</label>
+    <label for="" class="fs-3">Editar Programa</label>
         <div class="col-lg-12-mb-4">
             <form action="{{ route('career.update', $career['id']) }}" method="POST">
                 @csrf
