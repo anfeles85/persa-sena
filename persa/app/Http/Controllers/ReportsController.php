@@ -31,7 +31,7 @@ class ReportsController extends Controller
             // aprendices solo de esos cursos
             $users = User::where('role_id', 3)
                 ->whereHas('courses', function ($query) use ($courses) {
-                    $query->whereIn('course.id', $courses->pluck('id')); // 👈 singular
+                    $query->whereIn('course.id', $courses->pluck('id')); 
                 })
                 ->get();
         } else {
@@ -42,12 +42,6 @@ class ReportsController extends Controller
         return view('reports.index', compact('courses', 'users'));
     }
 
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    
     /**
      * reporte que genera el permiso de un aprendiz en especifico
      */
@@ -74,13 +68,19 @@ class ReportsController extends Controller
      */
     public function export_permissions_by_date_range(Request $request)
     {
+        ini_set('memory_limit', '512M');
+        ini_set('max_execution_time', 300);
+
         $permissions = Permission::with([
             'apprentice_user.apprenticeCourses.career',
             'instructor_user',
             'guard_user',
             'location',
             'permissionType',
-        ])->whereBetween('permission_date', [$request['date1'], $request['date2']])->get();
+        ])
+        ->whereHas('apprentice_user') 
+        ->whereBetween('permission_date', [$request['date1'], $request['date2']])
+        ->get();
         
 
         $data = array(
@@ -97,7 +97,7 @@ class ReportsController extends Controller
                 ]); 
                 
         return $pdf->download('PersaByData.pdf');
-}
+    }
 
     /**
      * reporte que genera listado de permisos por curso
