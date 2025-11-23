@@ -27,10 +27,12 @@
                             <td>{{ $permission->id }}</td>
                             <td>{{ \Carbon\Carbon::parse($permission->permission_date)->format('d/m/Y') }}</td>
                             <td>{{ $permission->reasons }}</td>
-                            <td>{{ $permission->apprentice_user->fullname }}</td>
-                            <td>{{ $permission->apprentice_user->document_number }}</td>
+                            
+                            <td>{{ $permission->apprentice_user ? $permission->apprentice_user->fullname : 'Usuario Eliminado' }}</td>
+                            <td>{{ $permission->apprentice_user ? $permission->apprentice_user->document : 'N/A' }}</td>
+                            
                             <td>
-                                @if ($permission->apprentice_user->apprenticeCourses->isNotEmpty())
+                                @if ($permission->apprentice_user && $permission->apprentice_user->apprenticeCourses->isNotEmpty())
                                     @foreach ($permission->apprentice_user->apprenticeCourses as $ac)
                                         @if ($ac->course && $ac->course->career)
                                             {{ $ac->course->career->name }} - 
