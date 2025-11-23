@@ -5,34 +5,46 @@
 
 <label class="fs-2">Grupos</label>
 <div class="row">
-    <div class="col-lg-12 mb-4 d-grid gap-2 d-md-block">
-        <div class="d-flex gap-2">
-        <form action="{{ route('course.import') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
+    <div class="col-lg-12 mb-4 d-flex flex-column flex-md-row gap-2">
+        <form action="{{ route('course.import') }}" 
+              method="POST" 
+              enctype="multipart/form-data" 
+              class="d-flex flex-column flex-md-row align-items-md-center gap-2 flex-grow-1">
             @csrf
-            <input type="file" name="archivo" accept=".xlsx,.xls,.csv" required class="form-control form-control-sm" />
-           <button type="submit" id="importBtn" class="btn btn-primary btn-sm">
+            <input type="file" 
+                   name="archivo" 
+                   accept=".xlsx,.xls,.csv" 
+                   required 
+                   class="form-control form-control-sm" />
+            <button type="submit" 
+                    id="importBtn" 
+                    class="btn btn-primary btn-sm text-nowrap">
                 <i class="fas fa-file-excel me-1"></i> Importar Excel de Fichas
             </button>
-
         </form>
-        <a href="{{ route('course.create') }}" class="btn btn-success">Crear</a>
         
-        
-        <a href="{{ asset('template_excel/cursos.xlsx') }}" class="btn btn-primary d-flex align-items-center justify-content-center" download="cursos.xlsx">
-            <i class="fas fa-file-download me-1"></i> Plantilla
-        </a>
-        
-        
-        <button id="help_import" class="btn btn-primary" onclick="openHelpWindow(event)" title="Ver formato de archivo de importación">
-            <i class="fas fa-search me-1"></i> Ayuda de importación
-        </button>
+        <div class="d-flex gap-2">
+            <a href="{{ route('course.create') }}" class="btn btn-success">Crear</a>
+            <a href="{{ asset('template_excel/cursos.xlsx') }}" 
+               class="btn btn-primary" 
+               download="cursos.xlsx"
+               title="Descargar plantilla">
+                <i class="fas fa-file-download me-1"></i> Plantilla
+            </a>
+            <button id="help_import" 
+                    class="btn btn-primary" 
+                    onclick="openHelpWindow(event)" 
+                    title="Ver formato de archivo de importación">
+                <i class="fas fa-search me-1"></i> Ayuda
+            </button>
+        </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-lg-12 mb-4">
-        <table id="table_data" class="table table-striped align-items-center text-center">
-            <thead>
+        <table id="table_data" class="table table-striped text-center align-middle">
+            <thead class="align-middle text-center">
                 <tr>
                     <th>Id</th>
                     <th>Ficha</th>
@@ -46,27 +58,29 @@
             </thead>
             <tbody>
                 @foreach ($courses as $course)
-                <tr>
-                    <td data-label="Id">{{ $course['id'] }}</td>
-                    <td data-label="Ficha">{{ $course['number_group'] }}</td>
-                    <td data-label="Nombre">{{ $course->career->name ?? 'Sin programa' }}</td>
-                    <td data-label="Jornada">{{ $course['shift'] }}</td>
-                    <td data-label="Trimestre">{{ $course['trimester'] }}</td>
-                    <td data-label="Año">{{ $course['year'] }}</td>
-                    <td data-label="Estado">{{ $course['status'] }}</td>
-                    <td id="buttons_DE" style="border-top: none;">
-                        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 w-100">
-                            
+                <tr class="d-block d-md-table-row border rounded mb-3 mb-md-0 p-2">
+                    <td data-label="Id" class="fw-bold d-block d-md-table-cell">{{ $course['id'] }}</td>
+                    <td data-label="Ficha" class="d-block d-md-table-cell">{{ $course['number_group'] }}</td>
+                    <td data-label="Programa" class="d-block d-md-table-cell">{{ $course->career->name ?? 'Sin programa' }}</td>
+                    <td data-label="Jornada" class="d-block d-md-table-cell">{{ $course['shift'] }}</td>
+                    <td data-label="Trimestre" class="d-block d-md-table-cell">{{ $course['trimester'] }}</td>
+                    <td data-label="Año" class="d-block d-md-table-cell">{{ $course['year'] }}</td>
+                    <td data-label="Estado" class="d-block d-md-table-cell">
+                        <span class="badge bg-{{ $course['status'] === 'ACTIVO' ? 'success' : 'secondary' }}">
+                            {{ $course['status'] }}
+                        </span>
+                    </td>
+                    <td data-label="Acciones" class="d-block d-md-table-cell">
+                        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
                             <a href="{{ route('course.edit', $course->id) }}" 
-                                class="btn btn-primary btn-circle table-btn w-100 w-md-auto" 
-                                title="Editar">
+                               class="btn btn-primary btn-circle table-btn w-100 w-md-auto" 
+                               title="Editar">
                                 <i class="far fa-edit"></i>
                             </a>
-
-                            
                             <form id="form-delete-{{ $course->id }}" 
-                                    action="{{ route('course.destroy', $course->id) }}" 
-                                    method="POST" class="w-100 w-md-auto">
+                                  action="{{ route('course.destroy', $course->id) }}" 
+                                  method="POST" 
+                                  class="w-100 w-md-auto">
                                 @csrf
                                 @method('DELETE')
                                 <button type="button" 
@@ -85,7 +99,7 @@
     </div>
 </div>
 
- 
+<!-- Modal de ayuda (mantener igual) -->
 <div id="helpWindowContent" class="d-none help-popup">
     <div class="help-content-box">
         <h4>Formato Requerido para Importación de Grupos</h4>
@@ -146,59 +160,26 @@
 @endsection
 
 @section('scripts')
-
     <script src="{{ asset('js/general.js') }}"></script>
     
     <script>
-    function openHelpWindow(e) {
-        if (e && e.preventDefault) e.preventDefault();
-
-        const el = document.getElementById('helpWindowContent');
-        if (!el) {
-            alert('Contenido de ayuda no encontrado.');
-            return;
+        function openHelpWindow(event) {
+            event.preventDefault();
+            const helpContent = document.getElementById('helpWindowContent').innerHTML;
+            const newWindow = window.open('', '_blank', 'width=900,height=700,scrollbars=yes');
+            newWindow.document.write(`
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Ayuda - Formato de Importación</title>
+                    <link rel="stylesheet" href="{{ asset('css/help.css') }}">
+                </head>
+                <body>${helpContent}</body>
+                </html>
+            `);
+            newWindow.document.close();
         }
-
-        const content = el.innerHTML;
-        const baseTag = document.querySelector('base');
-        const baseHref = baseTag ? baseTag.href : window.location.origin + '/';
-        const customCss = @json(asset('css/custom.css?v=2.1.0'));
-
-        const helpWindow = window.open('', 'Ayuda_de_exportacion', 'width=900,height=700,scrollbars=yes,resizable=yes');
-        if (!helpWindow) {
-            alert('Popup bloqueado. Por favor permite popups para este sitio.');
-            return;
-        }
-
-        try {
-            helpWindow.document.open();
-            helpWindow.document.write('<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ayuda de exportación - Grupos</title>');
-            helpWindow.document.write('<base href="' + baseHref + '">');
-            helpWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">');
-            helpWindow.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">');
-            helpWindow.document.write('<link rel="stylesheet" href="' + customCss + '">');
-            helpWindow.document.write('</head><body class="help-window-body">');
-            helpWindow.document.write(content);
-            helpWindow.document.write('</body></html>');
-            helpWindow.document.close();
-        } catch (err) {
-            console.error('Error abriendo ventana de ayuda:', err);
-            alert('No se pudo abrir la ventana de ayuda.');
-        }
-    }
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.querySelector('form[action="{{ route('course.import') }}"]');
-            const importBtn = document.getElementById('importBtn');
-
-            if (form && importBtn) {
-            form.addEventListener('submit', () => {
-            importBtn.disabled = true;
-            importBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> <span style="color: #fff;">Importando...</span>';
-            });
-            }
-        });
-    </script>
-
 @endsection
