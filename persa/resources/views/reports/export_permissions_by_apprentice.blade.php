@@ -5,7 +5,22 @@
 @section('content')
     <section id="results">
         @if ($permissions->isNotEmpty())
-            <h4>Aprendiz: {{ $apprentice->fullname }} (Documento: {{ $apprentice->document }})</h4>
+            <div style="margin-bottom: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #39a900;">
+                <h4 style="margin: 0 0 10px 0; color: #333;">Información del Aprendiz</h4>
+                <p style="margin: 5px 0;"><strong>Nombre:</strong> {{ $apprentice->fullname }}</p>
+                <p style="margin: 5px 0;"><strong>Documento:</strong> {{ $apprentice->document }}</p>
+                <p style="margin: 5px 0;"><strong>Correo:</strong> {{ $apprentice->email }}</p>
+                
+                @if($course)
+                    <p style="margin: 5px 0;"><strong>Grupo:</strong> {{ $course->number_group }}</p>
+                    <p style="margin: 5px 0;"><strong>Programa de Formación:</strong> {{ $course->career->name ?? 'N/A' }}</p>
+                    <p style="margin: 5px 0;"><strong>Jornada:</strong> {{ $course->shift }} - {{ $course->year }}</p>
+                @else
+                    <p style="margin: 5px 0; color: #dc3545;"><strong>Ficha:</strong> Sin ficha asignada</p>
+                @endif
+            </div>
+
+            <h4 style="margin-top: 20px;">Historial de Permisos</h4>
             <table id="reportTable">
                 <thead>
                     <tr>

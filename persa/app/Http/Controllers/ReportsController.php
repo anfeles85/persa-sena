@@ -48,12 +48,18 @@ class ReportsController extends Controller
     public function export_permissions_by_apprentice(Request $request){
         $apprentice = User::where('id', $request->input('apprentice_id'))
                           ->where('role_id', 3)
-                          ->with(['permissions.permissionType', 'permissions.location'])
+                          ->with([
+                              'permissions.permissionType', 
+                              'permissions.location',
+                              'courses.career'
+                          ])
                           ->firstOrFail();
 
         $permissions = $apprentice->permissions;
+        
+        $course = $apprentice->courses->first();
 
-        $pdf = Pdf::loadView('reports.export_permissions_by_apprentice', compact('permissions', 'apprentice'))
+        $pdf = Pdf::loadView('reports.export_permissions_by_apprentice', compact('permissions', 'apprentice', 'course'))
             ->setPaper('letter', 'portrait')
             ->setOptions([
                 'defaultFont' => 'sans-serif',
