@@ -3,6 +3,7 @@
 @section('header', 'Crear Tipo de permiso')
 @section('content')
 
+<br>
     <div>
         <label class="fs-3">Crear Tipo de Permiso</label>
         <div class="col-lg-12 mb-4">

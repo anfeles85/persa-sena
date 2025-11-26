@@ -2,6 +2,8 @@
 @section('title', 'Crear Permiso')
 @section('header', 'Crear Permiso')
 @section('content')
+
+<br>
     <div>
         <label class="fs-3">Crear Permiso</label>
         <div class="col-12 mb-4">

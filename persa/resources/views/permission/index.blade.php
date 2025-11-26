@@ -5,6 +5,7 @@
 
 @section('content')
 
+<br>
 <label class="fs-2">Permisos</label>
 
 @if(Auth::user()->role_id == 3)

@@ -4,6 +4,8 @@
 @section('header', 'Crear usuario')
 
 @section('content')
+
+<br>
 <div class="col-12 col-md-10 mx-auto">
     <label class="fs-3">Crear Usuario</label>
     <form action="{{ route('user.store') }}" method="POST">

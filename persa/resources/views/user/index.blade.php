@@ -6,7 +6,7 @@
 @section('content')
 
 
-
+<br>
 <label class="fs-2">Usuarios</label>
 
 <form method="GET" action="{{ url()->current() }}" class="row g-2 mb-3">

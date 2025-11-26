@@ -4,6 +4,7 @@
 @section('header', 'Mi Perfil')
 @section('content')
 
+<br>
 <label class="fs-2">Mi Perfil</label>
 
 <!-- Mensajes de éxito y error en la parte superior -->

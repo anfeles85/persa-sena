@@ -29,6 +29,7 @@
 
         {{-- Título --}}
         <div class="mb-4 px-2 text-center text-md-start">
+            <br>
             <h3 class="mb-2 h4 font-weight-bolder">Dashboard</h3>
             <p class="mb-0 text-muted">
                 En este sitio podrás ver diferentes datos sobre los permisos que existen en el sistema

@@ -2,6 +2,8 @@
 @section('title', 'Crear Grupo')
 @section('header', 'Crear Grupo')
 @section('content')
+
+<br>
     <div>
         <label class="fs-3">Crear Grupos</label>
         <div class="col-lg-12 mb-4">

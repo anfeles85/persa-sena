@@ -16,7 +16,7 @@
                         <th>Motivo</th>
                         <th>Aprendiz</th>
                         <th>Documento</th>
-                        <th>Carrera</th>
+                        <th>Grupo</th>
                         <th>Estado</th>
                         <th>Sede</th>
                     </tr>
@@ -32,19 +32,13 @@
                             <td>{{ $permission->apprentice_user ? $permission->apprentice_user->document : 'N/A' }}</td>
                             
                             <td>
-                                @if ($permission->apprentice_user && $permission->apprentice_user->apprenticeCourses->isNotEmpty())
-                                    @foreach ($permission->apprentice_user->apprenticeCourses as $ac)
-                                        @if ($ac->course && $ac->course->career)
-                                            {{ $ac->course->career->name }} - 
-                                            {{ $ac->course->trimester }} - 
-                                            {{ $ac->course->shift }}
-                                        @else
-                                            Curso no asignado
-                                        @endif
-                                        <br>
+                                @if ($permission->apprentice_user && $permission->apprentice_user->courses->isNotEmpty())
+                                    @foreach ($permission->apprentice_user->courses as $course)
+                                        {{ $course->number_group ?? 'N/A' }}
+                                        @if (!$loop->last), @endif
                                     @endforeach
                                 @else
-                                    No tiene curso asignado
+                                    No tiene ficha asignada
                                 @endif
                             </td>
                             <td>{{ ucfirst(strtolower($permission->status)) }}</td>

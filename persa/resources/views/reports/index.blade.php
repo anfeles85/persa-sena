@@ -3,6 +3,7 @@
 @section('header', 'Reportes')
 @section('content')   
 
+<br>
 <label class="fs-2 mb-4">Reportes</label>
 
 {{-- Reporte por rango de fechas --}}
@@ -65,12 +66,12 @@
                             <label for="apprentice_id" class="form-label">Seleccione un aprendiz:</label>
                             <select name="apprentice_id" 
                                     id="apprentice_id" 
-                                    class="form-control" 
+                                    class="form-control select2-apprentice" 
                                     required>
-                                <option value="">Seleccione un aprendiz</option>
+                                <option value="">Buscar por nombre o documento...</option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}">
-                                        {{ $user->fullname }} - {{ $user->document }}
+                                        {{ $user->document }} - {{ $user->fullname }}
                                     </option>
                                 @endforeach
                             </select>
@@ -106,9 +107,9 @@
                             <label for="course_id" class="form-label">Seleccione una ficha:</label>
                             <select name="course_id" 
                                     id="course_id" 
-                                    class="form-control" 
+                                    class="form-control select2-course" 
                                     required>
-                                <option value="">Seleccione una ficha</option>
+                                <option value="">Buscar por número de ficha o programa...</option>
                                 @foreach ($courses as $course)
                                     <option value="{{ $course->id }}" 
                                             {{ old('course_id') == $course->id ? 'selected' : '' }}>
@@ -131,4 +132,42 @@
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.select2-apprentice').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Buscar por nombre o documento...',
+            allowClear: true,
+            language: {
+                noResults: function() {
+                    return "No se encontraron resultados";
+                },
+                searching: function() {
+                    return "Buscando...";
+                }
+            }
+        });
+
+        $('.select2-course').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Buscar por número de ficha o programa...',
+            allowClear: true,
+            language: {
+                noResults: function() {
+                    return "No se encontraron resultados";
+                },
+                searching: function() {
+                    return "Buscando...";
+                }
+            }
+        });
+    });
+</script>
 @endsection

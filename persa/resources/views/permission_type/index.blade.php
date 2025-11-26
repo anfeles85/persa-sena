@@ -3,6 +3,7 @@
 @section('header', 'Tipos de Permiso')
 @section('content')
 
+<br>
 <label class="fs-2">Tipo de Permisos</label>
 
 <div class="row">
