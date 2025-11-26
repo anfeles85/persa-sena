@@ -106,9 +106,9 @@
                             <label for="course_id" class="form-label">Seleccione una ficha:</label>
                             <select name="course_id" 
                                     id="course_id" 
-                                    class="form-control" 
+                                    class="form-control select2-course" 
                                     required>
-                                <option value="">Seleccione una ficha</option>
+                                <option value="">Buscar por número de ficha o programa...</option>
                                 @foreach ($courses as $course)
                                     <option value="{{ $course->id }}" 
                                             {{ old('course_id') == $course->id ? 'selected' : '' }}>
@@ -143,6 +143,20 @@
         $('.select2-apprentice').select2({
             theme: 'bootstrap-5',
             placeholder: 'Buscar por nombre o documento...',
+            allowClear: true,
+            language: {
+                noResults: function() {
+                    return "No se encontraron resultados";
+                },
+                searching: function() {
+                    return "Buscando...";
+                }
+            }
+        });
+
+        $('.select2-course').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Buscar por número de ficha o programa...',
             allowClear: true,
             language: {
                 noResults: function() {

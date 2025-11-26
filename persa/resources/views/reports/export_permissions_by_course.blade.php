@@ -5,22 +5,31 @@
 @section('content')
     <section id="results">
         @if (isset($course) && $apprentices->count() > 0)
-            <h4>Ficha: {{ $course->number_group ?? $course->id }}</h4>
+            <h4>Grupo: {{ $course->number_group ?? $course->id }}</h4>
+            <p><strong>Programa:</strong> {{ $course->career->name ?? 'N/A' }}</p>
+            <p><strong>Jornada:</strong> {{ $course->shift }} - {{ $course->year }}</p>
             <hr>
 
-            @foreach ($apprentices as $apprentice)
-                <h5>Aprendiz: {{ $apprentice->fullname }} (Documento: {{ $apprentice->document}})</h5>
+            @php
+                $apprenticesWithPermissions = $apprentices->filter(function($apprentice) {
+                    return $apprentice->permissions->isNotEmpty();
+                });
+            @endphp
 
-                @if ($apprentice->permissions->isEmpty())
-                    <p>No tiene permisos registrados.</p>
-                @else
+            @if($apprenticesWithPermissions->isEmpty())
+                <p><strong>No existen permisos registrados para esta ficha.</strong></p>
+            @else
+                @foreach ($apprenticesWithPermissions as $apprentice)
+                    <h5>Aprendiz: {{ $apprentice->fullname }} (Documento: {{ $apprentice->document }})</h5>
+
                     <table id="reportTable">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
                                 <th>Tipo de Permiso</th>
-                                <th>Ubicación</th>
+                                <th>Sede</th>
                                 <th>Motivo</th>
+                                <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,14 +39,15 @@
                                     <td>{{ $permission->permissionType->name ?? 'N/A' }}</td>
                                     <td>{{ $permission->location->name ?? 'N/A' }}</td>
                                     <td>{{ $permission->reasons }}</td>
+                                    <td>{{ ucfirst(strtolower($permission->status)) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                @endif
 
-                <br>
-            @endforeach
+                    <br>
+                @endforeach
+            @endif
         @else
             <p><strong>No existen resultados en el reporte.</strong></p>
         @endif
