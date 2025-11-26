@@ -72,7 +72,7 @@ class ReportsController extends Controller
         ini_set('max_execution_time', 300);
 
         $permissions = Permission::with([
-            'apprentice_user.apprenticeCourses.career',
+            'apprentice_user.courses',
             'instructor_user',
             'guard_user',
             'location',
@@ -90,7 +90,7 @@ class ReportsController extends Controller
         );
 
         $pdf = Pdf::loadView('reports.export_permissions_by_date_range', $data)
-                ->setPaper('letter', 'portrait')
+                ->setPaper('letter', 'landscape')
                 ->setOptions([
                     'defaultFont'=>'sans-serif', 
                     'isRemoteEnabled'=>true
