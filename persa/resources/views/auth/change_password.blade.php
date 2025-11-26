@@ -4,6 +4,7 @@
 @section('content')
 @yield('scripts')
 
+<br>
 <div>
     <label class="fs-3">Cambiar contraseña</label>
         <div class="col-lg-12 mb-4">

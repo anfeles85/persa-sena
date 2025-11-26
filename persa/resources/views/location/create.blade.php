@@ -3,6 +3,7 @@
 @section('header', 'Crear Sede')
 @section('content')
 
+<br>
     <div>
         <label class="fs-3">Crear Sede</label>
         <div class="col-lg-12 mb-4">

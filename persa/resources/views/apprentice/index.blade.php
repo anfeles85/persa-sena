@@ -6,6 +6,7 @@
 <div>
     <div class="row">
         <div class="col-lg-12 mb-4">
+            <br>
             <label class="fs-2">Buscar aprendices por ficha</label>
             <div class="card-body">
                 <form action="{{ route('apprentice.index') }}" method="GET" id="searchForm">

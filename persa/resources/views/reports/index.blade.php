@@ -3,6 +3,7 @@
 @section('header', 'Reportes')
 @section('content')   
 
+<br>
 <label class="fs-2 mb-4">Reportes</label>
 
 {{-- Reporte por rango de fechas --}}

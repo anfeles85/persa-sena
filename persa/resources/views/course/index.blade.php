@@ -3,6 +3,7 @@
 @section('header', 'Grupos')
 @section('content')
 
+<br>
 <label class="fs-2">Grupos</label>
 <div class="row">
     <div class="col-lg-12 mb-4 d-flex flex-column flex-md-row gap-2">

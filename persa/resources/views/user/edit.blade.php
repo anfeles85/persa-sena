@@ -2,6 +2,8 @@
 @section('title', 'Editar Usuario')
 @section('header', 'Editar Usuario')
 @section('content')
+
+<br>
     <div>
         <label class="fs-3">Editar Usuario</label>
         <div class="col-lg-12 mb-4">

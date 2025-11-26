@@ -3,7 +3,7 @@
 @section('header', 'Sedes')
 @section('content')
 
-
+<br>
 <label class="fs-2">Sedes</label>
 <div class="row">
     <div class="col-lg-12 mb-4 d-grid gap-2 d-md-block">
